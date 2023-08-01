@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" name="description" content="">
+  <title>
+    Meteo Summary
+  </title>
+  
+  <meta name="title" content="Meteo Summary">
+  <meta name="description" content="Toutes les infos météo pour préparer un vol en parapente. Carte des fronts, vent, différence de pression, balise.">
+  <meta name="msapplication-TileColor" content="#fdca37">
+  <meta name="theme-color" content="#fdca37">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+  <script src="./assets/js/script.js"></script>
+  <script src="https://kit.fontawesome.com/e798f160a4.js" crossorigin="anonymous"></script>
+  
+  <link rel="stylesheet" media="all" href="./assets/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <style> 
+    .button1 {
+      border: none;
+      color: black;
+      padding: 2px 2px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 20px;
+      margin: 0px 0px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="page-content" class="striped">
+    
+    <div id="box_167" class="box  odd">
+      <div class="py-3 ">
+        <div id="rendered-box-167" class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <h1>Météo Summary</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="py-3 ">
+        <div id="rendered-box-567" class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <h2>Tout ce qu'il faut pour préparer ta journée de vol&nbsp;<br></h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div id="box_259" class="box  odd">
+      <div class="py-3 ">
+        <div id="rendered-box-259" class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <h3>Vent à Chalais 500 m.</h3>
+              <div id="374"><iframe frameborder="0" marginheight="1" marginwidth="1" scrolling="no"  src="https://widget.holfuy.com/?station=1086&su=km/h&t=C&lang=fr&mode=average&avgrows=16" style="width:100%; height:180px;"></iframe></div>
+              <h3>Vent à Villy 420 m.</h3>
+              <div id="9507"><iframe frameborder="0" marginheight="1" marginwidth="1" scrolling="no"  src="https://widget.holfuy.com/?station=717&su=km/h&t=C&lang=fr&mode=average&avgrows=16" style="width:100%; height:180px;"></iframe></div>
+            </div>
+            <div class="col-md-6">
+              <h3>Vent au Crêt du Midi 2330 m.</h3>
+              <div id="2641"><iframe frameborder="0" marginheight="1" marginwidth="1" scrolling="no"  src="https://widget.holfuy.com/?station=927&su=km/h&t=C&lang=fr&mode=average&avgrows=16" style="width:100%; height:180px;"></iframe></div>
+              <h3>Vent à Vounetz 1620 m.</h3>
+              <div id="4404"><iframe frameborder="0" marginheight="1" marginwidth="1" scrolling="no"  src="https://widget.holfuy.com/?station=549&su=km/h&t=C&lang=fr&mode=average&avgrows=16" style="width:100%; height:180px;"></iframe></div>
+            </div>
+            <div class="col-md-6">
+              <a href="https://winds.mobi/stations/map?lat=46.4075639&lon=7.3924254&zoom=9" target="_blank"><button class="button1">&#x2794; Carte complète des stations (Winds.Mobi)</button></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Winds moby refuse de s'ouvrir en mode carte et force la vue "list" dans l'iframe  -->
+    <!--div id="box_155" class="box  odd">
+      <div class="py-3 ">
+        <div id="rendered-box-155" class="container">
+          <div class="row" id="anchor">
+            <div class="col-md-12" name="div-windsmobi">
+              <h3>Vent</h3>
+              <iframe width="100%" height="650" src="https://winds.mobi/stations/list?lat=46.4075639&lon=7.3924254" name="iframe-windsmobi" id=iframe-windsmobi></iframe><br>
+              <a href="https://winds.mobi/stations/map?lat=46.4075639&lon=7.3924254&zoom=9" target="_blank">Winds.Mobi</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div-->
+    
+    <div id="box_155" class="box  odd">
+      <div class="py-3 ">
+        <div id="rendered-box-155" class="container">
+          <div class="row" id="anchor">
+            <div class="col-md-12">
+              <h3>Paraglidable</h3>
+              <iframe width="100%" height="650" src="https://paraglidable.com/?lat=46.391&lon=7.094&zoom=9" name="iframe-parag" id=iframe-parag></iframe><br>
+              <a href="https://paraglidable.com/?lat=46.391&lon=7.094&zoom=9" target="_blank">Paraglidable</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="box_154" class="box  even">
+      <div id="rendered-box-154" class="my-4 container">
+        <h2></h2>
+        <div class="row">
+          <div class="col-md-6 my-4">
+            <h3>Etat 27.07.2023 12h UTC</h3>
+            <img class="img-fluid" src="https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/AL2712_large.gif" />
+          </div>
+          <div class="col-md-6 my-4">
+            <h3>Prévision 28.07.2023 00h UTC</h3>
+            <img class="img-fluid" src="https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL2800_large.gif" />
+          </div>
+          <!--div class="col-md-6 my-4">
+            <h3>Prévision 28.07.2023 12h UTC</h3>
+            <img class="img-fluid" src="https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL2812_large.gif" />
+          </div-->
+          <div class="col-md-6 my-4">
+            <h3>Prévisions du foehn</h3>
+            <a href="http://www.meteocentrale.ch/fr/meteo/foehn-et-bise/foehn.html" target="_new">
+              <img src="https://www.meteocentrale.ch/uploads/pics/uwz-ch_foehn_fr.png?2817462" class="img-fluid">
+            </a>
+          </div>
+          <div class="col-md-6 my-4">
+            <h3>Prévisions de la bise</h3>
+            <a href="https://www.meteocentrale.ch/fr/meteo/foehn-et-bise/bise.html" target="_new">
+              <img src="https://www.meteocentrale.ch/uploads/pics/uwz-ch_bise_fr.png?2817462" class="img-fluid">
+            </a>
+          </div>
+          <div class="col-md-12">
+            <h3>Pression et vents en Europe</h3>
+            <iframe width="100%" height="650" src="https://embed.windy.com/embed2.html?lat=45.613&lon=9.406&detailLat=46.291&detailLon=7.539&width=650&height=650&zoom=2&level=surface&overlay=pressure&product=ecmwf&menu=&message=&marker=&calendar=now&pressure=true&type=map&location=coordinates&detail=&metricWind=default&metricTemp=default&radarRange=-1" frameborder="0"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div id="box_155" class="box  odd">
+      <div class="py-3 ">
+        <div id="rendered-box-155" class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <h3>Vents en Suisse</h3>
+              <iframe src="https://www.meteoblue.com/en/weather/maps/widget/charmey_switzerland_2661211?windAnimation=0&windAnimation=1&gust=0&gust=1&satellite=0&satellite=1&cloudsAndPrecipitation=0&cloudsAndPrecipitation=1&temperature=0&temperature=1&sunshine=0&sunshine=1&extremeForecastIndex=0&extremeForecastIndex=1&geoloc=fixed&tempunit=C&windunit=km%252Fh&lengthunit=metric&zoom=5&autowidth=auto#coords=8/46.423/7.648&map=windAnimation~rainbow~ICOND2~850%20mb~none"  frameborder="0" scrolling="NO" allowtransparency="true" sandbox="allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox" style="width: 100%; height: 720px"></iframe><div><!-- DO NOT REMOVE THIS LINK --><a href="https://www.meteoblue.com/en/weather/maps/charmey_switzerland_2661211?utm_source=weather_widget&utm_medium=linkus&utm_content=map&utm_campaign=Weather%2BWidget" target="_blank" rel="noopener">meteoblue</a></div></div>
+              <p>Pour info : 850 mb c'est environ 1500 m.<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;700 mb c'est environ 3000 m.<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;500 mb c'est environ 5500 m.&nbsp;</p>
+              <p>Pour mieux visualiser le vent, il faut afficher le mode Rainbow.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="box_155" class="box  odd">
+      <div class="py-3 ">
+        <div id="rendered-box-155" class="container">
+          <div class="row" id="anchor">
+            <div class="col-md-12">
+              <h3>XC-term ICON D2</h3>
+              <iframe width="100%" height="650" src="https://xctherm.com/icon?lat=46.2505639&lon=7.3924254&zoom=9" allowfullscreen="true"
+              allow="geolocation" name="iframe-xcterm" id=iframe-xcterm></iframe><br>
+              <a href="https://xctherm.com/icon?lat=46.2505639&lon=7.3924254&zoom=9" target="_blank">XC Term</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="box_158" class="box  even">
+      <div id="rendered-box-158" class="my-4 container">
+        <h2></h2>
+        <div class="row">
+          <div class="col-md-12 my-4">
+            <h3>Image Satellite meteoblue</h3>
+            <div class="stop-scrolling">
+              <iframe src="https://www.meteoblue.com/fr/meteo/maps/widget/vercorin_suisse_2658166?windAnimation=0&gust=0&satellite=1&coronaWeatherScore=0&geoloc=fixed&tempunit=C&windunit=km%252Fh&lengthunit=metric&zoom=5&autowidth=auto" frameborder="0" scrolling="NO" allowtransparency="true"  style="width: 100%; height: 720px"></iframe>
+            </div>
+            <div><!-- DO NOT REMOVE THIS LINK --><a href="https://www.meteoblue.com/fr/meteo/webmap/beta/charmey_suisse_2661211?utm_source=weather_widget&utm_medium=linkus&utm_content=map&utm_campaign=Weather%2BWidget" target="_blank">meteoblue</a></div>
+          </div>
+          <div><!-- DO NOT REMOVE THIS LINK --><a href="https://www.meteoblue.com/fr/meteo/webmap/beta/vercorin_suisse_2658166?utm_source=weather_widget&utm_medium=linkus&utm_content=map&utm_campaign=Weather%2BWidget" target="_blank">meteoblue</a></div>
+        </div>
+        <div class="col-md-12">
+          <img class="img-fluid" src="https://my.meteoblue.com/visimage/meteogram_web_hd?look=KILOMETER_PER_HOUR%2CCELSIUS%2CMILLIMETER&amp;apikey=5838a18e295d&amp;winddirection=3char&amp;temperature=C&amp;windspeed=kmh&amp;precipitationamount=mm&amp;city=Charmey&amp;iso2=ch&amp;lat=46.6196&amp;lon=7.16486&amp;asl=895&amp;tz=Europe%2FZurich&amp;lang=fr&amp;sig=e477e9b21e39f451d48c7e8ca9ef69f1" />
+        </div>
+        <div class="col-md-12">
+          <img class="img-fluid" src="https://my.meteoblue.com/visimage/meteogram_web_hd?look=KILOMETER_PER_HOUR%2CCELSIUS%2CMILLIMETER&amp;apikey=5838a18e295d&amp;winddirection=3char&amp;temperature=C&amp;windspeed=kmh&amp;precipitationamount=mm&amp;city=Bex&amp;iso2=ch&amp;lat=46.2496&amp;lon=7.0098&amp;asl=421&amp;tz=Europe%2FZurich&amp;lang=fr&amp;sig=208862b9e08efcb4d575496047005de4" />
+        </div>
+        <div class="col-md-12">
+          <img class="img-fluid" src="https://my.meteoblue.com/visimage/meteogram_web_hd?look=KILOMETER_PER_HOUR%2CCELSIUS%2CMILLIMETER&amp;apikey=5838a18e295d&amp;temperature=C&amp;windspeed=kmh&amp;precipitationamount=mm&amp;winddirection=3char&amp;city=Vercorin&amp;iso2=ch&amp;lat=46.256500&amp;lon=7.531040&amp;asl=1340&amp;tz=Europe%2FZurich&amp;lang=fr&amp;sig=106c5f8e751346e105fb75aabe45a2eb" />
+        </div>
+      </div>
+    </div>
+    
+    <div id="box_155" class="box  odd">
+      <div class="py-3 ">
+        <div id="rendered-box-155" class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <h3>DABS (aujourd'hui)</h3>
+              <iframe src="./assets/pdf/dabs_today.pdf?1234#toolbar=0" width="100%" height="700px"> </iframe><br>
+              <a href="https://www.skybriefing.com/fr/dabs" target="_blank">Skybriefing</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="box_155" class="box  odd">
+      <div class="py-3 ">
+        <div id="rendered-box-155" class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <h3>DABS (demain)</h3>
+              <iframe src="./assets/pdf/dabs_tomorrow.pdf?1234#toolbar=0" width="100%" height="700px"> </iframe><br>
+              <a href="https://www.skybriefing.com/fr/dabs" target="_blank">Skybriefing</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="box_155" class="box  odd">
+      <div class="py-3 ">
+        <div id="rendered-box-155" class="container">
+          <div class="row" id="anchor">
+            <div class="col-md-12">
+              <h3>Carte de vol à voile</h3>
+              <iframe width="100%" height="650" src="https://map.geo.admin.ch/?zoom=2.984824051441887&bgLayer=ch.swisstopo.pixelkarte-farbe&time_current=latest&lang=fr&topic=ech&layers=ch.bazl.segelflugkarte&E=2582968.49&N=1128202.41" name="iframe-xcterm" id=iframe-xcterm></iframe><br>
+              <a href="" target="_blank">Map Geo Admin</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!------------------------------------------------------------------------------------------------------------------------------------ -->
+    
+    <div id="box_164" class="box odd">
+      <div id="rendered-box-165" class="container">
+        <h2 class="">Autres liens utiles</h2>
+        <div class="row row-cols-1 row-cols-md-2">
+          <div class="col">
+            <div class="mb-5 h-100">
+              <div class="row">
+                <div class="col-md-6 img-thingy-right">
+                  <a href="https://www.meteo-fsvl.ch/system/login.html" target="_blank">
+                    <img class="img-fluid" src="./assets/png/fsvl_meteo.png" />
+                  </a>
+                </div>
+                <div class="col-md-5 offset-md-1">
+                  <h3 class="mt-5 mt-md-0">SHV/FSVL Meteo - Login</h5>
+                    <small><a href="https://www.meteo-fsvl.ch/system/login.html" class="thick_link text-dark stretched-link" target="_blank">https://www.meteo-fsvl.ch/s...</a></small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="mb-5 h-100">
+                <div class="row">
+                  <div class="col-md-6 img-thingy-right">
+                    <a href="https://meteo-parapente.com/" target="_blank">
+                      <img class="img-fluid" src="./assets/png/meteo_parapente.png" />
+                    </a>
+                  </div>
+                  <div class="col-md-5 offset-md-1">
+                    <h3 class="mt-5 mt-md-0">meteo-parapente.com</h5>
+                      <small><a href="https://meteo-parapente.com/" class="thick_link text-dark stretched-link" target="_blank">https://meteo-parapente.com/</a></small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row row-cols-1 row-cols-md-2">
+              <div class="col">
+                <div class="mb-5 h-100">
+                  <div class="row">
+                    <div class="col-md-6 img-thingy-right">
+                      <a href="https://soaringmeteo.org/soarWRF" target="_blank">
+                        <img class="img-fluid" src="./assets/png/soaring_meteo.png" />
+                      </a>
+                    </div>
+                    <div class="col-md-5 offset-md-1">
+                      <h3 class="mt-5 mt-md-0">Soaringmeteo - Météorologie pour pilotes de soaring</h5>
+                        <small><a href="https://soaringmeteo.org/soarWRF" class="thick_link text-dark stretched-link" target="_blank">https://soaringmeteo.org/so...</a></small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="mb-5 h-100">
+                    <div class="row">
+                      <div class="col-md-6 img-thingy-right">
+                        <a href="https://www.meteosuisse.admin.ch/services-et-publications/applications/radiosondages.html#tab=radio-soundings-emagram" target="_blank">
+                          <img class="img-fluid" src="./assets/png/meteosuisse_radiosonsages.png" />
+                        </a>
+                      </div>
+                      <div class="col-md-5 offset-md-1">
+                        <h3 class="mt-5 mt-md-0">Radiosondages - MétéoSuisse</h5>
+                          <small><a href="https://www.meteosuisse.admin.ch/services-et-publications/applications/radiosondages.html#tab=radio-soundings-emagram" class="thick_link text-dark stretched-link" target="_blank">https://www.meteosuisse.adm...</a></small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="py-3 ">
+      <div id="rendered-box-567" class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <p>- Regarde l'app météosuisse. Fait-toi une idée des vents sur les balises suivantes :&nbsp; Chasseral, Dôle, Moléson, Diablerets, Attelas, Viège, Montana et Andermatt.</p>
+            <p><b>Avec le résumé de tout ces points, cherche le danger de la journée.&nbsp;</b></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="container">
+    <div class="row justify-content-center">
+      <footer class="col-md-9 pt-5 text-muted text-center text-small">
+        <ul class="list-inline">
+          <li> Inspiré de la <a href="https://www.twistair.ch/ecole-parapente/42-meteo-parapente-vercorin">page meteo de Twist'air</a> </li>
+          <li class="list-inline-item">
+            © <!-- -->2023<!-- --> Steambot.ch  -  <a href="mailto:webmaster@steambot.ch">contact</a>
+          </li>
+        </ul>
+      </footer>
+    </div>
+  </div>
+  
+</body>
+</html>
