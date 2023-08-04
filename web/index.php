@@ -401,7 +401,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <p><b>Avec le résumé de tous ces points, cherche le danger de la journée.&nbsp;</b><br>
-                              Tu peux utiliser pour cela la <a href="https://www.meteo-fsvl.ch/assets/media/Downloads/Meteo/Strategie_de_decision_meteo.pdf">stratégie de décision météo de la FSVL.</a></p>
+                              Tu peux utiliser pour cela la <a href="https://www.meteo-fsvl.ch/assets/media/Downloads/Meteo/Strategie_de_decision_meteo.pdf" target="_blank">stratégie de décision météo de la FSVL.</a></p>
                     </div>
                 </div>
             </div>
