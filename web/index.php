@@ -54,6 +54,8 @@
             cursor: pointer;
         }
     </style>
+    <!-- Matomo -->
+    <!-- End Matomo Code -->
 </head>
 
 <body>
@@ -74,7 +76,7 @@
                 <div id="rendered-box-567" class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <h2>Tout ce qu'il faut pour préparer ta journée de vol<br></h2>
+                            <h2>Les infos essentielles pour préparer une journée de vol<br></h2>
                         </div>
                     </div>
                 </div>
@@ -310,7 +312,7 @@
                     <div class="col-md-12 my-4">
                         <h3>Carte de vol à voile</h3>
                         <div class="stop-scrolling">
-                            <iframe width="100%" height="600" frameborder='0' style='border:0' allow='geolocation' scrolling="no" src="//map.geo.admin.ch/?zoom=2.984824051441887&bgLayer=ch.swisstopo.pixelkarte-farbe&time_current=latest&lang=fr&topic=ech&layers=ch.bazl.segelflugkarte&E=2582968.49&N=1128202.41"></iframe><br>
+                            <iframe width="100%" height="600" frameborder='0' style='border:0' allow='geolocation' scrolling="no" data-src="//map.geo.admin.ch/?zoom=2.984824051441887&bgLayer=ch.swisstopo.pixelkarte-farbe&time_current=latest&lang=fr&topic=ech&layers=ch.bazl.segelflugkarte&E=2582968.49&N=1128202.41"></iframe><br>
                             <a href="https://map.geo.admin.ch/?zoom=2.984824051441887&bgLayer=ch.swisstopo.pixelkarte-farbe&time_current=latest&lang=fr&topic=ech&layers=ch.bazl.segelflugkarte&E=2582968.49&N=1128202.41" target="_blank">Map Geo Admin</a>
                         </div>
                     </div>
@@ -398,7 +400,8 @@
             <div id="rendered-box-567" class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <p><b>Avec le résumé de tous ces points, cherche le danger de la journée.&nbsp;</b></p>
+                        <p><b>Avec le résumé de tous ces points, cherche le danger de la journée.&nbsp;</b><br>
+                              Tu peux utiliser pour cela la <a href="https://www.meteo-fsvl.ch/assets/media/Downloads/Meteo/Strategie_de_decision_meteo.pdf" target="_blank">stratégie de décision météo de la FSVL.</a></p>
                     </div>
                 </div>
             </div>
@@ -479,7 +482,32 @@
             fetchForecastData();
             
         </script>
+
+        <script>
+          function lazyLoadIframe(entries, observer) {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                const iframe = entry.target;
+                const src = iframe.getAttribute("data-src");
+                if (src) {
+                  iframe.setAttribute("src", src);
+                  observer.unobserve(iframe);
+                }
+              }
+            });
+          }
+        
+          const iframeObserver = new IntersectionObserver(lazyLoadIframe, {
+            root: null,
+            rootMargin: "0px",
+            threshold: 0.1 // Adjust this threshold as needed (0 to 1)
+          });
+        
+          const lazyIframes = document.querySelectorAll("iframe[data-src]");
+          lazyIframes.forEach(iframe => {
+            iframeObserver.observe(iframe);
+          });
+        </script>
         
     </body>
     </html>
-    
