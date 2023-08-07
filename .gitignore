@@ -1,6 +1,6 @@
 #  Project specific  #
 ######################
-/web/assets/pdf/*
+./web/assets/pdf/*
 
 # Compiled source #
 ###################
