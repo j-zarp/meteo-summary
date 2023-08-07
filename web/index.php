@@ -178,8 +178,7 @@
        <?php
         // Get the current date and tomorrow's date
         $date_utc = new DateTime("now", new DateTimeZone("UTC"));
-        $yesterday = new DateTime('yesterday');
-        $tomorrow = new DateTime('tomorrow');
+        $tomorrow = new DateTime('tomorrow', new DateTimeZone("UTC"));
 
         // Format the dates as required (DD.MM.YYYY)
         $todayFormatted = $date_utc->format('d.m.Y');
