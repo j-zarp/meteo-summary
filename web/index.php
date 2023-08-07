@@ -178,17 +178,15 @@
        <?php
         // Get the current date and tomorrow's date
         $date_utc = new DateTime("now", new DateTimeZone("UTC"));
-        $today = new DateTime();
         $yesterday = new DateTime('yesterday');
         $tomorrow = new DateTime('tomorrow');
 
         // Format the dates as required (DD.MM.YYYY)
-        $todayFormatted = $today->format('d.m.Y');
-        $yesterdayFormatted = $today->format('d.m.Y');
+        $todayFormatted = $date_utc->format('d.m.Y');
         $tomorrowFormatted = $tomorrow->format('d.m.Y');
 
         // Get the day of the month for today and tomorrow
-        $dayOfTheMonth = $today->format('d');
+        $dayOfTheMonth = $date_utc->format('d');
         $dayOfTheMonthForYesterday = $tomorrow->format('d');
         $dayOfTheMonthForTomorrow = $tomorrow->format('d');
 
