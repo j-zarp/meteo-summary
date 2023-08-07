@@ -55,6 +55,19 @@
         }
     </style>
     <!-- Matomo -->
+    <script>
+      var _paq = window._paq = window._paq || [];
+      /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+      _paq.push(['trackPageView']);
+      _paq.push(['enableLinkTracking']);
+      (function() {
+        var u="//matomo.steambot.ch/";
+        _paq.push(['setTrackerUrl', u+'matomo.php']);
+        _paq.push(['setSiteId', '1']);
+        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+        g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+      })();
+    </script>
     <!-- End Matomo Code -->
 </head>
 
@@ -162,37 +175,59 @@
             </div>
         </div>
         
-        
-        <?php
+       <?php
         // Get the current date and tomorrow's date
+        $date_utc = new DateTime("now", new DateTimeZone("UTC"));
         $today = new DateTime();
+        $yesterday = new DateTime('yesterday');
         $tomorrow = new DateTime('tomorrow');
-        
+
         // Format the dates as required (DD.MM.YYYY)
         $todayFormatted = $today->format('d.m.Y');
+        $yesterdayFormatted = $today->format('d.m.Y');
         $tomorrowFormatted = $tomorrow->format('d.m.Y');
-        
+
         // Get the day of the month for today and tomorrow
         $dayOfTheMonth = $today->format('d');
+        $dayOfTheMonthForYesterday = $tomorrow->format('d');
         $dayOfTheMonthForTomorrow = $tomorrow->format('d');
-        
+
         // Update the links with the dynamic day of the month values
-        $linkToday12 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/AL{$dayOfTheMonth}12_large.gif";
-        $linkToday18 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/AL{$dayOfTheMonth}18_large.gif";
+        if($date_utc->format('H') < 6) {
+          $time1 = "18 UTC";
+          $time2 = "00 UTC";
+          $linkToday1 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/AL{$dayOfTheMonthForYesterday}18_large.gif";
+          $linkToday2 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/AL{$dayOfTheMonth}00_large.gif";
+        } elseif($date_utc->format('H') < 12) {
+          $time1 = "00 UTC";
+          $time2 = "06 UTC";
+          $linkToday1 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/AL{$dayOfTheMonth}00_large.gif";
+          $linkToday2 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/AL{$dayOfTheMonth}06_large.gif";
+        } elseif($date_utc->format('H') < 18) {
+          $time1 = "06 UTC";
+          $time2 = "12 UTC";
+          $linkToday1 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/AL{$dayOfTheMonth}06_large.gif";
+          $linkToday2 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/AL{$dayOfTheMonth}12_large.gif";
+        } else {
+          $time1 = "12 UTC";
+          $time2 = "18 UTC";
+          $linkToday1 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/AL{$dayOfTheMonth}12_large.gif";
+          $linkToday2 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/AL{$dayOfTheMonth}18_large.gif";
+        }
         $linkTomorrow00 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonthForTomorrow}00_large.gif";
         $linkTomorrow12 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonthForTomorrow}12_large.gif";
         ?>
-        
+
         <div id="box_154" class="box even">
             <div id="rendered-box-154" class="my-4 container">
                 <div class="row">
                     <div class="col-md-6 my-4">
-                        <h3>Etat <?php echo $todayFormatted; ?> 12h UTC</h3>
-                        <img class="img-fluid" src="<?php echo $linkToday12; ?>" />
+                       <h3>Etat <?php echo $todayFormatted . " " . $time1; ?></h3>
+                        <img class="img-fluid" src="<?php echo $linkToday1; ?>" />
                     </div>
                     <div class="col-md-6 my-4">
-                        <h3>Etat <?php echo $todayFormatted; ?> 18h UTC</h3>
-                        <img class="img-fluid" src="<?php echo $linkToday18; ?>" />
+                        <h3>Etat <?php echo $todayFormatted . " " . $time2; ?></h3>
+                        <img class="img-fluid" src="<?php echo $linkToday2; ?>" />
                     </div>
                     <div class="col-md-6 my-4">
                         <h3>Prévision <?php echo $tomorrowFormatted; ?> 00h UTC</h3>
@@ -204,25 +239,24 @@
                     </div>
                     <div class="col-md-6 my-4">
                         <h3>Prévisions du foehn</h3>
-                        <a href="http://www.meteocentrale.ch/fr/meteo/foehn-et-bise/foehn.html" target="_new">
-                            <img src="https://www.meteocentrale.ch/uploads/pics/uwz-ch_foehn_fr.png?2817462" class="img-fluid">
+                        <a href=http://www.meteocentrale.ch/fr/meteo/foehn-et-bise/foehn.html target="_new">
+                            <img src=https://www.meteocentrale.ch/uploads/pics/uwz-ch_foehn_fr.png?2817462 class="img-fluid">
                         </a>
                     </div>
                     <div class="col-md-6 my-4">
                         <h3>Prévisions de la bise</h3>
-                        <a href="https://www.meteocentrale.ch/fr/meteo/foehn-et-bise/bise.html" target="_new">
-                            <img src="https://www.meteocentrale.ch/uploads/pics/uwz-ch_bise_fr.png?2817462" class="img-fluid">
+                        <a href=https://www.meteocentrale.ch/fr/meteo/foehn-et-bise/bise.html target="_new">
+                            <img src=https://www.meteocentrale.ch/uploads/pics/uwz-ch_bise_fr.png?2817462 class="img-fluid">
                         </a>
                     </div>
                     <div class="col-md-12">
                         <h3>Pression et vents en Europe</h3>
-                        <iframe width="100%" height="650" src="https://embed.windy.com/embed2.html?lat=45.613&lon=9.406&detailLat=46.291&detailLon=7.539&width=650&height=650&zoom=2&level=surface&overlay=pressure&product=ecmwf&menu=&message=&marker=&calendar=now&pressure=true&type=map&location=coordinates&detail=&metricWind=default&metricTemp=default&radarRange=-1" allowfullscreen="true"
+                        <iframe width="100%" height="650" src=https://embed.windy.com/embed2.html?lat=45.613&lon=9.406&detailLat=46.291&detailLon=7.539&width=650&height=650&zoom=2&level=surface&overlay=pressure&product=ecmwf&menu=&message=&marker=&calendar=now&pressure=true&type=map&location=coordinates&detail=&metricWind=default&metricTemp=default&radarRange=-1 allowfullscreen="true"
                         allow="geolocation" frameborder="0"></iframe>
                     </div>
                 </div>
             </div>
         </div>
-        
         
         <div id="box_155" class="box  odd">
             <div class="py-3 ">
