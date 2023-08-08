@@ -3,10 +3,10 @@
 <head>
     <meta charset="utf-8" name="description" content="">
     <title>
-        Steambot Meteo Summary
+        Météo Summary
     </title>
     
-    <meta name="title" content="Meteo Summary">
+    <meta name="title" content="Météo Summary">
     <meta name="description" content="Les infos essentielles météo pour préparer un vol en parapente. Probabilités, carte synoptiques, vent, différence de pression, balise, DABS, etc.">
     <meta name="keywords" content="steambot, meteo, parapente, carte, fronts, balises, vent, dabs, suisse, weather, paragliding, switzerland, wind, windy, meteoblue">
     <meta name="robots" content="index,follow">
