@@ -3,11 +3,13 @@
 <head>
     <meta charset="utf-8" name="description" content="">
     <title>
-        Meteo Summary
+        Steambot Meteo Summary
     </title>
     
     <meta name="title" content="Meteo Summary">
-    <meta name="description" content="Toutes les infos météo pour préparer un vol en parapente. Carte des fronts, vent, différence de pression, balise.">
+    <meta name="description" content="Les infos essentielles météo pour préparer un vol en parapente. Probabilités, carte synoptiques, vent, différence de pression, balise, DABS, etc.">
+    <meta name="keywords" content="steambot, meteo, parapente, carte, fronts, balises, vent, dabs, suisse, weather, paragliding, switzerland, wind, windy, meteoblue">
+    <meta name="robots" content="index,follow">
     <meta name="msapplication-TileColor" content="#fdca37">
     <meta name="theme-color" content="#fdca37">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -18,6 +20,12 @@
     
     <link rel="stylesheet" media="all" href="./assets/css/style.css" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="./favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="./favicon_io/site.webmanifest">
+    
     <style> 
         .forecast-container {
             display: flex;
@@ -192,17 +200,17 @@
         $date_decimal = $date_utc->format('H') + $date_utc->format('i')/100.;
 
         // Update the links with the dynamic day of the month values
-        if($date_decimal < 6.1) {
+        if($date_decimal < 7.2) {
           $time1 = "Etat " . $todayFormatted . " 00 UTC";
           $time2 = "Prévision " . $todayFormatted . " 12 UTC";
           $linkToday1 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/AL{$dayOfTheMonth}00_large.gif";
           $linkToday2 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonth}12_large.gif";
-        } elseif($date_decimal < 12.1) {
+        } elseif($date_decimal < 13.2) {
           $time1 = "Etat " . $todayFormatted . " 06 UTC";
           $time2 = "Prévision " . $todayFormatted . " 12 UTC";
           $linkToday1 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/AL{$dayOfTheMonth}06_large.gif";
           $linkToday2 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonth}12_large.gif";
-        } elseif($date_decimal < 18.1) {
+        } elseif($date_decimal < 19.2) {
           $time1 = "Etat " . $todayFormatted . " 06 UTC";
           $time2 = "Etat " . $todayFormatted . " 12 UTC";
           $linkToday1 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/AL{$dayOfTheMonth}06_large.gif";
