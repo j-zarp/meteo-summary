@@ -179,35 +179,37 @@
         // Get the current date and tomorrow's date
         $date_utc = new DateTime("now", new DateTimeZone("UTC"));
         $tomorrow = new DateTime('tomorrow', new DateTimeZone("UTC"));
+        $yesterday = new DateTime('yesterday', new DateTimeZone("UTC"));
 
         // Format the dates as required (DD.MM.YYYY)
         $todayFormatted = $date_utc->format('d.m.Y');
+        $yesterdayFormatted = $yesterday->format('d.m.Y');
         $tomorrowFormatted = $tomorrow->format('d.m.Y');
 
         // Get the day of the month for today and tomorrow
         $dayOfTheMonth = $date_utc->format('d');
-        $dayOfTheMonthForYesterday = $tomorrow->format('d');
+        $dayOfTheMonthForYesterday = $yesterday->format('d');
         $dayOfTheMonthForTomorrow = $tomorrow->format('d');
 
         // Update the links with the dynamic day of the month values
         if($date_utc->format('H') < 6) {
-          $time1 = "18 UTC";
-          $time2 = "00 UTC";
+          $time1 = $yesterdayFormatted . " 18 UTC";
+          $time2 = $todayFormatted . " 00 UTC";
           $linkToday1 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/AL{$dayOfTheMonthForYesterday}18_large.gif";
           $linkToday2 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/AL{$dayOfTheMonth}00_large.gif";
         } elseif($date_utc->format('H') < 12) {
-          $time1 = "00 UTC";
-          $time2 = "06 UTC";
+          $time1 = $todayFormatted . " 00 UTC";
+          $time2 = $todayFormatted . " 06 UTC";
           $linkToday1 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/AL{$dayOfTheMonth}00_large.gif";
           $linkToday2 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/AL{$dayOfTheMonth}06_large.gif";
         } elseif($date_utc->format('H') < 18) {
-          $time1 = "06 UTC";
-          $time2 = "12 UTC";
+          $time1 = $todayFormatted . " 06 UTC";
+          $time2 = $todayFormatted . " 12 UTC";
           $linkToday1 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/AL{$dayOfTheMonth}06_large.gif";
           $linkToday2 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/AL{$dayOfTheMonth}12_large.gif";
         } else {
-          $time1 = "12 UTC";
-          $time2 = "18 UTC";
+          $time1 = $todayFormatted . " 12 UTC";
+          $time2 = $todayFormatted . " 18 UTC";
           $linkToday1 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/AL{$dayOfTheMonth}12_large.gif";
           $linkToday2 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/AL{$dayOfTheMonth}18_large.gif";
         }
@@ -219,11 +221,11 @@
             <div id="rendered-box-154" class="my-4 container">
                 <div class="row">
                     <div class="col-md-6 my-4">
-                       <h3>Etat <?php echo $todayFormatted . " " . $time1; ?></h3>
+                       <h3>Etat <?php echo $time1; ?></h3>
                         <img class="img-fluid" src="<?php echo $linkToday1; ?>" />
                     </div>
                     <div class="col-md-6 my-4">
-                        <h3>Etat <?php echo $todayFormatted . " " . $time2; ?></h3>
+                        <h3>Etat <?php echo $time2; ?></h3>
                         <img class="img-fluid" src="<?php echo $linkToday2; ?>" />
                     </div>
                     <div class="col-md-6 my-4">
