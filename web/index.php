@@ -504,20 +504,29 @@
         }
         
         // Function to create a table for a given date
-        function createTableForDate(entries) {
+        function createTableForDate(entries, dateLabel) {
             if (!entries) return '';
             const sortedEntries = entries.sort((a, b) => b.forecast.fly - a.forecast.fly);
             let table = `<table class="forecast-table"><tr><th>Name</th><th>Fly Probability</th><th>XC Probability</th></tr>`;
-                sortedEntries.forEach(entry => {
-                    const flyProbability = entry.forecast.fly;
-                    const flyColor = getColorByProbability(flyProbability);
-                    const xcProbability = entry.forecast.XC || 0;
-                    const xcColor = getColorByProbability(xcProbability);
-                    table += `<tr><td>${entry.name}</td><td class="red-text" style="color:${flyColor};">${(flyProbability * 100).toFixed(2)}%</td><td class="green-text" style="color:${xcColor};">${(xcProbability * 100).toFixed(2)}%</td></tr>`;
-                });
-                table += '</table>';
-                return table;
-            }
+            sortedEntries.forEach(entry => {
+                // Rename "Vercorin Village" to "Vercorin" and "Vounetz" to "Charmey"
+                let name = entry.name;
+                if (name === "Vercorin Village") {
+                    name = "Vercorin";
+                } else if (name === "Lévanchy (Levanchy) Grandvillard") {
+                    name = "Grandvillard";
+                } else if (name === "Verbier Les Ruinettes") {
+                    name = "Verbier";
+                }
+                const flyProbability = entry.forecast.fly;
+                const flyColor = getColorByProbability(flyProbability);
+                const xcProbability = entry.forecast.XC || 0;
+                const xcColor = getColorByProbability(xcProbability);
+                table += `<tr><td>${name}</td><td class="red-text" style="color:${flyColor};">${(flyProbability * 100).toFixed(2)}%</td><td class="green-text" style="color:${xcColor};">${(xcProbability * 100).toFixed(2)}%</td></tr>`;
+            });
+            table += '</table>';
+            return table;
+        }
             
             // Fetch data when the page loads
             fetchForecastData();
