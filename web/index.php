@@ -61,6 +61,14 @@
             margin: 0px 0px;
             cursor: pointer;
         }
+        .show-button {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .hidden-row {
+            display: none;
+        }
     </style>
     <!-- Matomo -->
     <script>
@@ -173,6 +181,9 @@
                             <div id="tomorrowForecastTable"></div>
                         </div>
                         <div class="col-md-12">
+        <div class="show-button">
+            <button id="toggleButton">Plus de sites</button><br><br>
+        </div>
                             
                             <iframe width="100%" height="650" src="https://paraglidable.com/?lat=46.391&lon=7.094&zoom=9" allowfullscreen="true"
                             allow="geolocation" name="iframe-parag" id=iframe-parag></iframe><br>
@@ -503,12 +514,12 @@
             return `rgb(${r},${g},${b})`;
         }
         
-        // Function to create a table for a given date
-        function createTableForDate(entries, dateLabel) {
-            if (!entries) return '';
-            const sortedEntries = entries.sort((a, b) => b.forecast.fly - a.forecast.fly);
-            let table = `<table class="forecast-table"><tr><th>Name</th><th>Fly Probability</th><th>XC Probability</th></tr>`;
-            sortedEntries.forEach(entry => {
+// Function to create a table for a given date
+function createTableForDate(entries, dateLabel) {
+    if (!entries) return '';
+    const sortedEntries = entries.sort((a, b) => b.forecast.fly - a.forecast.fly);
+    let table = `<table class="forecast-table"><tr><th>Name</th><th>Fly Probability</th><th>XC Probability</th></tr>`;
+    sortedEntries.forEach((entry, index) => {
                 // Rename "Vercorin Village" to "Vercorin" and "Vounetz" to "Charmey"
                 let name = entry.name;
                 if (name === "Vercorin Village") {
@@ -518,19 +529,28 @@
                 } else if (name === "Verbier Les Ruinettes") {
                     name = "Verbier";
                 }
-                const flyProbability = entry.forecast.fly;
-                const flyColor = getColorByProbability(flyProbability);
-                const xcProbability = entry.forecast.XC || 0;
-                const xcColor = getColorByProbability(xcProbability);
-                table += `<tr><td>${name}</td><td class="red-text" style="color:${flyColor};">${(flyProbability * 100).toFixed(2)}%</td><td class="green-text" style="color:${xcColor};">${(xcProbability * 100).toFixed(2)}%</td></tr>`;
-            });
-            table += '</table>';
-            return table;
-        }
+        const flyProbability = entry.forecast.fly;
+        const flyColor = getColorByProbability(flyProbability);
+        const xcProbability = entry.forecast.XC || 0;
+        const xcColor = getColorByProbability(xcProbability);
+
+        // Apply "hidden-row" class to rows beyond the first three
+        const rowClass = index >= 4 ? "hidden-row initially-hidden" : "";
+
+        table += `<tr class="${rowClass}"><td>${name}</td><td class="red-text" style="color:${flyColor};">${(flyProbability * 100).toFixed(2)}%</td><td class="green-text" style="color:${xcColor};">${(xcProbability * 100).toFixed(2)}%</td></tr>`;
+    });
+    table += '</table>';
+    return table;
+}
             
             // Fetch data when the page loads
             fetchForecastData();
-            
+
+    document.getElementById('toggleButton').addEventListener('click', function () {
+        const hiddenRows = document.querySelectorAll('.initially-hidden');
+        hiddenRows.forEach(row => row.classList.toggle('hidden-row'));
+        this.textContent = this.textContent === 'Plus de sites' ? 'Moins de sites' : 'Plus de sites';
+    });
         </script>
 
         <script>
