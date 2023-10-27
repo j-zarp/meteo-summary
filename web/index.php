@@ -270,15 +270,16 @@
           </div>
           <!-- Substitution for meteocentrale  -->
           <!--div class="col-md-6 my-4">
+            <h3>Prévisions du foehn</h3>
+            <a href="<?php echo "https://profiwetter.ch/wind_foehn_ch_fr.png?t=" . time() ?>" target="_blank">
+              <img src="<?php echo "https://profiwetter.ch/wind_foehn_ch_fr.png?t=" . time() ?>" class="img-fluid">
+            </a>
+          </div>
+          <div class="col-md-6 my-4">
             <h3>Prévisions de la bise</h3>
             <a href="<?php echo "https://profiwetter.ch/wind_bise_fr.png?t=" . time() ?>" target="_blank">
               <img src="<?php echo "https://profiwetter.ch/wind_bise_fr.png?t=" . time() ?>" class="img-fluid">
             </a>
-          </div>
-          <div class="col-md-12">
-            <h3>Pression et vents en Europe</h3>
-            <iframe width="100%" height="650" src="https://embed.windy.com/embed2.html?lat=45.613&lon=9.406&detailLat=46.291&detailLon=7.539&width=650&height=650&zoom=2&level=surface&overlay=pressure&product=ecmwf&menu=&message=&marker=&calendar=now&pressure=true&type=map&location=coordinates&detail=&metricWind=default&metricTemp=default&radarRange=-1" allowfullscreen="true"
-            allow="geolocation" frameborder="0"></iframe>
           </div-->
           <div class="col-md-12">
             <h3>Pression et vents en Europe</h3>
