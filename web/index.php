@@ -260,16 +260,26 @@
           </div>
           <div class="col-md-6 my-4">
             <h3>Prévisions du foehn</h3>
-            <a href="http://www.meteocentrale.ch/fr/meteo/foehn-et-bise/foehn.html" target="_blank">
               <img src="https://www.meteocentrale.ch/uploads/pics/uwz-ch_foehn_fr.png?2817462" class="img-fluid">
             </a>
           </div>
           <div class="col-md-6 my-4">
             <h3>Prévisions de la bise</h3>
-            <a href="https://www.meteocentrale.ch/fr/meteo/foehn-et-bise/bise.html" target="_blank">
               <img src="https://www.meteocentrale.ch/uploads/pics/uwz-ch_bise_fr.png?2817462" class="img-fluid">
             </a>
           </div>
+          <!-- Substitution for meteocentrale  -->
+          <!--div class="col-md-6 my-4">
+            <h3>Prévisions de la bise</h3>
+            <a href="<?php echo "https://profiwetter.ch/wind_bise_fr.png?t=" . time() ?>" target="_blank">
+              <img src="<?php echo "https://profiwetter.ch/wind_bise_fr.png?t=" . time() ?>" class="img-fluid">
+            </a>
+          </div>
+          <div class="col-md-12">
+            <h3>Pression et vents en Europe</h3>
+            <iframe width="100%" height="650" src="https://embed.windy.com/embed2.html?lat=45.613&lon=9.406&detailLat=46.291&detailLon=7.539&width=650&height=650&zoom=2&level=surface&overlay=pressure&product=ecmwf&menu=&message=&marker=&calendar=now&pressure=true&type=map&location=coordinates&detail=&metricWind=default&metricTemp=default&radarRange=-1" allowfullscreen="true"
+            allow="geolocation" frameborder="0"></iframe>
+          </div-->
           <div class="col-md-12">
             <h3>Pression et vents en Europe</h3>
             <iframe width="100%" height="650" src="https://embed.windy.com/embed2.html?lat=45.613&lon=9.406&detailLat=46.291&detailLon=7.539&width=650&height=650&zoom=2&level=surface&overlay=pressure&product=ecmwf&menu=&message=&marker=&calendar=now&pressure=true&type=map&location=coordinates&detail=&metricWind=default&metricTemp=default&radarRange=-1" allowfullscreen="true"
@@ -285,7 +295,7 @@
           <div class="row">
             <div class="col-md-12">
               <h3>Vents en Suisse</h3>
-              <iframe src="https://www.meteoblue.com/en/weather/maps/widget/charmey_switzerland_2661211?windAnimation=0&windAnimation=1&gust=0&gust=1&satellite=0&satellite=1&cloudsAndPrecipitation=0&cloudsAndPrecipitation=1&temperature=0&temperature=1&sunshine=0&sunshine=1&extremeForecastIndex=0&extremeForecastIndex=1&geoloc=fixed&tempunit=C&windunit=km%252Fh&lengthunit=metric&zoom=5&autowidth=auto#coords=8/46.423/7.648&map=windAnimation~rainbow~ICOND2~850%20mb~none"  frameborder="0" scrolling="NO" allowtransparency="true" sandbox="allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox" style="width: 100%; height: 720px"></iframe>
+              <iframe src="https://www.meteoblue.com/en/weather/maps/widget/charmey_switzerland_2661211?windAnimation=0&windAnimation=1&gust=0&gust=1&satellite=0&satellite=1&cloudsAndPrecipitation=0&cloudsAndPrecipitation=1&temperature=0&temperature=1&sunshine=0&sunshine=1&extremeForecastIndex=0&extremeForecastIndex=1&geoloc=fixed&tempunit=C&windunit=km%252Fh&lengthunit=metric&zoom=5&autowidth=auto#coords=8/46.423/7.648&map=windAnimation~rainbow~NEMS4~850%20mb~none"  frameborder="0" scrolling="NO" allowtransparency="true" sandbox="allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox" style="width: 100%; height: 720px"></iframe>
               <div><!-- DO NOT REMOVE THIS LINK --><a href="https://www.meteoblue.com/en/weather/maps/charmey_switzerland_2661211?utm_source=weather_widget&utm_medium=linkus&utm_content=map&utm_campaign=Weather%2BWidget" target="_blank" rel="noopener">meteoblue</a></div>
               <p>850 mb c'est environ 1500 m.<br>700 mb c'est environ 3000 m.<br>500 mb c'est environ 5500 m.</p>
             </div>
@@ -579,4 +589,3 @@
     
   </body>
 </html>
-
