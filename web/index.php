@@ -257,7 +257,7 @@
             <h3>Prévision <?php echo $tomorrowFormatted; ?> 12h UTC</h3>
             <img class="img-fluid" src="<?php echo $linkTomorrow12; ?>" >
           </div>
-          <div class="col-md-6 my-4">
+          <!--div class="col-md-6 my-4">
             <h3>Prévisions du foehn</h3>
               <img src="https://www.meteocentrale.ch/uploads/pics/uwz-ch_foehn_fr.png?2817462" class="img-fluid">
             </a>
@@ -266,9 +266,9 @@
             <h3>Prévisions de la bise</h3>
               <img src="https://www.meteocentrale.ch/uploads/pics/uwz-ch_bise_fr.png?2817462" class="img-fluid">
             </a>
-          </div>
+          </div-->
           <!-- Substitution for meteocentrale  -->
-          <!--div class="col-md-6 my-4">
+          <div class="col-md-6 my-4">
             <h3>Prévisions du foehn</h3>
             <a href="<?php echo "https://profiwetter.ch/wind_foehn_ch_fr.png?t=" . time() ?>" target="_blank">
               <img src="<?php echo "https://profiwetter.ch/wind_foehn_ch_fr.png?t=" . time() ?>" class="img-fluid">
@@ -279,7 +279,7 @@
             <a href="<?php echo "https://profiwetter.ch/wind_bise_fr.png?t=" . time() ?>" target="_blank">
               <img src="<?php echo "https://profiwetter.ch/wind_bise_fr.png?t=" . time() ?>" class="img-fluid">
             </a>
-          </div-->
+          </div>
           <div class="col-md-12">
             <h3>Pression et vents en Europe</h3>
             <iframe width="100%" height="650" src="https://embed.windy.com/embed2.html?lat=45.613&lon=9.406&detailLat=46.291&detailLon=7.539&width=650&height=650&zoom=2&level=surface&overlay=pressure&product=ecmwf&menu=&message=&marker=&calendar=now&pressure=true&type=map&location=coordinates&detail=&metricWind=default&metricTemp=default&radarRange=-1" allowfullscreen="true"
