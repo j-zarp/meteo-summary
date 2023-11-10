@@ -203,6 +203,7 @@
     
     // Format the dates as required (DD.MM.YYYY)
     $todayFormatted = $date_utc->format('d.m.Y');
+    $todayStr = $date_utc->format('Ymd');
     $tomorrowFormatted = $tomorrow->format('d.m.Y');
     
     // Get the day of the month for today and tomorrow
@@ -216,23 +217,23 @@
     if($date_decimal < 7.2) {
       $time1 = "Etat " . $todayFormatted . " 00 UTC";
       $time2 = "Prévision " . $todayFormatted . " 12 UTC";
-      $linkToday1 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/AL{$dayOfTheMonth}00_large.gif?1234";
+      $linkToday1 = "https://cdn.knmi.nl/knmi/map/page/klimatologie/daggegevens/weerkaarten/analyse_{$todayStr}00.gif?1234";
       $linkToday2 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonth}12_large.gif?1234";
     } elseif($date_decimal < 13.2) {
       $time1 = "Etat " . $todayFormatted . " 06 UTC";
       $time2 = "Prévision " . $todayFormatted . " 12 UTC";
-      $linkToday1 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/AL{$dayOfTheMonth}06_large.gif?1234";
+      $linkToday1 = "https://cdn.knmi.nl/knmi/map/page/klimatologie/daggegevens/weerkaarten/analyse_{$todayStr}06.gif?1234";
       $linkToday2 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonth}12_large.gif?1234";
     } elseif($date_decimal < 19.2) {
       $time1 = "Etat " . $todayFormatted . " 06 UTC";
       $time2 = "Etat " . $todayFormatted . " 12 UTC";
-      $linkToday1 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/AL{$dayOfTheMonth}06_large.gif?1234";
-      $linkToday2 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/AL{$dayOfTheMonth}12_large.gif?1234";
+      $linkToday1 = "https://cdn.knmi.nl/knmi/map/page/klimatologie/daggegevens/weerkaarten/analyse_{$todayStr}06.gif?1234";
+      $linkToday2 = "https://cdn.knmi.nl/knmi/map/page/klimatologie/daggegevens/weerkaarten/analyse_{$todayStr}12.gif?1234";
     } else {
       $time1 = "Etat " . $todayFormatted . " 12 UTC";
       $time2 = "Etat " . $todayFormatted . " 18 UTC";
-      $linkToday1 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/AL{$dayOfTheMonth}12_large.gif?1234";
-      $linkToday2 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/AL{$dayOfTheMonth}18_large.gif?1234";
+      $linkToday1 = "https://cdn.knmi.nl/knmi/map/page/klimatologie/daggegevens/weerkaarten/analyse_{$todayStr}12.gif?1234";
+      $linkToday2 = "https://cdn.knmi.nl/knmi/map/page/klimatologie/daggegevens/weerkaarten/analyse_{$todayStr}18.gif?1234";
     }
     $linkTomorrow00 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonthForTomorrow}00_large.gif?1234";
     $linkTomorrow12 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonthForTomorrow}12_large.gif?1234";
@@ -257,6 +258,7 @@
             <h3>Prévision <?php echo $tomorrowFormatted; ?> 12h UTC</h3>
             <img class="img-fluid" src="<?php echo $linkTomorrow12; ?>" >
           </div>
+          <!-- Deprecated meteocentrale diagrams  -->
           <!--div class="col-md-6 my-4">
             <h3>Prévisions du foehn</h3>
               <img src="https://www.meteocentrale.ch/uploads/pics/uwz-ch_foehn_fr.png?2817462" class="img-fluid">
@@ -267,7 +269,6 @@
               <img src="https://www.meteocentrale.ch/uploads/pics/uwz-ch_bise_fr.png?2817462" class="img-fluid">
             </a>
           </div-->
-          <!-- Substitution for meteocentrale  -->
           <div class="col-md-6 my-4">
             <h3>Prévisions du foehn</h3>
             <a href="<?php echo "https://profiwetter.ch/wind_foehn_ch_fr.png?t=" . time() ?>" target="_blank">
