@@ -197,43 +197,57 @@
     </div>
     
     <?php
+    // Function to check if a URL points to a valid location
+    function isValidUrl($url) {
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        $data = curl_exec($ch);
+        curl_close($ch);
+        // the response contains an error message
+        if (strpos($data, '<Code>NoSuchKey</Code>') !== false) {
+            return false;
+        }
+        return true;
+    }
+    // Return a URL for an analyzed synoptic map, if it exists, otherwise return a URL for the forecast
+    function getValidImageUrl($date, $time, &$state) {
+        // Format the dates as required
+        $dayFormatted = $date->format('d.m.Y');
+        $dayStr = $date->format('Ymd');
+        $dayOfTheMonth = $date->format('d');
+        $url = "https://cdn.knmi.nl/knmi/map/page/klimatologie/daggegevens/weerkaarten/analyse_{$dayStr}{$time}.gif?1234";
+        if (isValidUrl($url)) {
+            $state = "Etat " . $dayFormatted . " " . $time . " UTC";
+            return $url;
+        }
+        // there are no forecast for 6 UTC, return instead the situation at 0 UTC
+        if ($time == "06") {
+            //$state = "Etat " . $dayFormatted . " 00 UTC";
+            //return "https://cdn.knmi.nl/knmi/map/page/klimatologie/daggegevens/weerkaarten/analyse_{$dayStr}00.gif?1234";
+            return getValidImageUrl($date, "00", $state);
+        }
+        $state = "Prévision " . $dayFormatted . " " . $time . " UTC";
+        return "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonth}{$time}_large.gif?1234";
+    }
     // Get the current date and tomorrow's date
     $date_utc = new DateTime("now", new DateTimeZone("UTC"));
     $tomorrow = new DateTime('tomorrow', new DateTimeZone("UTC"));
     
-    // Format the dates as required (DD.MM.YYYY)
-    $todayFormatted = $date_utc->format('d.m.Y');
-    $todayStr = $date_utc->format('Ymd');
+    // Get the day of the month for tomorrow
     $tomorrowFormatted = $tomorrow->format('d.m.Y');
-    
-    // Get the day of the month for today and tomorrow
-    $dayOfTheMonth = $date_utc->format('d');
     $dayOfTheMonthForTomorrow = $tomorrow->format('d');
     
     // Get decimal time for today
     $date_decimal = $date_utc->format('H') + $date_utc->format('i')/100.;
     
     // Update the links with the dynamic day of the month values
-    if($date_decimal < 7.2) {
-      $time1 = "Etat " . $todayFormatted . " 00 UTC";
-      $time2 = "Prévision " . $todayFormatted . " 12 UTC";
-      $linkToday1 = "https://cdn.knmi.nl/knmi/map/page/klimatologie/daggegevens/weerkaarten/analyse_{$todayStr}00.gif?1234";
-      $linkToday2 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonth}12_large.gif?1234";
-    } elseif($date_decimal < 13.2) {
-      $time1 = "Etat " . $todayFormatted . " 06 UTC";
-      $time2 = "Prévision " . $todayFormatted . " 12 UTC";
-      $linkToday1 = "https://cdn.knmi.nl/knmi/map/page/klimatologie/daggegevens/weerkaarten/analyse_{$todayStr}06.gif?1234";
-      $linkToday2 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonth}12_large.gif?1234";
-    } elseif($date_decimal < 19.2) {
-      $time1 = "Etat " . $todayFormatted . " 06 UTC";
-      $time2 = "Etat " . $todayFormatted . " 12 UTC";
-      $linkToday1 = "https://cdn.knmi.nl/knmi/map/page/klimatologie/daggegevens/weerkaarten/analyse_{$todayStr}06.gif?1234";
-      $linkToday2 = "https://cdn.knmi.nl/knmi/map/page/klimatologie/daggegevens/weerkaarten/analyse_{$todayStr}12.gif?1234";
+    if($date_decimal < 18.2) {
+      $linkToday1 = getValidImageUrl($date_utc, "06", $state1);
+      $linkToday2 = getValidImageUrl($date_utc, "12", $state2);
     } else {
-      $time1 = "Etat " . $todayFormatted . " 12 UTC";
-      $time2 = "Etat " . $todayFormatted . " 18 UTC";
-      $linkToday1 = "https://cdn.knmi.nl/knmi/map/page/klimatologie/daggegevens/weerkaarten/analyse_{$todayStr}12.gif?1234";
-      $linkToday2 = "https://cdn.knmi.nl/knmi/map/page/klimatologie/daggegevens/weerkaarten/analyse_{$todayStr}18.gif?1234";
+      $linkToday1 = getValidImageUrl($date_utc, "12", $state1);
+      $linkToday2 = getValidImageUrl($date_utc, "18", $state2);
     }
     $linkTomorrow00 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonthForTomorrow}00_large.gif?1234";
     $linkTomorrow12 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonthForTomorrow}12_large.gif?1234";
@@ -243,11 +257,11 @@
       <div id="rendered-box-154" class="my-4 container">
         <div class="row">
           <div class="col-md-6 my-4">
-            <h3><?php echo $time1; ?></h3>
+            <h3><?php echo $state1; ?></h3>
             <img class="img-fluid" src="<?php echo $linkToday1; ?>" >
           </div>
           <div class="col-md-6 my-4">
-            <h3><?php echo $time2; ?></h3>
+            <h3><?php echo $state2; ?></h3>
             <img class="img-fluid" src="<?php echo $linkToday2; ?>" >
           </div>
           <div class="col-md-6 my-4">
