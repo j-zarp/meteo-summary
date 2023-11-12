@@ -223,8 +223,6 @@
         }
         // there are no forecast for 6 UTC, return instead the situation at 0 UTC
         if ($time == "06") {
-            //$state = "Etat " . $dayFormatted . " 00 UTC";
-            //return "https://cdn.knmi.nl/knmi/map/page/klimatologie/daggegevens/weerkaarten/analyse_{$dayStr}00.gif?1234";
             return getValidImageUrl($date, "00", $state);
         }
         $state = "Prévision " . $dayFormatted . " " . $time . " UTC";
@@ -242,7 +240,7 @@
     $date_decimal = $date_utc->format('H') + $date_utc->format('i')/100.;
     
     // Update the links with the dynamic day of the month values
-    if($date_decimal < 18.2) {
+    if($date_decimal < 19.2) {
       $linkToday1 = getValidImageUrl($date_utc, "06", $state1);
       $linkToday2 = getValidImageUrl($date_utc, "12", $state2);
     } else {
