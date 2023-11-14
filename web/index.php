@@ -197,7 +197,7 @@
     </div>
     
     <?php
-    // Function to check if a URL points to a valid location
+    // Function to check if a URL points to a valid location on cdn.knmi.nl
     function isValidUrl($url) {
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -210,23 +210,35 @@
         }
         return true;
     }
-    // Return a URL for an analyzed synoptic map, if it exists, otherwise return a URL for the forecast
-    function getValidImageUrl($date, $time, &$state) {
+    // Return a URL for an analyzed synoptic map, if it exists, otherwise return a URL for the forecast map
+    function getValidImageUrl($date, &$time, &$text) {
         // Format the dates as required
         $dayFormatted = $date->format('d.m.Y');
         $dayStr = $date->format('Ymd');
         $dayOfTheMonth = $date->format('d');
-        $url = "https://cdn.knmi.nl/knmi/map/page/klimatologie/daggegevens/weerkaarten/analyse_{$dayStr}{$time}.gif?1234";
-        if (isValidUrl($url)) {
-            $state = "Etat " . $dayFormatted . " " . $time . " UTC";
+	      $timestr = sprintf("%02d", $time);
+        $url = "https://cdn.knmi.nl/knmi/map/page/klimatologie/daggegevens/weerkaarten/analyse_{$dayStr}{$timestr}.gif?1234";
+	      if (isValidUrl($url)) {
+	          // return analyzed map
+            $text = "Etat " . $dayFormatted . " " . $timestr . " UTC";
             return $url;
         }
-        // there are no forecast for 6 UTC, return instead the situation at 0 UTC
-        if ($time == "06") {
-            return getValidImageUrl($date, "00", $state);
-        }
-        $state = "Prévision " . $dayFormatted . " " . $time . " UTC";
-        return "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonth}{$time}_large.gif?1234";
+        // there are no forecast for 06 UTC and 18 UTC, return instead the situation at 00 or 12 UTC
+	      if ($time == 6 or $time == 18) {
+	          $time -= 6;
+            return getValidImageUrl($date, $time, $text);
+	      }
+	      // return forecast
+        $text = "Prévision " . $dayFormatted . " " . $timestr . " UTC";
+        return "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonth}{$timestr}_large.gif?1234";
+    }
+    // Return URLs and text labels for the most relevant synoptic maps
+    function getImageUrls($date) {
+	      $time2 = 18; // start looking at 18 UTC
+        $url2 = getValidImageUrl($date, $time2, $text2);
+	      $time1 = $time2 - 6;
+        $url1 = getValidImageUrl($date, $time1, $text1);
+        return array($url1, $url2, $text1, $text2);
     }
     // Get the current date and tomorrow's date
     $date_utc = new DateTime("now", new DateTimeZone("UTC"));
@@ -236,17 +248,8 @@
     $tomorrowFormatted = $tomorrow->format('d.m.Y');
     $dayOfTheMonthForTomorrow = $tomorrow->format('d');
     
-    // Get decimal time for today
-    $date_decimal = $date_utc->format('H') + $date_utc->format('i')/100.;
-    
     // Update the links with the dynamic day of the month values
-    if($date_decimal < 19.2) {
-      $linkToday1 = getValidImageUrl($date_utc, "06", $state1);
-      $linkToday2 = getValidImageUrl($date_utc, "12", $state2);
-    } else {
-      $linkToday1 = getValidImageUrl($date_utc, "12", $state1);
-      $linkToday2 = getValidImageUrl($date_utc, "18", $state2);
-    }
+    $resToday = getImageUrls($date_utc);
     $linkTomorrow00 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonthForTomorrow}00_large.gif?1234";
     $linkTomorrow12 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonthForTomorrow}12_large.gif?1234";
     ?>
@@ -255,12 +258,12 @@
       <div id="rendered-box-154" class="my-4 container">
         <div class="row">
           <div class="col-md-6 my-4">
-            <h3><?php echo $state1; ?></h3>
-            <img class="img-fluid" src="<?php echo $linkToday1; ?>" >
+            <h3><?php echo $resToday[2]; ?></h3>
+            <img class="img-fluid" src="<?php echo $resToday[0]; ?>" >
           </div>
           <div class="col-md-6 my-4">
-            <h3><?php echo $state2; ?></h3>
-            <img class="img-fluid" src="<?php echo $linkToday2; ?>" >
+            <h3><?php echo $resToday[3]; ?></h3>
+            <img class="img-fluid" src="<?php echo $resToday[1]; ?>" >
           </div>
           <div class="col-md-6 my-4">
             <h3>Prévision <?php echo $tomorrowFormatted; ?> 00h UTC</h3>
