@@ -134,8 +134,8 @@
               <div id="h1636"><iframe frameborder="0" marginheight="1" marginwidth="1" scrolling="no"  src="https://widget.holfuy.com/?station=1636&su=km/h&t=C&lang=fr&mode=average&avgrows=16" style="width:100%; height:180px;"></iframe></div>
             </div>
             <div class="col-md-6">
-              <h3>Vent aux Rochers de Naye 2040 m.</h3>
-              <div id="h550"><iframe frameborder="0" marginheight="1" marginwidth="1" scrolling="no"  src="https://widget.holfuy.com/?station=550&su=km/h&t=C&lang=fr&mode=average&avgrows=16" style="width:100%; height:180px;"></iframe></div>
+              <h3>Vent à Sonchaux 1421 m.</h3>
+              <div id="h550"><iframe frameborder="0" marginheight="1" marginwidth="1" scrolling="no"  src="https://widget.holfuy.com/?station=690&su=km/h&t=C&lang=fr&mode=average&avgrows=16" style="width:100%; height:180px;"></iframe></div>
             </div>
             
             <div class="col-md-6">
