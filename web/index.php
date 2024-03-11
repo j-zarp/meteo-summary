@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" name="description" content="">
   <title>
     Météo Summary
   </title>
   
   <meta name="title" content="Météo Summary">
-  <meta name="description" content="Les infos essentielles météo pour préparer un vol en parapente. Probabilités, carte synoptiques, vent, différence de pression, balise, DABS, etc.">
-  <meta name="keywords" content="steambot, meteo, parapente, carte, fronts, balises, vent, dabs, suisse, weather, paragliding, switzerland, wind, windy, meteoblue">
+  <meta name="description" content="Les infos essentielles météo pour préparer un vol en parapente en Suisse. Probabilités, carte synoptiques, vent, différence de pression, balise, DABS, etc.">
+  <meta name="keywords" content="steambot, meteo, parapente, carte, fronts, balises, vent, dabs, suisse, weather, paragliding, switzerland, wind, windy, meteoblue, map, mountain, montagne, rain, cloud, europe, vol libre, fsvl">
   <meta name="robots" content="index,follow">
   <meta name="msapplication-TileColor" content="#fdca37">
   <meta name="theme-color" content="#fdca37">
@@ -198,43 +197,59 @@
     </div>
     
     <?php
+    // Function to check if a URL points to a valid location on cdn.knmi.nl
+    function isValidUrl($url) {
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        $data = curl_exec($ch);
+        curl_close($ch);
+        // the response contains an error message
+        if (strpos($data, '<Code>NoSuchKey</Code>') !== false) {
+            return false;
+        }
+        return true;
+    }
+    // Return a URL for an analyzed synoptic map, if it exists, otherwise return a URL for the forecast map
+    function getValidImageUrl($date, &$time, &$text) {
+        // Format the dates as required
+        $dayFormatted = $date->format('d.m.Y');
+        $dayStr = $date->format('Ymd');
+        $dayOfTheMonth = $date->format('d');
+	      $timestr = sprintf("%02d", $time);
+        $url = "https://cdn.knmi.nl/knmi/map/page/klimatologie/daggegevens/weerkaarten/analyse_{$dayStr}{$timestr}.gif?1234";
+	      if (isValidUrl($url)) {
+	          // return analyzed map
+            $text = "Etat " . $dayFormatted . " " . $timestr . " UTC";
+            return $url;
+        }
+        // there are no forecast for 06 UTC and 18 UTC, return instead the situation at 00 or 12 UTC
+	      if ($time == 6 or $time == 18) {
+	          $time -= 6;
+            return getValidImageUrl($date, $time, $text);
+	      }
+	      // return forecast
+        $text = "Prévision " . $dayFormatted . " " . $timestr . " UTC";
+        return "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonth}{$timestr}_large.gif?1234";
+    }
+    // Return URLs and text labels for the most relevant synoptic maps
+    function getImageUrls($date) {
+	      $time2 = 18; // start looking at 18 UTC
+        $url2 = getValidImageUrl($date, $time2, $text2);
+	      $time1 = $time2 - 6;
+        $url1 = getValidImageUrl($date, $time1, $text1);
+        return array($url1, $url2, $text1, $text2);
+    }
     // Get the current date and tomorrow's date
     $date_utc = new DateTime("now", new DateTimeZone("UTC"));
     $tomorrow = new DateTime('tomorrow', new DateTimeZone("UTC"));
     
-    // Format the dates as required (DD.MM.YYYY)
-    $todayFormatted = $date_utc->format('d.m.Y');
+    // Get the day of the month for tomorrow
     $tomorrowFormatted = $tomorrow->format('d.m.Y');
-    
-    // Get the day of the month for today and tomorrow
-    $dayOfTheMonth = $date_utc->format('d');
     $dayOfTheMonthForTomorrow = $tomorrow->format('d');
     
-    // Get decimal time for today
-    $date_decimal = $date_utc->format('H') + $date_utc->format('i')/100.;
-    
     // Update the links with the dynamic day of the month values
-    if($date_decimal < 7.2) {
-      $time1 = "Etat " . $todayFormatted . " 00 UTC";
-      $time2 = "Prévision " . $todayFormatted . " 12 UTC";
-      $linkToday1 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/AL{$dayOfTheMonth}00_large.gif?1234";
-      $linkToday2 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonth}12_large.gif?1234";
-    } elseif($date_decimal < 13.2) {
-      $time1 = "Etat " . $todayFormatted . " 06 UTC";
-      $time2 = "Prévision " . $todayFormatted . " 12 UTC";
-      $linkToday1 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/AL{$dayOfTheMonth}06_large.gif?1234";
-      $linkToday2 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonth}12_large.gif?1234";
-    } elseif($date_decimal < 19.2) {
-      $time1 = "Etat " . $todayFormatted . " 06 UTC";
-      $time2 = "Etat " . $todayFormatted . " 12 UTC";
-      $linkToday1 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/AL{$dayOfTheMonth}06_large.gif?1234";
-      $linkToday2 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/AL{$dayOfTheMonth}12_large.gif?1234";
-    } else {
-      $time1 = "Etat " . $todayFormatted . " 12 UTC";
-      $time2 = "Etat " . $todayFormatted . " 18 UTC";
-      $linkToday1 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/AL{$dayOfTheMonth}12_large.gif?1234";
-      $linkToday2 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/AL{$dayOfTheMonth}18_large.gif?1234";
-    }
+    $resToday = getImageUrls($date_utc);
     $linkTomorrow00 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonthForTomorrow}00_large.gif?1234";
     $linkTomorrow12 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonthForTomorrow}12_large.gif?1234";
     ?>
@@ -243,12 +258,12 @@
       <div id="rendered-box-154" class="my-4 container">
         <div class="row">
           <div class="col-md-6 my-4">
-            <h3><?php echo $time1; ?></h3>
-            <img class="img-fluid" src="<?php echo $linkToday1; ?>" >
+            <h3><?php echo $resToday[2]; ?></h3>
+            <img class="img-fluid" src="<?php echo $resToday[0]; ?>" >
           </div>
           <div class="col-md-6 my-4">
-            <h3><?php echo $time2; ?></h3>
-            <img class="img-fluid" src="<?php echo $linkToday2; ?>" >
+            <h3><?php echo $resToday[3]; ?></h3>
+            <img class="img-fluid" src="<?php echo $resToday[1]; ?>" >
           </div>
           <div class="col-md-6 my-4">
             <h3>Prévision <?php echo $tomorrowFormatted; ?> 00h UTC</h3>
@@ -258,16 +273,27 @@
             <h3>Prévision <?php echo $tomorrowFormatted; ?> 12h UTC</h3>
             <img class="img-fluid" src="<?php echo $linkTomorrow12; ?>" >
           </div>
-          <div class="col-md-6 my-4">
+          <!-- Deprecated meteocentrale diagrams  -->
+          <!--div class="col-md-6 my-4">
             <h3>Prévisions du foehn</h3>
-            <a href="http://www.meteocentrale.ch/fr/meteo/foehn-et-bise/foehn.html" target="_blank">
               <img src="https://www.meteocentrale.ch/uploads/pics/uwz-ch_foehn_fr.png?2817462" class="img-fluid">
             </a>
           </div>
           <div class="col-md-6 my-4">
             <h3>Prévisions de la bise</h3>
-            <a href="https://www.meteocentrale.ch/fr/meteo/foehn-et-bise/bise.html" target="_blank">
               <img src="https://www.meteocentrale.ch/uploads/pics/uwz-ch_bise_fr.png?2817462" class="img-fluid">
+            </a>
+          </div-->
+          <div class="col-md-6 my-4">
+            <h3>Prévisions du foehn</h3>
+            <a href="<?php echo "https://profiwetter.ch/wind_foehn_ch_fr.png?t=" . time() ?>" target="_blank">
+              <img src="<?php echo "https://profiwetter.ch/wind_foehn_ch_fr.png?t=" . time() ?>" class="img-fluid">
+            </a>
+          </div>
+          <div class="col-md-6 my-4">
+            <h3>Prévisions de la bise</h3>
+            <a href="<?php echo "https://profiwetter.ch/wind_bise_fr.png?t=" . time() ?>" target="_blank">
+              <img src="<?php echo "https://profiwetter.ch/wind_bise_fr.png?t=" . time() ?>" class="img-fluid">
             </a>
           </div>
           <div class="col-md-12">
@@ -285,7 +311,7 @@
           <div class="row">
             <div class="col-md-12">
               <h3>Vents en Suisse</h3>
-              <iframe src="https://www.meteoblue.com/en/weather/maps/widget/charmey_switzerland_2661211?windAnimation=0&windAnimation=1&gust=0&gust=1&satellite=0&satellite=1&cloudsAndPrecipitation=0&cloudsAndPrecipitation=1&temperature=0&temperature=1&sunshine=0&sunshine=1&extremeForecastIndex=0&extremeForecastIndex=1&geoloc=fixed&tempunit=C&windunit=km%252Fh&lengthunit=metric&zoom=5&autowidth=auto#coords=8/46.423/7.648&map=windAnimation~rainbow~ICOND2~850%20mb~none"  frameborder="0" scrolling="NO" allowtransparency="true" sandbox="allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox" style="width: 100%; height: 720px"></iframe>
+              <iframe src="https://www.meteoblue.com/en/weather/maps/widget/charmey_switzerland_2661211?windAnimation=0&windAnimation=1&gust=0&gust=1&satellite=0&satellite=1&cloudsAndPrecipitation=0&cloudsAndPrecipitation=1&temperature=0&temperature=1&sunshine=0&sunshine=1&extremeForecastIndex=0&extremeForecastIndex=1&geoloc=fixed&tempunit=C&windunit=km%252Fh&lengthunit=metric&zoom=5&autowidth=auto#coords=8/46.423/7.648&map=windAnimation~rainbow~NEMS4~850%20mb~none"  frameborder="0" scrolling="NO" allowtransparency="true" sandbox="allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox" style="width: 100%; height: 720px"></iframe>
               <div><!-- DO NOT REMOVE THIS LINK --><a href="https://www.meteoblue.com/en/weather/maps/charmey_switzerland_2661211?utm_source=weather_widget&utm_medium=linkus&utm_content=map&utm_campaign=Weather%2BWidget" target="_blank" rel="noopener">meteoblue</a></div>
               <p>850 mb c'est environ 1500 m.<br>700 mb c'est environ 3000 m.<br>500 mb c'est environ 5500 m.</p>
             </div>
@@ -579,4 +605,5 @@
     
   </body>
 </html>
+
 
