@@ -286,13 +286,13 @@
           </div-->
           <div class="col-md-6 my-4">
             <h3>Prévisions du foehn</h3>
-            <a href="<?php echo "https://profiwetter.ch/wind_foehn_ch_fr.png?t=" . time() ?>" target="_blank">
+            <!--a href="<?php echo "https://profiwetter.ch/wind_foehn_ch_fr.png?t=" . time() ?>" target="_blank"-->
               <img src="<?php echo "https://profiwetter.ch/wind_foehn_ch_fr.png?t=" . time() ?>" class="img-fluid">
             </a>
           </div>
           <div class="col-md-6 my-4">
             <h3>Prévisions de la bise</h3>
-            <a href="<?php echo "https://profiwetter.ch/wind_bise_fr.png?t=" . time() ?>" target="_blank">
+            <!--a href="<?php echo "https://profiwetter.ch/wind_bise_fr.png?t=" . time() ?>" target="_blank"-->
               <img src="<?php echo "https://profiwetter.ch/wind_bise_fr.png?t=" . time() ?>" class="img-fluid">
             </a>
           </div>
@@ -393,8 +393,11 @@
           <div class="col-md-12 my-4">
             <h3>Carte de vol à voile</h3>
             <div class="stop-scrolling">
-              <iframe width="100%" height="600" frameborder='0' style='border:0' allow='geolocation' scrolling="no" data-src="//map.geo.admin.ch/?zoom=2.984824051441887&bgLayer=ch.swisstopo.pixelkarte-farbe&time_current=latest&lang=fr&topic=ech&layers=ch.bazl.segelflugkarte&E=2582968.49&N=1128202.41"></iframe><br>
-              <a href="https://map.geo.admin.ch/?zoom=2.984824051441887&bgLayer=ch.swisstopo.pixelkarte-farbe&time_current=latest&lang=fr&topic=ech&layers=ch.bazl.segelflugkarte&E=2582968.49&N=1128202.41" target="_blank">Map Geo Admin</a>
+              <!-- ref: https://www.geo.admin.ch/de/web-integration-iframe -->
+              <!--iframe width="100%" height="600" frameborder='0' style='border:0' allow='geolocation' scrolling="no" data-src="//test.map.geo.admin.ch/?zoom=2.984824051441887&bgLayer=ch.swisstopo.pixelkarte-farbe&time_current=latest&lang=fr&topic=ech&layers=ch.bazl.segelflugkarte&E=2582968.49&N=1128202.41"></iframe-->
+              <iframe width="100%" height="600" frameborder='0' style='border:0' allow='geolocation' scrolling="no" data-src="//map.geo.admin.ch/?zoom=2.984824051441887&bgLayer=ch.swisstopo.pixelkarte-farbe&time_current=latest&lang=fr&topic=ech&layers=ch.bazl.segelflugkarte&E=2582968.49&N=1128202.41"></iframe>
+              <br>
+              <a href="https://test.map.geo.admin.ch/?zoom=2.984824051441887&bgLayer=ch.swisstopo.pixelkarte-farbe&time_current=latest&lang=fr&topic=ech&layers=ch.bazl.segelflugkarte&E=2582968.49&N=1128202.41" target="_blank">Map Geo Admin</a>
             </div>
           </div>
         </div>
@@ -458,13 +461,13 @@
             <div class="mb-5 h-100">
               <div class="row">
                 <div class="col-md-6 img-thingy-right">
-                  <a href="https://www.meteosuisse.admin.ch/services-et-publications/applications/radiosondages.html#tab=radio-soundings-emagram" target="_blank">
-                    <img class="img-fluid" src="./assets/png/meteosuisse_radiosonsages.png" >
+                  <a href="https://thermal.kk7.ch/#46.379,7.388,11" target="_blank">
+                    <img class="img-fluid" src="./assets/png/thermal.kk7.ch.png" >
                   </a>
                 </div>
                 <div class="col-md-5 offset-md-1">
-                  <h3 class="mt-5 mt-md-0">Radiosondages - MétéoSuisse</h3>
-                  <small><a href="https://www.meteosuisse.admin.ch/services-et-publications/applications/radiosondages.html#tab=radio-soundings-emagram" class="thick_link text-dark stretched-link" target="_blank">https://www.meteosuisse.adm...</a></small>
+                  <h3 class="mt-5 mt-md-0">Thermal KK7 - thermiques et routes</h3>
+                  <small><a href="https://thermal.kk7.ch/#46.379,7.388,11" class="thick_link text-dark stretched-link" target="_blank">https://thermal.kk7.ch</a></small>
                 </div>
               </div>
             </div>
@@ -489,7 +492,7 @@
           <ul class="list-inline">
             <li> Inspiré de la <a href="https://www.twistair.ch/ecole-parapente/42-meteo-parapente-vercorin" target="_blank">page meteo de Twist'air</a> </li>
             <li class="list-inline-item">
-              © <!-- -->2023<!-- --> Steambot.ch  -  <a href="mailto:webmaster@steambot.ch">contact</a>
+              © <!-- -->2024<!-- --> Steambot.ch  -  <a href="mailto:webmaster@steambot.ch">contact</a>
             </li>
           </ul>
         </footer>
