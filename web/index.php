@@ -27,7 +27,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="./favicon_io/favicon-16x16.png">
   <link rel="icon" type="image/png" href="./favicon_io/android-chrome-192x192.png?v=2" sizes="192x192">
   <link rel="icon" type="image/png" href="./favicon_io/android-chrome-512x512.png?v=2" sizes="512x512">
-  <link rel="manifest" href="./favicon_io/site.webmanifest">
+  <link rel="manifest" href="./favicon_io/manifest.json">
   
   <style> 
     .forecast-container {
