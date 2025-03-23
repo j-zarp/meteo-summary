@@ -450,13 +450,13 @@
             <div class="mb-5 h-100">
               <div class="row">
                 <div class="col-md-6 img-thingy-right">
-                  <a href="https://soaringmeteo.org/soarWRF" target="_blank">
-                    <img class="img-fluid" src="./assets/png/soaring_meteo.png" >
+                  <a href="https://www.hikeandfly.org/" target="_blank">
+                    <img class="img-fluid" src="./assets/png/HF_planer.png" >
                   </a>
                 </div>
                 <div class="col-md-5 offset-md-1">
-                  <h3 class="mt-5 mt-md-0">Soaringmeteo - Météorologie pour pilotes de soaring</h3>
-                  <small><a href="https://soaringmeteo.org/soarWRF" class="thick_link text-dark stretched-link" target="_blank">https://soaringmeteo.org/so...</a></small>
+                  <h3 class="mt-5 mt-md-0">Hike &amp; Fly Planer - Calcule la distance de plané depuis un sommet</h3>
+                  <small><a href="https://www.hikeandfly.org/" class="thick_link text-dark stretched-link" target="_blank">https://www.hikeandfly.org/</a></small>
                 </div>
               </div>
             </div>
