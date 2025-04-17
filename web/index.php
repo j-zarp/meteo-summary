@@ -496,7 +496,11 @@
           <ul class="list-inline">
             <li> Inspiré de la <a href="https://www.twistair.ch/ecole-parapente/42-meteo-parapente-vercorin" target="_blank">page meteo de Twist'air</a> </li>
             <li class="list-inline-item">
-              © <!-- -->2025<!-- --> Steambot.ch  -  <a href="mailto:webmaster@steambot.ch">contact</a>
+              <script type="text/javascript">
+              var user = "webmaster";
+              var domain = "steambot.ch";
+              document.write('© <!-- -->2025<!-- --> Steambot.ch  -  <a href="mailto:' + user + '@' + domain + '">' + 'contact</a>');
+              </script>
             </li>
           </ul>
         </footer>
