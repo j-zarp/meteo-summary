@@ -122,7 +122,7 @@
             <div class="col-md-6">
               <h3>Vent à Chalais 500 m.</h3>
               <div id="h1086"><iframe frameborder="0" marginheight="1" marginwidth="1" scrolling="no"  src="https://widget.holfuy.com/?station=1086&su=km/h&t=C&lang=fr&mode=average&avgrows=16" style="width:100%; height:180px;"></iframe></div>
-              <h3>Vent à Villy 420 m.</h3>
+              <h3>Vent à Ollon 420 m.</h3>
               <div id="h717"><iframe frameborder="0" marginheight="1" marginwidth="1" scrolling="no"  src="https://widget.holfuy.com/?station=717&su=km/h&t=C&lang=fr&mode=average&avgrows=16" style="width:100%; height:180px;"></iframe></div>
             </div>
             
