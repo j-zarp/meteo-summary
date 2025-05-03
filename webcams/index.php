@@ -1,26 +1,28 @@
 <?php
 // fetch latest webcam image from labellevue.ch (Mauborget)
+function display_mauborget_image() {
 
-// 1. Grab the directory listing
-$listing = @file_get_contents('https://labellevue.ch/');
-if ($listing === false) {
-    die("Could not fetch camera listing.");
+    // 1. Grab the directory listing
+    $listing = @file_get_contents('https://labellevue.ch/');
+    if ($listing === false) {
+        return("Could not fetch camera images list.");
+    }
+    
+    // 2. Extract all filenames ending in _TIMING.jpg
+    preg_match_all("/src='([^']+_TIMING\.jpg)'/", $listing, $m);
+    $files = $m[1] ?? [];
+    
+    if (empty($files)) {
+        return("No images found.");
+    }
+    // 3. Sort and pick the newest
+    sort($files, SORT_STRING);
+    $latest = end($files);
+    
+    // 4. Build full URL + cache-buster
+    $imageUrl = $latest . '?_=' . time();
+    return htmlspecialchars($imageUrl, ENT_QUOTES);
 }
-
-// 2. Extract all filenames ending in _TIMING.jpg
-preg_match_all("/src='([^']+_TIMING\.jpg)'/", $listing, $m);
-$files = $m[1] ?? [];
-
-if (empty($files)) {
-    die("No images found in listing.");
-}
-
-// 3. Sort and pick the newest
-sort($files, SORT_STRING);
-$latest = end($files);
-
-// 4. Build full URL + cache-buster
-$imageUrl = $latest . '?_=' . time();
 ?>
 
 <!DOCTYPE html>
@@ -184,7 +186,7 @@ $imageUrl = $latest . '?_=' . time();
             <div class="container-lg">
               <h3>Déco Mauborget</h3>
               <a href="https://labellevue.ch" target="_blank">
-              <img src="<?= htmlspecialchars($imageUrl, ENT_QUOTES) ?>"
+              <img src="<?= display_mauborget_image() ?>"
                    alt="Latest webcam snapshot" style="width:100%">
               </a>
             </div>
