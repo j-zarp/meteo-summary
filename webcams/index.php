@@ -184,6 +184,16 @@ function display_mauborget_image() {
           
           <div class="row">
             <div class="container-lg">
+              <h3>Déco Sonchaux</h3>
+              <a href="http://sonchaux-webcam.ch" target="_blank">
+              <img src="https://images.weserv.nl/?url=http://sonchaux-webcam.ch/images/photo.jpg"
+                   alt="Latest webcam snapshot" style="width:100%">
+              </a>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="container-lg">
               <h3>Déco Mauborget</h3>
               <a href="https://labellevue.ch" target="_blank">
               <img src="<?= display_mauborget_image() ?>"
