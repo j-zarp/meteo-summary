@@ -437,38 +437,6 @@
             <div class="mb-5 h-100">
               <div class="row">
                 <div class="col-md-6 img-thingy-right">
-                  <a href="https://www.hikeandfly.org/" target="_blank">
-                    <img class="img-fluid" src="./assets/png/HF_planer.png" >
-                  </a>
-                </div>
-                <div class="col-md-5 offset-md-1">
-                  <h3 class="mt-5 mt-md-0">Hike &amp; Fly Planer - Calcule la distance de plané depuis un sommet</h3>
-                  <small><a href="https://www.hikeandfly.org/" class="thick_link text-dark stretched-link" target="_blank">https://www.hikeandfly.org/</a></small>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="mb-5 h-100">
-              <div class="row">
-                <div class="col-md-6 img-thingy-right">
-                  <a href="https://thermal.kk7.ch/#46.379,7.388,11" target="_blank">
-                    <img class="img-fluid" src="./assets/png/thermal.kk7.ch.png" >
-                  </a>
-                </div>
-                <div class="col-md-5 offset-md-1">
-                  <h3 class="mt-5 mt-md-0">Thermal KK7 - thermiques et routes</h3>
-                  <small><a href="https://thermal.kk7.ch/#46.379,7.388,11" class="thick_link text-dark stretched-link" target="_blank">https://thermal.kk7.ch</a></small>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row row-cols-1 row-cols-md-2">
-          <div class="col">
-            <div class="mb-5 h-100">
-              <div class="row">
-                <div class="col-md-6 img-thingy-right">
                   <a href="https://flyxc.app/" target="_blank">
                     <img class="img-fluid" src="./assets/png/flyxc.png" >
                   </a>
@@ -491,6 +459,38 @@
                 <div class="col-md-5 offset-md-1">
                   <h3 class="mt-5 mt-md-0">Burnair - cartes, prévisions, XC planning</h3>
                   <small><a href="https://www.burnair.cloud/?layers=%2Cant%2Ctw&visibility=%2Cauto%2Con&base=bbt#10/46.5442/7.5510" class="thick_link text-dark stretched-link" target="_blank">https://www.burnair.cloud</a></small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row row-cols-1 row-cols-md-2">
+          <div class="col">
+            <div class="mb-5 h-100">
+              <div class="row">
+                <div class="col-md-6 img-thingy-right">
+                  <a href="https://www.hikeandfly.org/" target="_blank">
+                    <img class="img-fluid" src="./assets/png/HF_planer.png" >
+                  </a>
+                </div>
+                <div class="col-md-5 offset-md-1">
+                  <h3 class="mt-5 mt-md-0">Hike &amp; Fly Planer - Calcule la distance de plané depuis un sommet</h3>
+                  <small><a href="https://www.hikeandfly.org/" class="thick_link text-dark stretched-link" target="_blank">https://www.hikeandfly.org/</a></small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-5 h-100">
+              <div class="row">
+                <div class="col-md-6 img-thingy-right">
+                  <a href="https://thermal.kk7.ch/#46.379,7.388,11" target="_blank">
+                    <img class="img-fluid" src="./assets/png/thermal.kk7.ch.png" >
+                  </a>
+                </div>
+                <div class="col-md-5 offset-md-1">
+                  <h3 class="mt-5 mt-md-0">Thermal KK7 - thermiques et routes</h3>
+                  <small><a href="https://thermal.kk7.ch/#46.379,7.388,11" class="thick_link text-dark stretched-link" target="_blank">https://thermal.kk7.ch</a></small>
                 </div>
               </div>
             </div>
