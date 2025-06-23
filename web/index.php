@@ -19,7 +19,7 @@
   
   <link rel="stylesheet" media="all" href="./assets/css/style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-
+  
   <!-- headers for the favicon on various platforms -->
   <link rel="shortcut icon" href="./favicon_io/favicon.ico?v=2">
   <link rel="apple-touch-icon" sizes="180x180" href="./favicon_io/apple-touch-icon.png">
@@ -155,17 +155,17 @@
     
     <!-- Winds moby refuse de s'ouvrir en mode carte et force la vue "list" dans l'iframe  -->
     <!--div id="box_155" class="box  odd">
-      <div class="py-3 ">
-        <div id="rendered-box-155" class="container">
-          <div class="row" id="anchor">
-            <div class="col-md-12" name="div-windsmobi">
-              <h3>Vent</h3>
-              <iframe width="100%" height="650" src="https://winds.mobi/stations/list?lat=46.4075639&lon=7.3924254" name="iframe-windsmobi" id=iframe-windsmobi></iframe><br>
-              <a href="https://winds.mobi/stations/map?lat=46.4075639&lon=7.3924254&zoom=9" target="_blank">Winds.Mobi</a>
-            </div>
+    <div class="py-3 ">
+      <div id="rendered-box-155" class="container">
+        <div class="row" id="anchor">
+          <div class="col-md-12" name="div-windsmobi">
+            <h3>Vent</h3>
+            <iframe width="100%" height="650" src="https://winds.mobi/stations/list?lat=46.4075639&lon=7.3924254" name="iframe-windsmobi" id=iframe-windsmobi></iframe><br>
+            <a href="https://winds.mobi/stations/map?lat=46.4075639&lon=7.3924254&zoom=9" target="_blank">Winds.Mobi</a>
           </div>
         </div>
       </div>
+    </div>
     </div-->
     
     <div id="box_155" class="box  odd">
@@ -203,46 +203,46 @@
     <?php
     // Function to check if a URL points to a valid location on cdn.knmi.nl
     function isValidUrl($url) {
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        $data = curl_exec($ch);
-        curl_close($ch);
-        // the response contains an error message
-        if (strpos($data, '<Code>NoSuchKey</Code>') !== false) {
-            return false;
-        }
-        return true;
+      $ch = curl_init($url);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+      curl_setopt($ch, CURLOPT_HEADER, 0);
+      $data = curl_exec($ch);
+      curl_close($ch);
+      // the response contains an error message
+      if (strpos($data, '<Code>NoSuchKey</Code>') !== false) {
+        return false;
+      }
+      return true;
     }
     // Return a URL for an analyzed synoptic map, if it exists, otherwise return a URL for the forecast map
     function getValidImageUrl($date, &$time, &$text) {
-        // Format the dates as required
-        $dayFormatted = $date->format('d.m.Y');
-        $dayStr = $date->format('Ymd');
-        $dayOfTheMonth = $date->format('d');
-	      $timestr = sprintf("%02d", $time);
-        $url = "https://cdn.knmi.nl/knmi/map/page/klimatologie/daggegevens/weerkaarten/analyse_{$dayStr}{$timestr}.gif?1234";
-	      if (isValidUrl($url)) {
-	          // return analyzed map
-            $text = "Etat " . $dayFormatted . " " . $timestr . " UTC";
-            return $url;
-        }
-        // there are no forecast for 06 UTC and 18 UTC, return instead the situation at 00 or 12 UTC
-	      if ($time == 6 or $time == 18) {
-	          $time -= 6;
-            return getValidImageUrl($date, $time, $text);
-	      }
-	      // return forecast
-        $text = "Prévision " . $dayFormatted . " " . $timestr . " UTC";
-        return "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonth}{$timestr}_large.gif?1234";
+      // Format the dates as required
+      $dayFormatted = $date->format('d.m.Y');
+      $dayStr = $date->format('Ymd');
+      $dayOfTheMonth = $date->format('d');
+      $timestr = sprintf("%02d", $time);
+      $url = "https://cdn.knmi.nl/knmi/map/page/klimatologie/daggegevens/weerkaarten/analyse_{$dayStr}{$timestr}.gif?1234";
+      if (isValidUrl($url)) {
+        // return analyzed map
+        $text = "Etat " . $dayFormatted . " " . $timestr . " UTC";
+        return $url;
+      }
+      // there are no forecast for 06 UTC and 18 UTC, return instead the situation at 00 or 12 UTC
+      if ($time == 6 or $time == 18) {
+        $time -= 6;
+        return getValidImageUrl($date, $time, $text);
+      }
+      // return forecast
+      $text = "Prévision " . $dayFormatted . " " . $timestr . " UTC";
+      return "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonth}{$timestr}_large.gif?1234";
     }
     // Return URLs and text labels for the most relevant synoptic maps
     function getImageUrls($date) {
-	      $time2 = 18; // start looking at 18 UTC
-        $url2 = getValidImageUrl($date, $time2, $text2);
-	      $time1 = $time2 - 6;
-        $url1 = getValidImageUrl($date, $time1, $text1);
-        return array($url1, $url2, $text1, $text2);
+      $time2 = 18; // start looking at 18 UTC
+      $url2 = getValidImageUrl($date, $time2, $text2);
+      $time1 = $time2 - 6;
+      $url1 = getValidImageUrl($date, $time1, $text1);
+      return array($url1, $url2, $text1, $text2);
     }
     // Get the current date and tomorrow's date
     $date_utc = new DateTime("now", new DateTimeZone("UTC"));
@@ -277,28 +277,15 @@
             <h3>Prévision <?php echo $tomorrowFormatted; ?> 12h UTC</h3>
             <img class="img-fluid" src="<?php echo $linkTomorrow12; ?>" >
           </div>
-          <!-- Deprecated meteocentrale diagrams  -->
-          <!--div class="col-md-6 my-4">
-            <h3>Prévisions du foehn</h3>
-              <img src="https://www.meteocentrale.ch/uploads/pics/uwz-ch_foehn_fr.png?2817462" class="img-fluid">
-            </a>
-          </div>
-          <div class="col-md-6 my-4">
-            <h3>Prévisions de la bise</h3>
-              <img src="https://www.meteocentrale.ch/uploads/pics/uwz-ch_bise_fr.png?2817462" class="img-fluid">
-            </a>
-          </div-->
           <div class="col-md-6 my-4">
             <h3>Prévisions du foehn</h3>
             <!--a href="<?php echo "https://profiwetter.ch/wind_foehn_ch_fr.png?t=" . time() ?>" target="_blank"-->
-              <img src="<?php echo "https://profiwetter.ch/wind_foehn_ch_fr.png?t=" . time() ?>" class="img-fluid">
-            </a>
+            <img src="<?php echo "https://profiwetter.ch/wind_foehn_ch_fr.png?t=" . time() ?>" class="img-fluid">
           </div>
           <div class="col-md-6 my-4">
             <h3>Prévisions de la bise</h3>
             <!--a href="<?php echo "https://profiwetter.ch/wind_bise_fr.png?t=" . time() ?>" target="_blank"-->
-              <img src="<?php echo "https://profiwetter.ch/wind_bise_fr.png?t=" . time() ?>" class="img-fluid">
-            </a>
+            <img src="<?php echo "https://profiwetter.ch/wind_bise_fr.png?t=" . time() ?>" class="img-fluid">
           </div>
           <div class="col-md-12">
             <h3>Pression et vents en Europe</h3>
@@ -497,9 +484,9 @@
             <li> Inspiré de la <a href="https://www.twistair.ch/ecole-parapente/42-meteo-parapente-vercorin" target="_blank">page meteo de Twist'air</a> </li>
             <li class="list-inline-item">
               <script type="text/javascript">
-              var user = "webmaster";
-              var domain = "steambot.ch";
-              document.write('© <!-- -->2025<!-- --> Steambot.ch  -  <a href="mailto:' + user + '@' + domain + '">' + 'contact</a>');
+                var user = "webmaster";
+                var domain = "steambot.ch";
+                document.write('© <!-- -->2025<!-- --> Steambot.ch  -  <a href="mailto:' + user + '@' + domain + '">' + 'contact</a>');
               </script>
             </li>
           </ul>
@@ -614,5 +601,6 @@
       });
     </script>
     
-  </body>
+</body>
 </html>
+
