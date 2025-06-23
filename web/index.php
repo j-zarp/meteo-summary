@@ -464,6 +464,38 @@
             </div>
           </div>
         </div>
+        <div class="row row-cols-1 row-cols-md-2">
+          <div class="col">
+            <div class="mb-5 h-100">
+              <div class="row">
+                <div class="col-md-6 img-thingy-right">
+                  <a href="https://flyxc.app/" target="_blank">
+                    <img class="img-fluid" src="./assets/png/flyxc.png" >
+                  </a>
+                </div>
+                <div class="col-md-5 offset-md-1">
+                  <h3 class="mt-5 mt-md-0">Hike &amp; FlyXC - pour préparer un cross et exporter les balises</h3>
+                  <small><a href="https://flyxc.app/" class="thick_link text-dark stretched-link" target="_blank">https://flyxc.app/</a></small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-5 h-100">
+              <div class="row">
+                <div class="col-md-6 img-thingy-right">
+                  <a href="https://www.burnair.cloud/?layers=%2Cant%2Ctw&visibility=%2Cauto%2Con&base=bbt#10/46.5442/7.5510" target="_blank">
+                    <img class="img-fluid" src="./assets/png/burnair.png" >
+                  </a>
+                </div>
+                <div class="col-md-5 offset-md-1">
+                  <h3 class="mt-5 mt-md-0">Burnair - cartes, prévisions, XC planning</h3>
+                  <small><a href="https://www.burnair.cloud/?layers=%2Cant%2Ctw&visibility=%2Cauto%2Con&base=bbt#10/46.5442/7.5510" class="thick_link text-dark stretched-link" target="_blank">https://www.burnair.cloud</a></small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     
