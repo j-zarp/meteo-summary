@@ -1,3 +1,30 @@
+<?php
+// fetch latest webcam image from labellevue.ch (Mauborget)
+function display_mauborget_image() {
+
+    // 1. Grab the directory listing
+    $listing = @file_get_contents('https://labellevue.ch/');
+    if ($listing === false) {
+        return("Could not fetch camera images list.");
+    }
+    
+    // 2. Extract all filenames ending in _TIMING.jpg
+    preg_match_all("/src='([^']+_TIMING\.jpg)'/", $listing, $m);
+    $files = $m[1] ?? [];
+    
+    if (empty($files)) {
+        return("No images found.");
+    }
+    // 3. Sort and pick the newest
+    sort($files, SORT_STRING);
+    $latest = end($files);
+    
+    // 4. Build full URL + cache-buster
+    $imageUrl = $latest . '?_=' . time();
+    return htmlspecialchars($imageUrl, ENT_QUOTES);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -108,7 +135,8 @@
           <div class="row">
             <div class="container-lg">
               <h3>Charmey</h3>
-              <a name="windy-webcam-timelapse-player" data-id="1604579854" data-play="day" href="https://windy.com/webcams/1604579854" target="_blank">Val-de-Charmey: Vounetse</a><script async type="text/javascript" src="https://webcams.windy.com/webcams/public/embed/script/player.js"></script>
+              <!--a name="windy-webcam-timelapse-player" data-id="1604579854" data-play="day" href="https://windy.com/webcams/1604579854" target="_blank">Val-de-Charmey: Vounetse</a><script async type="text/javascript" src="https://webcams.windy.com/webcams/public/embed/script/player.js"></script-->
+            <img src="https://webcam.charmey.ch/image_2024.php?id=03" alt="Charmey vallée" width="100%">
             </div>
           </div>
           
@@ -122,21 +150,21 @@
           <div class="row">
             <div class="container-lg">
               <h3>Rochers de Naye</h3>
-              <a name="windy-webcam-timelapse-player" data-id="1226691645" data-play="day" href="https://windy.com/webcams/1226691645" target="_blank">Villeneuve: Les Pléiades 2</a><script async type="text/javascript" src="https://webcams.windy.com/webcams/public/embed/script/player.js"></script>
+              <a name="windy-webcam-timelapse-player" data-id="1697030033" data-play="day" href="https://windy.com/webcams/1697030033" target="_blank">Veytaux: Rochers de Naye</a><script async type="text/javascript" src="https://webcams.windy.com/webcams/public/embed/script/player.js"></script>
             </div>
           </div>
           
           <div class="row">
             <div class="container-lg">
-              <h3>Leysin</h3>
-              <a name="windy-webcam-timelapse-player" data-id="1419358971" data-play="day" href="https://windy.com/webcams/1419358971" target="_blank">Leysin</a><script async type="text/javascript" src="https://webcams.windy.com/webcams/public/embed/script/player.js"></script>
+              <h3>Les Diablerets</h3>
+              <a name="windy-webcam-timelapse-player"  data-id="1697034263" data-play="day" data-loop="0" data-auto-play="0" data-force-full-screen-on-overlay-play="0" data-interactive="1" href="https://windy.com/webcams/1697034263" target="_blank">Ormont-Dessous: Les Diablerets - Meilleret</a><script async type="text/javascript" src="https://webcams.windy.com/webcams/public/embed/v2/script/player.js"></script>
             </div>
           </div>
           
           <div class="row">
             <div class="container-lg">
               <h3>Villars-sur-Ollon</h3>
-              <a name="windy-webcam-timelapse-player" data-id="1048419764" data-play="day" href="https://windy.com/webcams/1048419764" target="_blank">Ollon VD: Villars-sur-Ollon</a><script async type="text/javascript" src="https://webcams.windy.com/webcams/public/embed/script/player.js"></script>
+              <a name="windy-webcam-timelapse-player"  data-id="1705420830" data-play="day" data-loop="0" data-auto-play="0" data-force-full-screen-on-overlay-play="0" data-interactive="1" href="https://windy.com/webcams/1705420830" target="_blank">Ollon: Villars - Chaux Ronde</a><script async type="text/javascript" src="https://webcams.windy.com/webcams/public/embed/v2/script/player.js"></script>
             </div>
           </div>
           
@@ -149,8 +177,28 @@
           
           <div class="row">
             <div class="container-lg">
-              <h3>Riddes</h3>
-              <a name="windy-webcam-timelapse-player" data-id="1671789679" data-play="day" href="https://windy.com/webcams/1671789679" target="_blank">Riddes</a><script async type="text/javascript" src="https://webcams.windy.com/webcams/public/embed/script/player.js"></script> 
+              <h3>Val de Bagnes</h3>
+              <a name="windy-webcam-timelapse-player"  data-id="1697040458" data-play="day" data-loop="0" data-auto-play="0" data-force-full-screen-on-overlay-play="0" data-interactive="1" href="https://windy.com/webcams/1697040458" target="_blank">Val de Bagnes: Savoleyres</a><script async type="text/javascript" src="https://webcams.windy.com/webcams/public/embed/v2/script/player.js"></script>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="container-lg">
+              <h3>Déco Sonchaux</h3>
+              <a href="http://sonchaux-webcam.ch" target="_blank">
+              <img src="https://images.weserv.nl/?url=http://sonchaux-webcam.ch/images/photo.jpg"
+                   alt="Latest webcam snapshot" style="width:100%">
+              </a>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="container-lg">
+              <h3>Déco Mauborget</h3>
+              <a href="https://labellevue.ch" target="_blank">
+              <img src="<?= display_mauborget_image() ?>"
+                   alt="Latest webcam snapshot" style="width:100%">
+              </a>
             </div>
           </div>
           
@@ -170,7 +218,7 @@
         <footer class="col-md-9 pt-5 text-muted text-center text-small">
           <ul class="list-inline">
             <li class="list-inline-item">
-              © <!-- -->2023<!-- --> Steambot.ch  -  <a href="mailto:webmaster@steambot.ch">contact</a>
+              © <!-- -->2025<!-- --> Steambot.ch  -  <a href="mailto:webmaster@steambot.ch">contact</a>
             </li>
           </ul>
         </footer>
