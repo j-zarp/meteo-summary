@@ -141,7 +141,7 @@
               <p><a href="https://winds.mobi/stations/map?lat=46.4075639&lon=7.3924254&zoom=9" target="_blank"><button class="button1">&#x2794; Carte complète des mesures</button></a></p>
             </div>
             <div class="col-md-6">
-              <p><a href="https://bluelift.ch/meteo-summary/webcams/" target="_blank"><button class="button1">&#x2794; Lien vers les Webcams</button></a></p>
+              <p><a href="https://bluelift.ch/webcams/" target="_blank"><button class="button1">&#x2794; Lien vers les Webcams</button></a></p>
             </div>
           </div>
         </div>
