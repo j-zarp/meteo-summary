@@ -45,7 +45,7 @@ function display_mauborget_image() {
   <script src="../web/assets/js/script.js"></script>
   <script src="https://kit.fontawesome.com/e798f160a4.js" crossorigin="anonymous"></script>
   
-  <link rel="stylesheet" media="all" href="../web/assets/css/style.css">
+  <link rel="stylesheet" media="all" href="../web/assets/css/zephyr.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 
   <!-- headers for the favicon on various platforms -->

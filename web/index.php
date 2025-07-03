@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <title>
-    Météo Summary
+    BlueLift
   </title>
   
   <meta name="title" content="Météo Summary">
@@ -17,7 +17,7 @@
   <script src="./assets/js/script.js"></script>
   <script src="https://kit.fontawesome.com/e798f160a4.js" crossorigin="anonymous"></script>
   
-  <link rel="stylesheet" media="all" href="./assets/css/style.css" />
+  <link rel="stylesheet" media="all" href="./assets/css/zephyr.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
   
   <!-- headers for the favicon on various platforms -->
@@ -45,15 +45,6 @@
   <link rel="manifest" href="./favicon_io/manifest.json">
   
   <style> 
-    .forecast-container {
-      display: flex;
-      justify-content: space-between;
-    }
-    .forecast-table {
-      border-collapse: collapse;
-      width: 100%;
-      margin-bottom: 20px;
-    }
     th, td {
       border: 1px solid #ddd;
       padding: 8px;
@@ -107,23 +98,12 @@
 
 <body>
   <div id="page-content" class="striped">
-    
-    <div id="box_167" class="box  odd">
-      <div class="py-3 ">
-        <div id="rendered-box-167" class="container">
-          <div class="row">
-            <div class="col-md-12">
-              <h1>Météo Summary</h1>
-            </div>
-          </div>
-        </div>
-      </div>
       
       <div class="py-3 ">
         <div id="rendered-box-567" class="container">
           <div class="row">
             <div class="col-md-12">
-              <h2>Les infos essentielles pour préparer une journée de vol<br></h2>
+              <h2>Les infos essentielles pour préparer ta journée de vol</h2>
             </div>
           </div>
         </div>
@@ -135,26 +115,26 @@
         <div id="rendered-box-259" class="container">
           <div class="row">
             <div class="col-md-6">
-              <h3>Vent à Chalais 500 m.</h3>
-              <div id="h1086"><iframe frameborder="0" marginheight="1" marginwidth="1" scrolling="no"  src="https://widget.holfuy.com/?station=1086&su=km/h&t=C&lang=fr&mode=average&avgrows=16" style="width:100%; height:180px;"></iframe></div>
-              <h3>Vent à Ollon 420 m.</h3>
+              <h4>Vent à Sonchaux 1421 m.</h4>
+              <div id="h550"><iframe frameborder="0" marginheight="1" marginwidth="1" scrolling="no"  src="https://widget.holfuy.com/?station=690&su=km/h&t=C&lang=fr&mode=average&avgrows=16" style="width:100%; height:180px;"></iframe></div>
+              <h4>Vent à Ollon 420 m.</h4>
               <div id="h717"><iframe frameborder="0" marginheight="1" marginwidth="1" scrolling="no"  src="https://widget.holfuy.com/?station=717&su=km/h&t=C&lang=fr&mode=average&avgrows=16" style="width:100%; height:180px;"></iframe></div>
             </div>
             
             <div class="col-md-6">
-              <h3>Vent au Crêt du Midi 2330 m.</h3>
-              <div id="h927"><iframe frameborder="0" marginheight="1" marginwidth="1" scrolling="no"  src="https://widget.holfuy.com/?station=927&su=km/h&t=C&lang=fr&mode=average&avgrows=16" style="width:100%; height:180px;"></iframe></div>
-              <h3>Vent à Vounetz 1620 m.</h3>
+              <h4>Vent au Suchet 1573 m.</h4>
+              <div id="h1636"><iframe frameborder="0" marginheight="1" marginwidth="1" scrolling="no"  src="https://widget.holfuy.com/?station=1636&su=km/h&t=C&lang=fr&mode=average&avgrows=16" style="width:100%; height:180px;"></iframe></div>
+              <h4>Vent à Vounetz 1620 m.</h4>
               <div id="h549"><iframe frameborder="0" marginheight="1" marginwidth="1" scrolling="no"  src="https://widget.holfuy.com/?station=549&su=km/h&t=C&lang=fr&mode=average&avgrows=16" style="width:100%; height:180px;"></iframe></div>
             </div>
             
             <div class="col-md-6">
-              <h3>Vent au Suchet 1573 m.</h3>
-              <div id="h1636"><iframe frameborder="0" marginheight="1" marginwidth="1" scrolling="no"  src="https://widget.holfuy.com/?station=1636&su=km/h&t=C&lang=fr&mode=average&avgrows=16" style="width:100%; height:180px;"></iframe></div>
+              <h4>Vent à Chalais 500 m.</h4>
+              <div id="h1086"><iframe frameborder="0" marginheight="1" marginwidth="1" scrolling="no"  src="https://widget.holfuy.com/?station=1086&su=km/h&t=C&lang=fr&mode=average&avgrows=16" style="width:100%; height:180px;"></iframe></div>
             </div>
             <div class="col-md-6">
-              <h3>Vent à Sonchaux 1421 m.</h3>
-              <div id="h550"><iframe frameborder="0" marginheight="1" marginwidth="1" scrolling="no"  src="https://widget.holfuy.com/?station=690&su=km/h&t=C&lang=fr&mode=average&avgrows=16" style="width:100%; height:180px;"></iframe></div>
+              <h4>Vent au Crêt du Midi 2330 m.</h4>
+              <div id="h927"><iframe frameborder="0" marginheight="1" marginwidth="1" scrolling="no"  src="https://widget.holfuy.com/?station=927&su=km/h&t=C&lang=fr&mode=average&avgrows=16" style="width:100%; height:180px;"></iframe></div>  
             </div>
             
             <div class="col-md-6">
@@ -203,12 +183,83 @@
             </div>
             <div class="col-md-12">
               <div class="show-button">
-                <button id="toggleButton">Plus de sites</button><br><br>
+                <button id="toggleButton" class="button1">Plus de sites</button><br><br>
               </div>
               
               <iframe width="100%" height="650" src="https://paraglidable.com/?lat=46.391&lon=7.094&zoom=9" allowfullscreen="true"
               allow="geolocation" name="iframe-parag" id="iframe-parag"></iframe><br>
               <a href="https://paraglidable.com/?lat=46.391&lon=7.094&zoom=9" target="_blank">Paraglidable</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bulletin météo Suisse -->
+    <?php
+    // Fetch the versions JSON
+    $versionsUrl = 'https://www.meteosuisse.admin.ch/product/output/versions.json';
+    $versionsJson = file_get_contents($versionsUrl);
+    $versions = json_decode($versionsJson, true);
+
+    // Get tags
+    $generalKey = 'generalsituation/text/fr';
+    $regionalKey = 'weather-report/fr/west';
+
+    $generalTag = $versions[$generalKey] ?? null;
+    $regionalTag = $versions[$regionalKey] ?? null;
+
+    $generalHtml = '';
+    $regionalHtml = '';
+
+    if ($generalTag) {
+        $generalUrl = "https://www.meteosuisse.admin.ch/product/output/generalsituation/text/fr/version__{$generalTag}/textproduct_fr.xhtml";
+        $generalHtml = file_get_contents($generalUrl);
+    }
+
+    if ($regionalTag) {
+        $regionalUrl = "https://www.meteosuisse.admin.ch/product/output/weather-report/fr/west/version__{$regionalTag}/textproduct_fr.xhtml";
+        $regionalHtml = file_get_contents($regionalUrl);
+    }
+
+    // Insert general situation before "Prévisions pour la Suisse Romande et le Valais"
+    $insertionPoint = mb_strpos($regionalHtml, 'Prévisions pour la Suisse Romande et le Valais');
+    if ($insertionPoint !== false) {
+        $combinedHtml = mb_substr($regionalHtml, 0, $insertionPoint)
+                      . $generalHtml . "<hr>"
+                      . mb_substr($regionalHtml, $insertionPoint);
+    } else {
+        $combinedHtml = $generalHtml . "<hr>" . $regionalHtml;
+    }
+
+    // Split into lines for preview
+    $lines = preg_split('/\r\n|\r|\n/', $combinedHtml);
+    $firstLines = array_slice($lines, 0, 6);
+    $remainingLines = array_slice($lines, 6);
+    ?>
+
+    <div id="box_155" class="box  odd">
+      <div class="py-3 ">
+        <div id="rendered-box-155" class="container">
+          <div class="row" id="anchor">
+            
+            <div class="col-md-12">
+              <h3>Bulletin (Source MétéoSuisse)</h3>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm" id="content">
+              <div id="preview">
+                <?= implode("\n", $firstLines) ?>
+              </div>
+              <div id="fullText" style="display: none;">
+                <?= implode("\n", $remainingLines) ?>
+              </div>
+              <?php if (count($remainingLines) > 0): ?>
+              <div class="show-button">
+                <button id="showMoreBtn" class="button1" onclick="toggleText()">Afficher plus</button>
+              </div>
+              <?php endif; ?>
             </div>
           </div>
         </div>
@@ -277,28 +328,28 @@
       <div id="rendered-box-154" class="my-4 container">
         <div class="row">
           <div class="col-md-6 my-4">
-            <h3><?php echo $resToday[2]; ?></h3>
+            <h4><?php echo $resToday[2]; ?></h4>
             <img class="img-fluid" src="<?php echo $resToday[0]; ?>" >
           </div>
           <div class="col-md-6 my-4">
-            <h3><?php echo $resToday[3]; ?></h3>
+            <h4><?php echo $resToday[3]; ?></h4>
             <img class="img-fluid" src="<?php echo $resToday[1]; ?>" >
           </div>
           <div class="col-md-6 my-4">
-            <h3>Prévision <?php echo $tomorrowFormatted; ?> 00h UTC</h3>
+            <h4>Prévision <?php echo $tomorrowFormatted; ?> 00h UTC</h4>
             <img class="img-fluid" src="<?php echo $linkTomorrow00; ?>" >
           </div>
           <div class="col-md-6 my-4">
-            <h3>Prévision <?php echo $tomorrowFormatted; ?> 12h UTC</h3>
+            <h4>Prévision <?php echo $tomorrowFormatted; ?> 12h UTC</h4>
             <img class="img-fluid" src="<?php echo $linkTomorrow12; ?>" >
           </div>
           <div class="col-md-6 my-4">
-            <h3>Prévisions du foehn</h3>
+            <h4>Prévisions du foehn</h4>
             <!--a href="<?php echo "https://profiwetter.ch/wind_foehn_ch_fr.png?t=" . time() ?>" target="_blank"-->
             <img src="<?php echo "https://profiwetter.ch/wind_foehn_ch_fr.png?t=" . time() ?>" class="img-fluid">
           </div>
           <div class="col-md-6 my-4">
-            <h3>Prévisions de la bise</h3>
+            <h4>Prévisions de la bise</h4>
             <!--a href="<?php echo "https://profiwetter.ch/wind_bise_fr.png?t=" . time() ?>" target="_blank"-->
             <img src="<?php echo "https://profiwetter.ch/wind_bise_fr.png?t=" . time() ?>" class="img-fluid">
           </div>
@@ -343,15 +394,6 @@
     
     <div id="box_151" class="box  even">
       <div id="rendered-box-151" class="my-4 container">
-        <div class="row">
-          <div class="col-md-12 my-4">
-            <h3>Image Satellite meteoblue</h3>
-            <div class="stop-scrolling">
-              <iframe src="https://www.meteoblue.com/fr/meteo/maps/widget/vercorin_suisse_2658166?windAnimation=0&gust=0&satellite=1&coronaWeatherScore=0&geoloc=fixed&tempunit=C&windunit=km%252Fh&lengthunit=metric&zoom=5&autowidth=auto" frameborder="0" scrolling="NO" allowtransparency="true"  style="width: 100%; height: 720px"></iframe>
-            </div>
-            <div><!-- DO NOT REMOVE THIS LINK --><a href="https://www.meteoblue.com/fr/meteo/webmap/beta/charmey_suisse_2661211?utm_source=weather_widget&utm_medium=linkus&utm_content=map&utm_campaign=Weather%2BWidget" target="_blank">meteoblue</a></div>
-          </div>
-        </div>
         <div class="row">
           <div class="col-md-12">
             <img class="img-fluid" src="https://my.meteoblue.com/visimage/meteogram_web_hd?look=KILOMETER_PER_HOUR%2CCELSIUS%2CMILLIMETER&amp;apikey=5838a18e295d&amp;winddirection=3char&amp;temperature=C&amp;windspeed=kmh&amp;precipitationamount=mm&amp;city=Charmey&amp;iso2=ch&amp;lat=46.6196&amp;lon=7.16486&amp;asl=895&amp;tz=Europe%2FZurich&amp;lang=fr&amp;sig=e477e9b21e39f451d48c7e8ca9ef69f1" >
@@ -425,8 +467,8 @@
                   </a>
                 </div>
                 <div class="col-md-5 offset-md-1">
-                  <h3 class="mt-5 mt-md-0">SHV/FSVL Meteo - Login</h3>
-                  <small><a href="https://www.meteo-fsvl.ch/system/login.html" class="thick_link text-dark stretched-link" target="_blank">https://www.meteo-fsvl.ch/s...</a></small>
+                  <h4 class="mt-5 mt-md-0">SHV/FSVL Meteo - Login</h4>
+                  <small><a href="https://www.meteo-fsvl.ch/system/login.html" class="thick_link text-dark" target="_blank">https://www.meteo-fsvl.ch/s...</a></small>
                 </div>
               </div>
             </div>
@@ -440,8 +482,8 @@
                   </a>
                 </div>
                 <div class="col-md-5 offset-md-1">
-                  <h3 class="mt-5 mt-md-0">meteo-parapente.com</h3>
-                  <small><a href="https://meteo-parapente.com/" class="thick_link text-dark stretched-link" target="_blank">https://meteo-parapente.com/</a></small>
+                  <h4 class="mt-5 mt-md-0">meteo-parapente.com</h4>
+                  <small><a href="https://meteo-parapente.com/" class="thick_link text-dark" target="_blank">https://meteo-parapente.com/</a></small>
                 </div>
               </div>
             </div>
@@ -457,8 +499,8 @@
                   </a>
                 </div>
                 <div class="col-md-5 offset-md-1">
-                  <h3 class="mt-5 mt-md-0">Hike &amp; FlyXC - pour préparer un cross et exporter les balises</h3>
-                  <small><a href="https://flyxc.app/" class="thick_link text-dark stretched-link" target="_blank">https://flyxc.app/</a></small>
+                  <h4 class="mt-5 mt-md-0">Hike &amp; FlyXC - pour préparer un cross et exporter les balises</h4>
+                  <small><a href="https://flyxc.app/" class="thick_link text-dark" target="_blank">https://flyxc.app/</a></small>
                 </div>
               </div>
             </div>
@@ -472,8 +514,8 @@
                   </a>
                 </div>
                 <div class="col-md-5 offset-md-1">
-                  <h3 class="mt-5 mt-md-0">Burnair - cartes, prévisions, XC planning</h3>
-                  <small><a href="https://www.burnair.cloud/?layers=%2Cant%2Ctw&visibility=%2Cauto%2Con&base=bbt#10/46.5442/7.5510" class="thick_link text-dark stretched-link" target="_blank">https://www.burnair.cloud</a></small>
+                  <h4 class="mt-5 mt-md-0">Burnair - cartes, prévisions, XC planning</h4>
+                  <small><a href="https://www.burnair.cloud/?layers=%2Cant%2Ctw&visibility=%2Cauto%2Con&base=bbt#10/46.5442/7.5510" class="thick_link text-dark" target="_blank">https://www.burnair.cloud</a></small>
                 </div>
               </div>
             </div>
@@ -489,8 +531,8 @@
                   </a>
                 </div>
                 <div class="col-md-5 offset-md-1">
-                  <h3 class="mt-5 mt-md-0">Hike &amp; Fly Planer - Calcule la distance de plané depuis un sommet</h3>
-                  <small><a href="https://www.hikeandfly.org/" class="thick_link text-dark stretched-link" target="_blank">https://www.hikeandfly.org/</a></small>
+                  <h4 class="mt-5 mt-md-0">Hike &amp; Fly Planer - Calcule la distance de plané depuis un sommet</h4>
+                  <small><a href="https://www.hikeandfly.org/" class="thick_link text-dark" target="_blank">https://www.hikeandfly.org/</a></small>
                 </div>
               </div>
             </div>
@@ -504,8 +546,8 @@
                   </a>
                 </div>
                 <div class="col-md-5 offset-md-1">
-                  <h3 class="mt-5 mt-md-0">Thermal KK7 - thermiques et routes</h3>
-                  <small><a href="https://thermal.kk7.ch/#46.379,7.388,11" class="thick_link text-dark stretched-link" target="_blank">https://thermal.kk7.ch</a></small>
+                  <h4 class="mt-5 mt-md-0">Thermal KK7 - thermiques et routes</h4>
+                  <small><a href="https://thermal.kk7.ch/#46.379,7.388,11" class="thick_link text-dark target="_blank">https://thermal.kk7.ch</a></small>
                 </div>
               </div>
             </div>
@@ -587,7 +629,7 @@
     function createTableForDate(entries, dateLabel) {
       if (!entries) return '';
       const sortedEntries = entries.sort((a, b) => b.forecast.fly - a.forecast.fly);
-      let table = `<table class="forecast-table"><tr><th>Name</th><th>Fly Probability</th><th>XC Probability</th></tr>`;
+      let table = `<table class="forecast-table" style="width:100%"><tr><th>Name</th><th>Fly Probability</th><th>XC Probability</th></tr>`;
         sortedEntries.forEach((entry, index) => {
           // Rename "Vercorin Village" to "Vercorin" and "Vounetz" to "Charmey"
           let name = entry.name;
@@ -646,6 +688,20 @@
       lazyIframes.forEach(iframe => {
         iframeObserver.observe(iframe);
       });
+    </script>
+
+    <script>
+        function toggleText() {
+            const fullText = document.getElementById('fullText');
+            const btn = document.getElementById('showMoreBtn');
+            if (fullText.style.display === 'none') {
+                fullText.style.display = 'block';
+                btn.textContent = 'Afficher moins';
+            } else {
+                fullText.style.display = 'none';
+                btn.textContent = 'Afficher plus';
+            }
+        }
     </script>
     
 </body>
