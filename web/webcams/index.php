@@ -49,28 +49,28 @@ function display_mauborget_image() {
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 
   <!-- headers for the favicon on various platforms -->
-  <link rel="shortcut icon" href="./favicon_io/favicon.ico?v=2">
-  <link rel="apple-touch-icon-precomposed" sizes="57x57" href="../web/favicon_io/apple-touch-icon-57x57.png" />
-  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../web/favicon_io/apple-touch-icon-114x114.png" />
-  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../web/favicon_io/apple-touch-icon-72x72.png" />
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../web/favicon_io/apple-touch-icon-144x144.png" />
-  <link rel="apple-touch-icon-precomposed" sizes="60x60" href="../web/favicon_io/apple-touch-icon-60x60.png" />
-  <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../web/favicon_io/apple-touch-icon-120x120.png" />
-  <link rel="apple-touch-icon-precomposed" sizes="76x76" href="../web/favicon_io/apple-touch-icon-76x76.png" />
-  <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../web/favicon_io/apple-touch-icon-152x152.png" />
-  <link rel="icon" type="image/png" href="../web/favicon_io/favicon-196x196.png" sizes="196x196" />
-  <link rel="icon" type="image/png" href="../web/favicon_io/favicon-96x96.png" sizes="96x96" />
-  <link rel="icon" type="image/png" href="../web/favicon_io/favicon-32x32.png" sizes="32x32" />
-  <link rel="icon" type="image/png" href="../web/favicon_io/favicon-16x16.png" sizes="16x16" />
-  <link rel="icon" type="image/png" href="../web/favicon_io/favicon-128.png" sizes="128x128" />
+  <link rel="shortcut icon" href="/favicon_io/favicon.ico?v=2">
+  <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/favicon_io/apple-touch-icon-57x57.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/favicon_io/apple-touch-icon-114x114.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/favicon_io/apple-touch-icon-72x72.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/favicon_io/apple-touch-icon-144x144.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="60x60" href="/favicon_io/apple-touch-icon-60x60.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/favicon_io/apple-touch-icon-120x120.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="76x76" href="/favicon_io/apple-touch-icon-76x76.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/favicon_io/apple-touch-icon-152x152.png" />
+  <link rel="icon" type="image/png" href="/favicon_io/favicon-196x196.png" sizes="196x196" />
+  <link rel="icon" type="image/png" href="/favicon_io/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/png" href="/favicon_io/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/favicon_io/favicon-16x16.png" sizes="16x16" />
+  <link rel="icon" type="image/png" href="/favicon_io/favicon-128.png" sizes="128x128" />
   <meta name="application-name" content="&nbsp;"/>
   <meta name="msapplication-TileColor" content="#FFFFFF" />
-  <meta name="msapplication-TileImage" content="../web/favicon_io/mstile-144x144.png" />
-  <meta name="msapplication-square70x70logo" content="../web/favicon_io/mstile-70x70.png" />
-  <meta name="msapplication-square150x150logo" content="../web/favicon_io/mstile-150x150.png" />
-  <meta name="msapplication-wide310x150logo" content="../web/favicon_io/mstile-310x150.png" />
-  <meta name="msapplication-square310x310logo" content="../web/favicon_io/mstile-310x310.png" />
-  <link rel="manifest" href="../web/favicon_io/manifest.json">
+  <meta name="msapplication-TileImage" content="/favicon_io/mstile-144x144.png" />
+  <meta name="msapplication-square70x70logo" content="/favicon_io/mstile-70x70.png" />
+  <meta name="msapplication-square150x150logo" content="/favicon_io/mstile-150x150.png" />
+  <meta name="msapplication-wide310x150logo" content="/favicon_io/mstile-310x150.png" />
+  <meta name="msapplication-square310x310logo" content="/favicon_io/mstile-310x310.png" />
+  <link rel="manifest" href="/favicon_io/manifest.json">
   
   <style> 
     .forecast-container {
