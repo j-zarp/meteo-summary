@@ -37,8 +37,8 @@ function display_mauborget_image() {
   <meta name="description" content="Les infos essentielles météo pour préparer un vol en parapente. Probabilités, carte synoptiques, vent, différence de pression, balise, DABS, etc.">
   <meta name="keywords" content="bluelift, meteo, parapente, carte, fronts, balises, vent, dabs, suisse, weather, paragliding, switzerland, wind, windy, meteoblue">
   <meta name="robots" content="index,follow">
-  <meta name="msapplication-TileColor" content="#fdca37">
-  <meta name="theme-color" content="#fdca37">
+  <meta name="msapplication-TileColor" content="#d6eaf8">
+  <meta name="theme-color" content="#d6eaf8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   
   <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
