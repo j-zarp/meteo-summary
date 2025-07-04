@@ -78,6 +78,38 @@
     .hidden-row {
       display: none;
     }
+
+    .pdf-container {
+      width: 100%;
+      max-width: 100%;
+      height: 650px;
+      overflow-y: auto;
+      margin-bottom: 20px;
+      padding: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: #fff;
+    }
+  
+    .pdf-page-canvas {
+      width: 100% !important;
+      height: auto !important;
+      margin-bottom: 10px;
+      display: block;
+    }
+  
+    @media (max-width: 768px) {
+      .pdf-container {
+        height: 500px;
+      }
+    }
+  
+    @media (max-width: 480px) {
+      .pdf-container {
+        height: 400px;
+      }
+    }
   </style>
   <!-- Matomo -->
   <script>
@@ -413,10 +445,8 @@
         <div class="row">
           <div class="col-md-12 my-4">
             <h3>DABS (aujourd'hui)</h3>
-            <div class="stop-scrolling">
-              <iframe src="./assets/pdf/dabs_today.pdf?1234#toolbar=0" width="100%" height="650px" frameborder="0" scrolling="NO"> </iframe><br>
-              <a href="https://www.skybriefing.com/fr/dabs" target="_blank">Skybriefing</a>
-            </div>
+            <div id="dabs_today_container" class="pdf-container"></div>
+            <a href="https://www.skybriefing.com/fr/dabs" target="_blank">Skybriefing</a>
           </div>
         </div>
       </div>
@@ -426,10 +456,8 @@
         <div class="row">
           <div class="col-md-12 my-4">
             <h3>DABS (demain)</h3>
-            <div class="stop-scrolling">
-              <iframe src="./assets/pdf/dabs_tomorrow.pdf?1234#toolbar=0" width="100%" height="650px" frameborder="0" scrolling="NO"> </iframe><br>
-              <a href="https://www.skybriefing.com/fr/dabs" target="_blank">Skybriefing</a>
-            </div>
+            <div id="dabs_tomorrow_container" class="pdf-container"></div>
+            <a href="https://www.skybriefing.com/fr/dabs" target="_blank">Skybriefing</a>
           </div>
         </div>
       </div>
@@ -704,6 +732,56 @@
         }
     </script>
     
+    <script src="//mozilla.github.io/pdf.js/build/pdf.mjs" type="module"></script>
+    <script type="module">
+      const { pdfjsLib } = globalThis;
+    
+      pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.mjs';
+    
+      /**
+       * Renders all pages of a PDF document into a given container.
+       * @param {string} pdfUrl - The URL of the PDF to render.
+       * @param {string} containerId - The ID of the container to render into.
+       */
+      function renderPdfAllPages(pdfUrl, containerId) {
+        const container = document.getElementById(containerId);
+        if (!container) {
+          console.error(`Container with ID "${containerId}" not found.`);
+          return;
+        }
+    
+        pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
+          console.log(`PDF loaded: ${pdfUrl} (${pdf.numPages} pages)`);
+    
+          for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+            pdf.getPage(pageNum).then(page => {
+              const scale = 1.5;
+              const viewport = page.getViewport({ scale });
+    
+              const canvas = document.createElement('canvas');
+              canvas.className = 'pdf-page-canvas';
+              canvas.height = viewport.height;
+              canvas.width = viewport.width;
+    
+              const context = canvas.getContext('2d');
+              const renderContext = {
+                canvasContext: context,
+                viewport: viewport
+              };
+    
+              page.render(renderContext);
+              container.appendChild(canvas);
+            });
+          }
+        }).catch(error => {
+          console.error(`Error loading PDF: ${pdfUrl}`, error);
+        });
+      }
+    
+      renderPdfAllPages('https://bluelift.ch/assets/pdf/dabs_today.pdf', 'dabs_today_container');
+      renderPdfAllPages('https://bluelift.ch/assets/pdf/dabs_tomorrow.pdf', 'dabs_tomorrow_container');
+    </script>
+
 </body>
 </html>
 
