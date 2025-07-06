@@ -4,7 +4,7 @@
   <title>
     BlueLift
   </title>
-  
+
   <meta name="title" content="BlueLift">
   <meta name="description" content="Les infos essentielles météo pour préparer un vol en parapente en Suisse. Probabilités, carte synoptiques, vent, différence de pression, balise, DABS, etc.">
   <meta name="keywords" content="bluelift, meteo, parapente, carte, fronts, balises, vent, dabs, suisse, weather, paragliding, switzerland, wind, windy, meteoblue, map, mountain, montagne, rain, cloud, europe, vol libre, fsvl">
@@ -12,14 +12,14 @@
   <meta name="msapplication-TileColor" content="#d6eaf8">
   <meta name="theme-color" content="#d6eaf8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  
+
   <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
   <script src="./assets/js/script.js"></script>
   <script src="https://kit.fontawesome.com/e798f160a4.js" crossorigin="anonymous"></script>
-  
+
   <link rel="stylesheet" media="all" href="./assets/css/zephyr.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-  
+
   <!-- headers for the favicon on various platforms -->
   <link rel="shortcut icon" href="/favicon_io/favicon.ico?v=2">
   <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/favicon_io/apple-touch-icon-57x57.png" />
@@ -43,8 +43,8 @@
   <meta name="msapplication-wide310x150logo" content="/favicon_io/mstile-310x150.png" />
   <meta name="msapplication-square310x310logo" content="/favicon_io/mstile-310x310.png" />
   <link rel="manifest" href="/favicon_io/manifest.json">
-  
-  <style> 
+
+  <style>
     th, td {
       border: 1px solid #ddd;
       padding: 8px;
@@ -74,7 +74,7 @@
       margin-top: 20px;
       text-align: center;
     }
-    
+
     .hidden-row {
       display: none;
     }
@@ -91,20 +91,20 @@
       border-radius: 8px;
       background: #fff;
     }
-  
+
     .pdf-page-canvas {
       width: 100% !important;
       height: auto !important;
       margin-bottom: 10px;
       display: block;
     }
-  
+
     @media (max-width: 768px) {
       .pdf-container {
         height: 500px;
       }
     }
-  
+
     @media (max-width: 480px) {
       .pdf-container {
         height: 400px;
@@ -130,7 +130,7 @@
 
 <body>
   <div id="page-content" class="striped">
-      
+
       <div class="py-3 ">
         <div id="rendered-box-567" class="container">
           <div class="row">
@@ -141,7 +141,7 @@
         </div>
       </div>
     </div>
-    
+
     <div id="box_259" class="box  odd">
       <div class="py-3 ">
         <div id="rendered-box-259" class="container">
@@ -152,23 +152,23 @@
               <h4>Vent à Ollon 420 m.</h4>
               <div id="h717"><iframe frameborder="0" marginheight="1" marginwidth="1" scrolling="no"  src="https://widget.holfuy.com/?station=717&su=km/h&t=C&lang=fr&mode=average&avgrows=16" style="width:100%; height:180px;"></iframe></div>
             </div>
-            
+
             <div class="col-md-6">
               <h4>Vent au Suchet 1573 m.</h4>
               <div id="h1636"><iframe frameborder="0" marginheight="1" marginwidth="1" scrolling="no"  src="https://widget.holfuy.com/?station=1636&su=km/h&t=C&lang=fr&mode=average&avgrows=16" style="width:100%; height:180px;"></iframe></div>
               <h4>Vent à Vounetz 1620 m.</h4>
               <div id="h549"><iframe frameborder="0" marginheight="1" marginwidth="1" scrolling="no"  src="https://widget.holfuy.com/?station=549&su=km/h&t=C&lang=fr&mode=average&avgrows=16" style="width:100%; height:180px;"></iframe></div>
             </div>
-            
+
             <div class="col-md-6">
               <h4>Vent à Chalais 500 m.</h4>
               <div id="h1086"><iframe frameborder="0" marginheight="1" marginwidth="1" scrolling="no"  src="https://widget.holfuy.com/?station=1086&su=km/h&t=C&lang=fr&mode=average&avgrows=16" style="width:100%; height:180px;"></iframe></div>
             </div>
             <div class="col-md-6">
               <h4>Vent au Crêt du Midi 2330 m.</h4>
-              <div id="h927"><iframe frameborder="0" marginheight="1" marginwidth="1" scrolling="no"  src="https://widget.holfuy.com/?station=927&su=km/h&t=C&lang=fr&mode=average&avgrows=16" style="width:100%; height:180px;"></iframe></div>  
+              <div id="h927"><iframe frameborder="0" marginheight="1" marginwidth="1" scrolling="no"  src="https://widget.holfuy.com/?station=927&su=km/h&t=C&lang=fr&mode=average&avgrows=16" style="width:100%; height:180px;"></iframe></div>
             </div>
-            
+
             <div class="col-md-6">
               <p><a href="https://winds.mobi/stations/map?lat=46.4075639&lon=7.3924254&zoom=9" target="_blank"><button class="button1">&#x2794; Carte complète des mesures</button></a></p>
             </div>
@@ -179,7 +179,7 @@
         </div>
       </div>
     </div>
-    
+
     <!-- Winds moby refuse de s'ouvrir en mode carte et force la vue "list" dans l'iframe  -->
     <!--div id="box_155" class="box  odd">
     <div class="py-3 ">
@@ -194,12 +194,12 @@
       </div>
     </div>
     </div-->
-    
+
     <div id="box_155" class="box  odd">
       <div class="py-3 ">
         <div id="rendered-box-155" class="container">
           <div class="row" id="anchor">
-            
+
             <div class="col-md-12">
               <h3>Prédictions Paraglidable</h3>
             </div>
@@ -217,7 +217,7 @@
               <div class="show-button">
                 <button id="toggleButton" class="button1">Plus de sites</button><br><br>
               </div>
-              
+
               <iframe width="100%" height="650" src="https://paraglidable.com/?lat=46.391&lon=7.094&zoom=9" allowfullscreen="true"
               allow="geolocation" name="iframe-parag" id="iframe-parag"></iframe><br>
               <a href="https://paraglidable.com/?lat=46.391&lon=7.094&zoom=9" target="_blank">Paraglidable</a>
@@ -270,15 +270,93 @@
     $remainingLines = array_slice($lines, 6);
     ?>
 
+    <?php
+    // Fetch the versions JSON
+    $versionsUrl = 'https://www.meteosuisse.admin.ch/product/output/versions.json';
+    $versionsJson = file_get_contents($versionsUrl);
+    $versions = json_decode($versionsJson, true);
+    
+    // Get tags
+    $key = 'weather-region-overview';
+    $tag = $versions[$key] ?? null;
+    
+    $jsonUrl = '';
+    if ($tag) {
+        $jsonUrl = "https://www.meteosuisse.admin.ch/product/output/weather-region-overview/version__{$tag}/weatherOverviewForecast_fr.json";
+    }
+    
+    // Fetch and decode the JSON data
+    $jsonData = file_get_contents($jsonUrl);
+    if ($jsonData === false) {
+        echo "<p>Failed to fetch weather data</p>";
+    }
+    $data = json_decode($jsonData, true);
+    if ($data === null) {
+        echo "<p>Failed to decode JSON</p>";
+    }
+    
+    // Find the region "location_id_west"
+    $regionData = null;
+    foreach ($data['regions'] as $region) {
+        if ($region['locationTitle'] === 'location_id_west') {
+            $regionData = $region;
+            break;
+        }
+    }
+    
+    if (!$regionData) {
+        echo "<p>Region not found</p>";
+    }
+    
+    // Get the forecast days and day names
+    $forecastDays = $regionData['days'] ?? [];
+    $dayInfos = $data['dayInfos'] ?? [];
+    ?>
+
     <div id="box_155" class="box  odd">
       <div class="py-3 ">
         <div id="rendered-box-155" class="container">
           <div class="row" id="anchor">
-            
+
             <div class="col-md-12">
               <h3>Bulletin (Source MétéoSuisse)</h3>
             </div>
+	  </div>
+
+          <div class="container my-3">
+            <div class="row text-center g-2 justify-content-center">
+              <?php foreach ($forecastDays as $index => $forecast):
+              $iconID = $forecast['iconId'] ?? null;
+              $tempMin = $forecast['minTemperature'] ?? null;
+              $tempMax = $forecast['maxTemperature'] ?? null;
+              $dayName = $dayInfos[$index]['dayName'] ?? "Jour " . ($index + 1);
+
+              // Translate German to French
+              if ($dayName === 'Heute') {
+                  $dayName = "Aujourd'hui";
+              } elseif ($dayName === 'Morgen') {
+                  $dayName = "Demain";
+              }
+
+              if ($iconID === null || $tempMin === null || $tempMax === null) {
+                  continue;
+              }
+  
+              $iconUrl = "https://www.meteosuisse.admin.ch/static/resources/weather-symbols/{$iconID}.svg";
+              ?>
+              <div class="col-lg-auto" style="width: 150px">
+                <div class="card">
+                  <div class="card-body">
+                    <p class="card-title"><?= htmlspecialchars($dayName) ?></p>
+                    <img src="<?= htmlspecialchars($iconUrl) ?>" alt="Weather icon" class="img-fluid my-1" style="max-height: 40px;">
+                    <p class="card-text"><?= htmlspecialchars($tempMin) ?>°C | <?= htmlspecialchars($tempMax) ?>°C</p>
+                  </div>
+                </div>
+              </div>
+              <?php endforeach; ?>
+            </div>
           </div>
+
           <div class="row">
             <div class="col-sm" id="content">
               <div id="preview">
@@ -297,7 +375,7 @@
         </div>
       </div>
     </div>
-    
+
     <?php
     // Function to check if a URL points to a valid location on cdn.knmi.nl
     function isValidUrl($url) {
@@ -345,17 +423,17 @@
     // Get the current date and tomorrow's date
     $date_utc = new DateTime("now", new DateTimeZone("UTC"));
     $tomorrow = new DateTime('tomorrow', new DateTimeZone("UTC"));
-    
+
     // Get the day of the month for tomorrow
     $tomorrowFormatted = $tomorrow->format('d.m.Y');
     $dayOfTheMonthForTomorrow = $tomorrow->format('d');
-    
+
     // Update the links with the dynamic day of the month values
     $resToday = getImageUrls($date_utc);
     $linkTomorrow00 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonthForTomorrow}00_large.gif?1234";
     $linkTomorrow12 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonthForTomorrow}12_large.gif?1234";
     ?>
-    
+
     <div id="box_154" class="box even">
       <div id="rendered-box-154" class="my-4 container">
         <div class="row">
@@ -393,7 +471,7 @@
         </div>
       </div>
     </div>
-    
+
     <div id="box_158" class="box  odd">
       <div class="py-3 ">
         <div id="rendered-box-158" class="container">
@@ -408,7 +486,7 @@
         </div>
       </div>
     </div>
-    
+
     <div id="box_159" class="box  odd">
       <div class="py-3 ">
         <div id="rendered-box-159" class="container">
@@ -423,7 +501,7 @@
         </div>
       </div>
     </div>
-    
+
     <div id="box_151" class="box  even">
       <div id="rendered-box-151" class="my-4 container">
         <div class="row">
@@ -439,7 +517,7 @@
         </div>
       </div>
     </div>
-    
+
     <div id="box_152" class="box  even">
       <div id="rendered-box-152" class="my-4 container">
         <div class="row">
@@ -462,7 +540,7 @@
         </div>
       </div>
     </div>
-    
+
     <div id="box_157" class="box  even">
       <div id="rendered-box-157" class="my-4 container">
         <div class="row">
@@ -479,9 +557,9 @@
         </div>
       </div>
     </div>
-    
+
     <!------------------------------------------------------------------------------------------------------------------------------------ -->
-    
+
     <div id="box_164" class="box odd">
       <div id="rendered-box-165" class="container">
         <h2 class="">Autres liens utiles</h2>
@@ -583,7 +661,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class="py-3 ">
       <div id="rendered-box-568" class="container">
         <div class="row">
@@ -593,7 +671,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class="container">
       <div class="row justify-content-center">
         <footer class="col-md-9 pt-5 text-muted text-center text-small">
@@ -611,7 +689,7 @@
       </div>
     </div>
   </div>
-  
+
   <script>
     // Function to fetch JSON data using PHP request
     function fetchForecastData() {
@@ -620,39 +698,39 @@
       .then(data => createTables(data))
       .catch(error => console.error('Error fetching data:', error));
     }
-    
+
     function getDateString(date) {
       const year = date.getFullYear().toString().padStart(4, '0');
       const month = (date.getMonth() + 1).toString().padStart(2, '0');
       const day = date.getDate().toString().padStart(2, '0');
       return `${year}-${month}-${day}`;
     }
-    
+
     // Function to create tables with the fetched data
     function createTables(data) {
       const today = getDateString(new Date());
       const tomorrow = getDateString(new Date(Date.now() + 86400000));
-      
+
       const todayTable = createTableForDate(data[today]);
       const tomorrowTable = createTableForDate(data[tomorrow]);
-      
+
       document.getElementById('todayForecastTable').innerHTML = todayTable;
       document.getElementById('tomorrowForecastTable').innerHTML = tomorrowTable;
     }
-    
+
     // Function to get the color based on probability value
     function getColorByProbability(probability) {
       // Map the probability to a color scale
       const red = [215, 48, 39]; // RGB for dark red
       const green = [26, 152, 80]; // RGB for dark green
-      
+
       const r = Math.round(red[0] + probability * (green[0] - red[0]));
       const g = Math.round(red[1] + probability * (green[1] - red[1]));
       const b = Math.round(red[2] + probability * (green[2] - red[2]));
-      
+
       return `rgb(${r},${g},${b})`;
     }
-    
+
     // Function to create a table for a given date
     function createTableForDate(entries, dateLabel) {
       if (!entries) return '';
@@ -672,26 +750,26 @@
           const flyColor = getColorByProbability(flyProbability);
           const xcProbability = entry.forecast.XC || 0;
           const xcColor = getColorByProbability(xcProbability);
-          
+
           // Apply "hidden-row" class to rows beyond the first three
           const rowClass = index >= 4 ? "hidden-row initially-hidden" : "";
-          
+
           table += `<tr class="${rowClass}"><td>${name}</td><td class="red-text" style="color:${flyColor};">${(flyProbability * 100).toFixed(2)}%</td><td class="green-text" style="color:${xcColor};">${(xcProbability * 100).toFixed(2)}%</td></tr>`;
         });
         table += '</table>';
         return table;
       }
-      
+
       // Fetch data when the page loads
       fetchForecastData();
-      
+
       document.getElementById('toggleButton').addEventListener('click', function () {
         const hiddenRows = document.querySelectorAll('.initially-hidden');
         hiddenRows.forEach(row => row.classList.toggle('hidden-row'));
         this.textContent = this.textContent === 'Plus de sites' ? 'Moins de sites' : 'Plus de sites';
       });
     </script>
-    
+
     <script>
       function lazyLoadIframe(entries, observer) {
         entries.forEach(entry => {
@@ -705,13 +783,13 @@
           }
         });
       }
-      
+
       const iframeObserver = new IntersectionObserver(lazyLoadIframe, {
         root: null,
         rootMargin: "0px",
         threshold: 0.1 // Adjust this threshold as needed (0 to 1)
       });
-      
+
       const lazyIframes = document.querySelectorAll("iframe[data-src]");
       lazyIframes.forEach(iframe => {
         iframeObserver.observe(iframe);
@@ -731,13 +809,13 @@
             }
         }
     </script>
-    
+
     <script src="//mozilla.github.io/pdf.js/build/pdf.mjs" type="module"></script>
     <script type="module">
       const { pdfjsLib } = globalThis;
-    
+
       pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.mjs';
-    
+
       /**
        * Renders all pages of a PDF document into a given container.
        * @param {string} pdfUrl - The URL of the PDF to render.
@@ -749,26 +827,26 @@
           console.error(`Container with ID "${containerId}" not found.`);
           return;
         }
-    
+
         pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
           console.log(`PDF loaded: ${pdfUrl} (${pdf.numPages} pages)`);
-    
+
           for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
             pdf.getPage(pageNum).then(page => {
               const scale = 1.5;
               const viewport = page.getViewport({ scale });
-    
+
               const canvas = document.createElement('canvas');
               canvas.className = 'pdf-page-canvas';
               canvas.height = viewport.height;
               canvas.width = viewport.width;
-    
+
               const context = canvas.getContext('2d');
               const renderContext = {
                 canvasContext: context,
                 viewport: viewport
               };
-    
+
               page.render(renderContext);
               container.appendChild(canvas);
             });
@@ -777,7 +855,7 @@
           console.error(`Error loading PDF: ${pdfUrl}`, error);
         });
       }
-    
+
       renderPdfAllPages('https://bluelift.ch/assets/pdf/dabs_today.pdf', 'dabs_today_container');
       renderPdfAllPages('https://bluelift.ch/assets/pdf/dabs_tomorrow.pdf', 'dabs_tomorrow_container');
     </script>
