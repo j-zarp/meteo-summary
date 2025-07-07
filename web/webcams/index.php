@@ -35,23 +35,42 @@ function display_mauborget_image() {
   
   <meta name="title" content="Webcams sites de vol">
   <meta name="description" content="Les infos essentielles météo pour préparer un vol en parapente. Probabilités, carte synoptiques, vent, différence de pression, balise, DABS, etc.">
-  <meta name="keywords" content="steambot, meteo, parapente, carte, fronts, balises, vent, dabs, suisse, weather, paragliding, switzerland, wind, windy, meteoblue">
+  <meta name="keywords" content="bluelift, meteo, parapente, carte, fronts, balises, vent, dabs, suisse, weather, paragliding, switzerland, wind, windy, meteoblue">
   <meta name="robots" content="index,follow">
-  <meta name="msapplication-TileColor" content="#fdca37">
-  <meta name="theme-color" content="#fdca37">
+  <meta name="msapplication-TileColor" content="#d6eaf8">
+  <meta name="theme-color" content="#d6eaf8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   
   <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
   <script src="../web/assets/js/script.js"></script>
   <script src="https://kit.fontawesome.com/e798f160a4.js" crossorigin="anonymous"></script>
   
-  <link rel="stylesheet" media="all" href="../web/assets/css/style.css">
+  <link rel="stylesheet" media="all" href="../assets/css/zephyr.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-  
-  <link rel="apple-touch-icon" sizes="180x180" href="../web/favicon_io/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="../web/favicon_io/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="../web/favicon_io/favicon-16x16.png">
-  <link rel="manifest" href="../web/favicon_io/site.webmanifest">
+
+  <!-- headers for the favicon on various platforms -->
+  <link rel="shortcut icon" href="/favicon_io/favicon.ico?v=2">
+  <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/favicon_io/apple-touch-icon-57x57.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/favicon_io/apple-touch-icon-114x114.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/favicon_io/apple-touch-icon-72x72.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/favicon_io/apple-touch-icon-144x144.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="60x60" href="/favicon_io/apple-touch-icon-60x60.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/favicon_io/apple-touch-icon-120x120.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="76x76" href="/favicon_io/apple-touch-icon-76x76.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/favicon_io/apple-touch-icon-152x152.png" />
+  <link rel="icon" type="image/png" href="/favicon_io/favicon-196x196.png" sizes="196x196" />
+  <link rel="icon" type="image/png" href="/favicon_io/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/png" href="/favicon_io/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/favicon_io/favicon-16x16.png" sizes="16x16" />
+  <link rel="icon" type="image/png" href="/favicon_io/favicon-128.png" sizes="128x128" />
+  <meta name="application-name" content="&nbsp;"/>
+  <meta name="msapplication-TileColor" content="#FFFFFF" />
+  <meta name="msapplication-TileImage" content="/favicon_io/mstile-144x144.png" />
+  <meta name="msapplication-square70x70logo" content="/favicon_io/mstile-70x70.png" />
+  <meta name="msapplication-square150x150logo" content="/favicon_io/mstile-150x150.png" />
+  <meta name="msapplication-wide310x150logo" content="/favicon_io/mstile-310x150.png" />
+  <meta name="msapplication-square310x310logo" content="/favicon_io/mstile-310x310.png" />
+  <link rel="manifest" href="/favicon_io/manifest.json">
   
   <style> 
     .forecast-container {
@@ -106,7 +125,7 @@ function display_mauborget_image() {
     (function() {
       var u="//matomo.steambot.ch/";
       _paq.push(['setTrackerUrl', u+'matomo.php']);
-      _paq.push(['setSiteId', '1']);
+      _paq.push(['setSiteId', '7']);
       var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
       g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
     })();
@@ -218,7 +237,11 @@ function display_mauborget_image() {
         <footer class="col-md-9 pt-5 text-muted text-center text-small">
           <ul class="list-inline">
             <li class="list-inline-item">
-              © <!-- -->2025<!-- --> Steambot.ch  -  <a href="mailto:webmaster@steambot.ch">contact</a>
+              <script type="text/javascript">
+                var user = "webmaster";
+                var domain = "bluelift.ch";
+                document.write('© <!-- -->2025<!-- --> Bluelift.ch  -  <a href="mailto:' + user + '@' + domain + '">' + 'contact</a>');
+              </script>
             </li>
           </ul>
         </footer>
