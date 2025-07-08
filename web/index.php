@@ -107,6 +107,18 @@
       background-color: #333;
       border-radius: 50%;
     }
+  /* add side margins for smartphones to allow for easy scrolling */
+  @media (max-width: 576px) {
+    #page-content {
+      padding-left: 5vw;
+      padding-right: 5vw;
+    }
+    /* Optionally, ensure iframes/images don't overflow */
+    iframe, img, .pdf-container {
+      width: 100% !important;
+      max-width: 100%;
+    }
+  }
   </style>
   <!-- Matomo -->
   <script>
