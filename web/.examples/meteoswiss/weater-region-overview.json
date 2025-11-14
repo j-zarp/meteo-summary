@@ -1,0 +1,173 @@
+{
+  "regions": [
+    {
+      "locationTitle": "location_id_north",
+      "days": [
+        {
+          "iconId": 2,
+          "maxTemperature": "14",
+          "minTemperature": "4"
+        },
+        {
+          "iconId": 3,
+          "maxTemperature": "14",
+          "minTemperature": "6"
+        },
+        {
+          "iconId": 17,
+          "maxTemperature": "10",
+          "minTemperature": "6"
+        },
+        {
+          "iconId": 20,
+          "maxTemperature": "8",
+          "minTemperature": "2"
+        },
+        {
+          "iconId": 2,
+          "maxTemperature": "4",
+          "minTemperature": "-1"
+        },
+        {
+          "iconId": 3,
+          "maxTemperature": "4",
+          "minTemperature": "-2"
+        },
+        {
+          "iconId": 15,
+          "maxTemperature": "3",
+          "minTemperature": "0"
+        },
+        {
+          "iconId": 5,
+          "maxTemperature": "3",
+          "minTemperature": "-1"
+        }
+      ]
+    },
+    {
+      "locationTitle": "location_id_west",
+      "days": [
+        {
+          "iconId": 29,
+          "maxTemperature": "15",
+          "minTemperature": "5"
+        },
+        {
+          "iconId": 29,
+          "maxTemperature": "13",
+          "minTemperature": "8"
+        },
+        {
+          "iconId": 20,
+          "maxTemperature": "10",
+          "minTemperature": "6"
+        },
+        {
+          "iconId": 17,
+          "maxTemperature": "10",
+          "minTemperature": "4"
+        },
+        {
+          "iconId": 2,
+          "maxTemperature": "6",
+          "minTemperature": "0"
+        },
+        {
+          "iconId": 3,
+          "maxTemperature": "6",
+          "minTemperature": "-1"
+        },
+        {
+          "iconId": 7,
+          "maxTemperature": "5",
+          "minTemperature": "1"
+        },
+        {
+          "iconId": 35,
+          "maxTemperature": "4",
+          "minTemperature": "0"
+        }
+      ]
+    },
+    {
+      "locationTitle": "location_id_south",
+      "days": [
+        {
+          "iconId": 3,
+          "maxTemperature": "13",
+          "minTemperature": "7"
+        },
+        {
+          "iconId": 17,
+          "maxTemperature": "12",
+          "minTemperature": "10"
+        },
+        {
+          "iconId": 20,
+          "maxTemperature": "12",
+          "minTemperature": "10"
+        },
+        {
+          "iconId": 3,
+          "maxTemperature": "14",
+          "minTemperature": "8"
+        },
+        {
+          "iconId": 2,
+          "maxTemperature": "11",
+          "minTemperature": "4"
+        },
+        {
+          "iconId": 3,
+          "maxTemperature": "9",
+          "minTemperature": "3"
+        },
+        {
+          "iconId": 14,
+          "maxTemperature": "8",
+          "minTemperature": "3"
+        },
+        {
+          "iconId": 6,
+          "maxTemperature": "8",
+          "minTemperature": "3"
+        }
+      ]
+    }
+  ],
+  "dayInfos": [
+    {
+      "dayName": "Heute",
+      "reliability": "100%"
+    },
+    {
+      "dayName": "samedi",
+      "reliability": "80%"
+    },
+    {
+      "dayName": "dimanche",
+      "reliability": "90%"
+    },
+    {
+      "dayName": "lundi",
+      "reliability": "90%"
+    },
+    {
+      "dayName": "mardi",
+      "reliability": "80%"
+    },
+    {
+      "dayName": "mercredi",
+      "reliability": "80%"
+    },
+    {
+      "dayName": "jeudi",
+      "reliability": "50%"
+    },
+    {
+      "dayName": "vendredi",
+      "reliability": "30%"
+    }
+  ]
+}
