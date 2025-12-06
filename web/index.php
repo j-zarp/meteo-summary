@@ -107,6 +107,18 @@
       background-color: #333;
       border-radius: 50%;
     }
+  /* add side margins for smartphones to allow for easy scrolling */
+  @media (max-width: 576px) {
+    #page-content {
+      padding-left: 5vw;
+      padding-right: 5vw;
+    }
+    /* Optionally, ensure iframes/images don't overflow */
+    iframe, img, .pdf-container {
+      width: 100% !important;
+      max-width: 100%;
+    }
+  }
   </style>
   <!-- Matomo -->
   <script>
@@ -258,27 +270,12 @@
 
     if ($generalTag) {
       $generalUrl = "https://www.meteosuisse.admin.ch/product/output/generalsituation/text/fr/version__{$generalTag}/textproduct_fr.xhtml";
-      $generalHtml = file_get_contents($generalUrl);
+      $generalHtml = "<h4>Situation Générale</h4>" . file_get_contents($generalUrl);
     }
     if ($regionalTag) {
       $regionalUrl = "https://www.meteosuisse.admin.ch/product/output/weather-report/fr/west/version__{$regionalTag}/textproduct_fr.xhtml";
-      $regionalHtml = file_get_contents($regionalUrl);
+      $regionalHtml = "<hr>" . file_get_contents($regionalUrl);
     }
-
-    // Insert general situation before "Prévisions pour la Suisse Romande et le Valais"
-    $insertionPoint = mb_strpos($regionalHtml, 'Prévisions pour la Suisse Romande et le Valais');
-    if ($insertionPoint !== false) {
-      $combinedHtml = mb_substr($regionalHtml, 0, $insertionPoint)
-                    . $generalHtml . "<hr>"
-                    . mb_substr($regionalHtml, $insertionPoint);
-    } else {
-      $combinedHtml = $generalHtml . "<hr>" . $regionalHtml;
-    }
-
-    // Split into lines for preview
-    $lines = preg_split('/\r\n|\r|\n/', $combinedHtml);
-    $firstLines = array_slice($lines, 0, 6);
-    $remainingLines = array_slice($lines, 6);
     ?>
 
     <?php
@@ -324,7 +321,7 @@
         <div id="rendered-box-155" class="container">
           <div class="row" id="anchor">
             <div class="col-md-12">
-              <h3>Bulletin (Source MétéoSuisse)</h3>
+              <h3>Bulletin (MétéoSuisse)</h3>
             </div>
           </div>
           <div class="container my-3">
@@ -382,16 +379,14 @@
           <div class="row">
             <div class="col-sm" id="content">
               <div id="preview">
-                <?= implode("\n", $firstLines) ?>
+                <?= $generalHtml ?>
               </div>
               <div id="fullText" style="display: none;">
-                <?= implode("\n", $remainingLines) ?>
+                <?= $regionalHtml ?>
               </div>
-              <?php if (count($remainingLines) > 0): ?>
                 <div class="show-button">
                   <button id="showMoreBtn" class="button1" onclick="toggleText()">Afficher plus</button>
                 </div>
-              <?php endif; ?>
             </div>
           </div>
         </div>

@@ -205,8 +205,7 @@ function display_mauborget_image() {
             <div class="container-lg">
               <h3>Déco Sonchaux</h3>
               <a href="http://sonchaux-webcam.ch" target="_blank">
-              <img src="https://images.weserv.nl/?url=http://sonchaux-webcam.ch/images/photo.jpg"
-                   alt="Latest webcam snapshot" style="width:100%">
+                <img id="webcam-image" alt="Latest webcam snapshot" style="width:100%">
               </a>
             </div>
           </div>
@@ -250,6 +249,13 @@ function display_mauborget_image() {
     
   </div>
   
+  <script>
+      const img = document.getElementById('webcam-image');
+      const baseUrl = 'https://images.weserv.nl/?url=http://sonchaux-webcam.ch/images/photo.jpg';
+      const timestamp = new Date().getTime();
+      img.src = `${baseUrl}&cacheBust=${timestamp}`;
+  </script>
+
 </body>
 </html>
 
