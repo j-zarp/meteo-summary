@@ -108,13 +108,13 @@
       background-color: #333;
       border-radius: 50%;
     }
-  /* add side margins for smartphones to allow for easy scrolling */
-  @media (max-width: 576px) {
-    #page-content {
-      padding-left: 5vw;
-      padding-right: 5vw;
+    /* add side margins for smartphones to allow for easy scrolling */
+    @media (max-width: 576px) {
+      #page-content {
+        padding-left: 5vw;
+        padding-right: 5vw;
+      }
     }
-  }
     /* Optionally, ensure iframes/images don't overflow */
     iframe, img, .pdf-container {
       width: 100% !important;
@@ -135,51 +135,51 @@
       z-index: 10;
       cursor: pointer;       /* indicates “tap to activate” */
     }
-        /* Icon link container */
-        .icon-link-bl {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            color: #1e293b;
-            padding: 16px 24px;
-            border-radius: 20px;
-            background: white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            transition: all 0.2s ease;
-            font-size: 20px;
-            font-weight: 500;
-            max-width: 300px;
-        }
+     /* Icon link container */
+     .icon-link-bl {
+         display: flex;
+         align-items: center;
+         gap: 12px;
+         text-decoration: none;
+         color: #1e293b;
+         padding: 16px 24px;
+         border-radius: 20px;
+         background: white;
+         box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+         transition: all 0.2s ease;
+         font-size: 20px;
+         font-weight: 500;
+         max-width: 300px;
+     }
 
-        /* Icon styling */
-        .icon-link-bl i {
-            font-size: 48px; /* Smaller, more balanced size */
-            color: #3b82f6; /* Modern blue instead of lightblue */
-            flex-shrink: 0;
-            transition: transform 0.2s ease;
-        }
+     /* Icon styling */
+     .icon-link-bl i {
+         font-size: 48px; /* Smaller, more balanced size */
+         color: #3b82f6; /* Modern blue instead of lightblue */
+         flex-shrink: 0;
+         transition: transform 0.2s ease;
+     }
 
-        /* Hover and focus states */
-        .icon-link-bl:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-            color: #1e293b;
-        }
-        .icon-link-bl:hover i {
-            transform: scale(1.1);
-            color: #1d4ed8;
-        }
-        .icon-link-bl:focus {
-            outline: 2px solid #3b82f6;
-            outline-offset: 2px;
-        }
+     /* Hover and focus states */
+     .icon-link-bl:hover {
+         transform: translateY(-2px);
+         box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+         color: #1e293b;
+     }
+     .icon-link-bl:hover i {
+         transform: scale(1.1);
+         color: #1d4ed8;
+     }
+     .icon-link-bl:focus {
+         outline: 2px solid #3b82f6;
+         outline-offset: 2px;
+     }
 
-        /* Responsive adjustments */
-        @media (max-width: 480px) {
-            .icon-link-bl { padding: 12px 16px; font-size: 14px; }
-            .icon-link-bl i { font-size: 28px; }
-        }
+     /* Responsive adjustments */
+     @media (max-width: 480px) {
+         .icon-link-bl { padding: 12px 16px; font-size: 14px; }
+         .icon-link-bl i { font-size: 28px; }
+     }
     </style>
   <!-- Matomo -->
   <!--script>
@@ -272,9 +272,14 @@
               <div class="show-button">
                 <button id="toggleButton" class="button1">Plus de sites</button><br><br>
               </div>
-              <iframe width="100%" height="650" src="https://paraglidable.com/?lat=46.391&lon=7.094&zoom=9"
-                allowfullscreen="true" allow="geolocation" name="iframe-parag" id="iframe-parag"></iframe><br>
-              <a href="https://paraglidable.com/?lat=46.391&lon=7.094&zoom=9" target="_blank">Paraglidable</a>
+              <div class="iframe-wrapper">
+                <div class="iframe-overlay">
+                </div>
+                <iframe width="100%" height="650" src="https://paraglidable.com/?lat=46.391&lon=7.094&zoom=9"
+                    allowfullscreen="true" allow="geolocation" name="iframe-parag" id="iframe-parag" class="my-iframe"></iframe>
+                <br>
+                <a href="https://paraglidable.com/?lat=46.391&lon=7.094&zoom=9" target="_blank">Paraglidable</a>
+              </div>
             </div>
           </div>
         </div>
@@ -780,12 +785,10 @@
         overlay.style.display = 'none';        // remove overlay
       });
       // Optional: disable iframe again when user scrolls away
-      /*
       wrapper.addEventListener('mouseleave', () => {
         iframe.style.pointerEvents = 'none';
         overlay.style.display = 'block';
       });
-      */
     });
 
     function fetchForecastData() {
