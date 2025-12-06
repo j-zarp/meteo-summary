@@ -16,6 +16,7 @@
 
   <link rel="stylesheet" media="all" href="./assets/css/zephyr.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
   <!-- Favicons for various platforms -->
   <link rel="shortcut icon" href="/favicon_io/favicon.ico?v=2">
@@ -41,7 +42,7 @@
   <meta name="msapplication-square310x310logo" content="/favicon_io/mstile-310x310.png" />
   <link rel="manifest" href="/favicon_io/manifest.json">
 
-  <style>
+    <style>
     th, td {
       border: 1px solid #ddd;
       padding: 8px;
@@ -113,15 +114,75 @@
       padding-left: 5vw;
       padding-right: 5vw;
     }
+  }
     /* Optionally, ensure iframes/images don't overflow */
     iframe, img, .pdf-container {
       width: 100% !important;
       max-width: 100%;
     }
-  }
-  </style>
+    /* iframe design: the user has first to click on it to enable scrolling */
+    .iframe-wrapper {
+      position: relative;
+    }
+
+    .my-iframe {
+      pointer-events: none; /* <- disables scrolling/touch */
+    }
+
+    .iframe-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 10;
+      cursor: pointer;       /* indicates “tap to activate” */
+    }
+        /* Icon link container */
+        .icon-link-bl {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: #1e293b;
+            padding: 16px 24px;
+            border-radius: 20px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+            font-size: 20px;
+            font-weight: 500;
+            max-width: 300px;
+        }
+
+        /* Icon styling */
+        .icon-link-bl i {
+            font-size: 48px; /* Smaller, more balanced size */
+            color: #3b82f6; /* Modern blue instead of lightblue */
+            flex-shrink: 0;
+            transition: transform 0.2s ease;
+        }
+
+        /* Hover and focus states */
+        .icon-link-bl:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            color: #1e293b;
+        }
+        .icon-link-bl:hover i {
+            transform: scale(1.1);
+            color: #1d4ed8;
+        }
+        .icon-link-bl:focus {
+            outline: 2px solid #3b82f6;
+            outline-offset: 2px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            .icon-link-bl { padding: 12px 16px; font-size: 14px; }
+            .icon-link-bl i { font-size: 28px; }
+        }
+    </style>
   <!-- Matomo -->
-  <script>
+  <!--script>
     var _paq = window._paq = window._paq || [];
     _paq.push(['trackPageView']);
     _paq.push(['enableLinkTracking']);
@@ -132,7 +193,7 @@
       var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
       g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
     })();
-  </script>
+  </script-->
   <!-- End Matomo Code -->
 </head>
 
@@ -143,83 +204,52 @@
       <div id="rendered-box-567" class="container">
         <div class="row">
           <div class="col-md-12">
-            <h2>Les infos essentielles pour préparer ta journée de vol</h2>
+            <h2>Les infos essentielles pour ta journée de vol</h2>
           </div>
         </div>
       </div>
     </div>
 
-    <div id="box_259" class="box odd">
+    <div class="box odd">
       <div class="py-3">
-        <div id="rendered-box-259" class="container">
-          <div class="row">
-            <div class="col-md-6">
-              <h4>Vent à Sonchaux 1421 m.</h4>
-              <div id="h550">
-                <iframe frameborder="0" marginheight="1" marginwidth="1" scrolling="no"
-                  src="https://widget.holfuy.com/?station=690&su=km/h&t=C&lang=fr&mode=average&avgrows=16"
-                  style="width:100%; height:180px;"></iframe>
-              </div>
-              <h4>Vent à Ollon 420 m.</h4>
-              <div id="h717">
-                <iframe frameborder="0" marginheight="1" marginwidth="1" scrolling="no"
-                  src="https://widget.holfuy.com/?station=717&su=km/h&t=C&lang=fr&mode=average&avgrows=16"
-                  style="width:100%; height:180px;"></iframe>
-              </div>
-            </div>
-
-            <div class="col-md-6">
-              <h4>Vent au Suchet 1573 m.</h4>
-              <div id="h1636">
-                <iframe frameborder="0" marginheight="1" marginwidth="1" scrolling="no"
-                  src="https://widget.holfuy.com/?station=1636&su=km/h&t=C&lang=fr&mode=average&avgrows=16"
-                  style="width:100%; height:180px;"></iframe>
-              </div>
-              <h4>Vent à Vounetz 1620 m.</h4>
-              <div id="h549">
-                <iframe frameborder="0" marginheight="1" marginwidth="1" scrolling="no"
-                  src="https://widget.holfuy.com/?station=549&su=km/h&t=C&lang=fr&mode=average&avgrows=16"
-                  style="width:100%; height:180px;"></iframe>
-              </div>
-            </div>
-
-            <div class="col-md-6">
-              <h4>Vent à Chalais 500 m.</h4>
-              <div id="h1086">
-                <iframe frameborder="0" marginheight="1" marginwidth="1" scrolling="no"
-                  src="https://widget.holfuy.com/?station=1086&su=km/h&t=C&lang=fr&mode=average&avgrows=16"
-                  style="width:100%; height:180px;"></iframe>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <h4>Vent au Crêt du Midi 2330 m.</h4>
-              <div id="h927">
-                <iframe frameborder="0" marginheight="1" marginwidth="1" scrolling="no"
-                  src="https://widget.holfuy.com/?station=927&su=km/h&t=C&lang=fr&mode=average&avgrows=16"
-                  style="width:100%; height:180px;"></iframe>
-              </div>
-            </div>
-
-            <div class="col-md-6">
+        <div id="rendered-box-159" class="container">
+          <div class="row justify-content-around">
+            <h3>Mesure du vent actuel</h3>
+            <div class="col-sm-4">
               <p>
-                <a href="https://winds.mobi/stations/map?lat=46.4075639&lon=7.3924254&zoom=9" target="_blank">
-                  <button class="button1">&#x2794; Carte complète des mesures</button>
+                <!--button class="button1">&#x2794; Carte winds.mobi</button-->
+                <a href="https://winds.mobi/stations/map?lat=46.4075639&lon=7.3924254&zoom=9" 
+                   target="_blank" class="icon-link-bl" aria-label="Open winds.mobi map">
+                <i class="material-icons">air</i>
+                Carte winds.mobi
                 </a>
               </p>
             </div>
-            <div class="col-md-6">
+            <div class="col-sm-4">
               <p>
-                <a href="https://bluelift.ch/webcams/" target="_blank">
-                  <button class="button1">&#x2794; Lien vers les Webcams</button>
+                <!--button class="button1">&#x2794; Etat des sites de vol (Webcams)</button-->
+                <a href="https://bluelift.ch/webcams/" 
+                   target="_blank" class="icon-link-bl" aria-label="View flight site webcams">
+                <i class="material-icons">video_camera_back</i>
+                Etat des sites de vol
                 </a>
               </p>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="iframe-wrapper">
+              <div class="iframe-overlay">
+              </div>
+              <iframe src="https://breezedude.de/?lat=46.4316&lon=7.1299&z=8.0"
+                    width="100%" height="600px" border=None
+                    allow="geolocation" class="my-iframe">
+              </iframe>
+              <a href="https://breezedude.de/?lat=46.4316&lon=7.1299&z=8.0" target="_blank">Breezedude.de</a>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- Winds.mobi iframe intentionally omitted (see original comment) -->
 
     <div id="box_155" class="box odd">
       <div class="py-3">
@@ -471,8 +501,14 @@
           </div>
           <div class="col-md-12">
             <h3>Pression et vents en Europe</h3>
-            <iframe width="100%" height="650" src="https://embed.windy.com/embed2.html?lat=45.613&lon=9.406&detailLat=46.291&detailLon=7.539&width=650&height=650&zoom=2&level=surface&overlay=pressure&product=ecmwf&menu=&message=&marker=&calendar=now&pressure=true&type=map&location=coordinates&detail=&metricWind=default&metricTemp=default&radarRange=-1"
-              allowfullscreen="true" allow="geolocation" frameborder="0"></iframe>
+            <div class="iframe-wrapper">
+              <div class="iframe-overlay">
+              </div>
+              <iframe width="100%" height="650" src="https://embed.windy.com/embed2.html?lat=45.613&lon=9.406&detailLat=46.291&detailLon=7.539&width=650&height=650&zoom=2&level=surface&overlay=pressure&product=ecmwf&menu=&message=&marker=&calendar=now&pressure=true&type=map&location=coordinates&detail=&metricWind=default&metricTemp=default&radarRange=-1"
+                  allowfullscreen="true" allow="geolocation" frameborder="0" class="my-iframe"></iframe>
+              <a href="https://www.windy.com/-Pressure-pressure?pressure,47.364,8.544,5,i:pressure" target="_blank">windy</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -484,9 +520,13 @@
           <div class="row">
             <div class="col-md-12">
               <h3>Vents en Suisse</h3>
-              <iframe src="https://www.meteoblue.com/en/weather/maps/widget/charmey_switzerland_2661211?windAnimation=0&windAnimation=1&gust=0&gust=1&satellite=0&satellite=1&cloudsAndPrecipitation=0&cloudsAndPrecipitation=1&temperature=0&temperature=1&sunshine=0&sunshine=1&extremeForecastIndex=0&extremeForecastIndex=1&geoloc=fixed&tempunit=C&windunit=km%252Fh&lengthunit=metric&zoom=5&autowidth=auto#coords=8/46.423/7.648&map=windAnimation~rainbow~NEMS4~850%20mb~none"
-                frameborder="0" scrolling="NO" allowtransparency="true" sandbox="allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox"
-                style="width: 100%; height: 720px"></iframe>
+              <div class="iframe-wrapper">
+                <div class="iframe-overlay">
+                </div>
+                <iframe src="https://www.meteoblue.com/en/weather/maps/widget/charmey_switzerland_2661211?windAnimation=0&windAnimation=1&gust=0&gust=1&satellite=0&satellite=1&cloudsAndPrecipitation=0&cloudsAndPrecipitation=1&temperature=0&temperature=1&sunshine=0&sunshine=1&extremeForecastIndex=0&extremeForecastIndex=1&geoloc=fixed&tempunit=C&windunit=km%252Fh&lengthunit=metric&zoom=5&autowidth=auto#coords=8/46.423/7.129&map=windAnimation~rainbow~NEMS4~850%20mb~none"
+                    frameborder="0" scrolling="NO" allowtransparency="true" sandbox="allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox"
+                    style="width: 100%; height: 720px" class="my-iframe"></iframe>
+              </div>
               <div>
                 <a href="https://www.meteoblue.com/en/weather/maps/charmey_switzerland_2661211?utm_source=weather_widget&utm_medium=linkus&utm_content=map&utm_campaign=Weather%2BWidget"
                   target="_blank" rel="noopener">meteoblue</a>
@@ -503,10 +543,14 @@
         <div id="rendered-box-159" class="container">
           <div class="row" id="anchor159">
             <div class="col-md-12">
-              <h3>XC-term ICON D2</h3>
-              <iframe width="100%" height="650" src="https://xctherm.com/icon?lat=46.2505639&lon=7.3924254&zoom=9"
-                allowfullscreen="true" allow="geolocation" name="iframe-xcterm" id="iframe-xcterm"></iframe><br>
-              <a href="https://xctherm.com/icon?lat=46.2505639&lon=7.3924254&zoom=9" target="_blank">XC Term</a>
+              <h3>XC-term ICON D2/CH1</h3>
+              <div class="iframe-wrapper">
+                <div class="iframe-overlay">
+                </div>
+                <iframe width="100%" height="650" src="https://xctherm.com/icon?lat=46.4505639&lon=6.9924254&zoom=9"
+                    allowfullscreen="true" allow="geolocation" name="iframe-xcterm" id="iframe-xcterm" class="my-iframe"></iframe><br>
+                <a href="https://xctherm.com/icon?lat=46.2505639&lon=7.3924254&zoom=9" target="_blank">XC Term</a>
+              </div>
             </div>
           </div>
         </div>
@@ -560,12 +604,14 @@
         <div class="row">
           <div class="col-md-12 my-4">
             <h3>Carte de vol à voile</h3>
-            <div class="stop-scrolling">
+            <div class="iframe-wrapper">
+              <div class="iframe-overlay">
+              </div>
               <iframe src="https://map.geo.admin.ch/#/embed?lang=en&center=2587196.94,1144748.25&z=3.285&bgLayer=ch.swisstopo.pixelkarte-farbe&topic=ech&layers=ch.swisstopo.zeitreihen@year=1864,f;ch.bfs.gebaeude_wohnungs_register,f;ch.bav.haltestellen-oev,f;ch.swisstopo.swisstlm3d-wanderwege,f;ch.vbs.schiessanzeigen,f;ch.astra.wanderland-sperrungen_umleitungen,f;ch.bazl.segelflugkarte"
-                style="border: 0;width: 100%;height: 650px;max-width: 100%;max-height: 100%;" allow="geolocation"></iframe>
+                    style="border: 0;width: 100%;height: 650px;max-width: 100%;max-height: 100%;" allow="geolocation" class="my-iframe"></iframe>
               <br>
               <a href="https://map.geo.admin.ch/?zoom=2.984824051441887&bgLayer=ch.swisstopo.pixelkarte-farbe&time_current=latest&lang=fr&topic=ech&layers=ch.bazl.segelflugkarte&E=2582968.49&N=1128202.41"
-                target="_blank">Map Geo Admin</a>
+                  target="_blank">Map Geo Admin</a>
             </div>
           </div>
         </div>
@@ -723,6 +769,25 @@
 
   <!-- JS for Forecasts, Carousels, PDF rendering, and UI interactions -->
   <script>
+    // to allow scrolling on iframes after a click
+    document.querySelectorAll('.iframe-wrapper').forEach(wrapper => {
+      
+      const iframe = wrapper.querySelector('.my-iframe');
+      const overlay = wrapper.querySelector('.iframe-overlay');
+    
+      overlay.addEventListener('click', () => {
+        iframe.style.pointerEvents = 'auto';  // enable interaction
+        overlay.style.display = 'none';        // remove overlay
+      });
+      // Optional: disable iframe again when user scrolls away
+      /*
+      wrapper.addEventListener('mouseleave', () => {
+        iframe.style.pointerEvents = 'none';
+        overlay.style.display = 'block';
+      });
+      */
+    });
+
     function fetchForecastData() {
       fetch('get_forecast.php')
         .then(response => response.json())
@@ -881,4 +946,3 @@
   </script>
 </body>
 </html>
-
