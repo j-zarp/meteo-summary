@@ -217,7 +217,6 @@
             <h3>Mesures actuelles</h3>
             <div class="col-sm-4">
               <p>
-                <!--button class="button1">&#x2794; Carte winds.mobi</button-->
                 <a href="https://winds.mobi/stations/map?lat=46.4075639&lon=7.3924254&zoom=9" 
                    target="_blank" class="icon-link-bl" aria-label="Open winds.mobi map">
                 <i class="material-icons">air</i>
@@ -227,7 +226,6 @@
             </div>
             <div class="col-sm-4">
               <p>
-                <!--button class="button1">&#x2794; Etat des sites de vol (Webcams)</button-->
                 <a href="https://bluelift.ch/webcams/" 
                    target="_blank" class="icon-link-bl" aria-label="View flight site webcams">
                 <i class="material-icons">video_camera_back</i>
@@ -238,13 +236,12 @@
           </div>
           <div class="col-md-12">
             <div class="iframe-wrapper">
-              <div class="iframe-overlay">
-              </div>
+              <div class="iframe-overlay"></div>
               <iframe src="https://breezedude.de/?lat=46.4316&lon=7.1299&z=8.0"
-                    width="100%" height="600px" border=None
-                    allow="geolocation" class="my-iframe">
+                    width="100%" height="600px"
+                    allow="geolocation" class="my-iframe" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
               </iframe>
-              <a href="https://breezedude.de/?lat=46.4316&lon=7.1299&z=8.0" target="_blank">Breezedude.de</a>
+              <a href="https://breezedude.de/?lat=46.4316&lon=7.1299&z=8.0" target="_blank" rel="noopener">Breezedude.de</a>
             </div>
           </div>
         </div>
@@ -273,12 +270,11 @@
                 <button id="toggleButton" class="button1">Plus de sites</button><br><br>
               </div>
               <div class="iframe-wrapper">
-                <div class="iframe-overlay">
-                </div>
+                <div class="iframe-overlay"></div>
                 <iframe width="100%" height="650" src="https://paraglidable.com/?lat=46.391&lon=7.094&zoom=9"
-                    allowfullscreen="true" allow="geolocation" name="iframe-parag" id="iframe-parag" class="my-iframe"></iframe>
+                    allowfullscreen="true" allow="geolocation" name="iframe-parag" id="iframe-parag" class="my-iframe" loading="lazy"></iframe>
                 <br>
-                <a href="https://paraglidable.com/?lat=46.391&lon=7.094&zoom=9" target="_blank">Paraglidable</a>
+                <a href="https://paraglidable.com/?lat=46.391&lon=7.094&zoom=9" target="_blank" rel="noopener">Paraglidable</a>
               </div>
             </div>
           </div>
@@ -288,65 +284,75 @@
 
     <!-- === Bulletin météo Suisse === -->
     <?php
-    // Fetch the versions JSON
+    // Read versions.json once and defensively decode
     $versionsUrl = 'https://www.meteosuisse.admin.ch/product/output/versions.json';
-    $versionsJson = file_get_contents($versionsUrl);
-    $versions = json_decode($versionsJson, true);
+    $versionsJson = @file_get_contents($versionsUrl);
+    $versions = [];
+    if ($versionsJson !== false) {
+      $decoded = json_decode($versionsJson, true);
+      if (is_array($decoded)) {
+        $versions = $decoded;
+      }
+    }
 
-    // Get tags
+    // Keys we need
     $generalKey = 'generalsituation/text/fr';
     $regionalKey = 'weather-report/fr/west';
 
-    $generalTag = $versions[$generalKey] ?? null;
-    $regionalTag = $versions[$regionalKey] ?? null;
+    $generalTag = is_array($versions) ? ($versions[$generalKey] ?? null) : null;
+    $regionalTag = is_array($versions) ? ($versions[$regionalKey] ?? null) : null;
 
     $generalHtml = '';
     $regionalHtml = '';
 
     if ($generalTag) {
       $generalUrl = "https://www.meteosuisse.admin.ch/product/output/generalsituation/text/fr/version__{$generalTag}/textproduct_fr.xhtml";
-      $generalHtml = "<h4>Situation Générale</h4>" . file_get_contents($generalUrl);
+      $tmp = @file_get_contents($generalUrl);
+      if ($tmp !== false) {
+        $generalHtml = "<h4>Situation Générale</h4>" . $tmp;
+      }
     }
     if ($regionalTag) {
       $regionalUrl = "https://www.meteosuisse.admin.ch/product/output/weather-report/fr/west/version__{$regionalTag}/textproduct_fr.xhtml";
-      $regionalHtml = "<hr>" . file_get_contents($regionalUrl);
+      $tmp = @file_get_contents($regionalUrl);
+      if ($tmp !== false) {
+        $regionalHtml = "<hr>" . $tmp;
+      }
     }
     ?>
 
     <?php
-    // Fetch the versions JSON again for region overview
-    $versionsUrl = 'https://www.meteosuisse.admin.ch/product/output/versions.json';
-    $versionsJson = file_get_contents($versionsUrl);
-    $versions = json_decode($versionsJson, true);
-
+    // region overview (use same $versions)
     $key = 'weather-region-overview';
-    $tag = $versions[$key] ?? null;
+    $tag = is_array($versions) ? ($versions[$key] ?? null) : null;
 
-    $jsonUrl = '';
+    $jsonData = '';
     if ($tag) {
       $jsonUrl = "https://www.meteosuisse.admin.ch/product/output/weather-region-overview/version__{$tag}/weatherOverviewForecast_fr.json";
+      $jsonData = @file_get_contents($jsonUrl);
     }
 
-    $jsonData = file_get_contents($jsonUrl);
-    if ($jsonData === false) {
-      echo "<p>Failed to fetch weather data</p>";
-    }
-    $data = json_decode($jsonData, true);
-    if ($data === null) {
-      echo "<p>Failed to decode JSON</p>";
+    $data = [];
+    if ($jsonData === false || $jsonData === '') {
+      // keep $data empty
+    } else {
+      $decoded = json_decode($jsonData, true);
+      if (is_array($decoded)) {
+        $data = $decoded;
+      }
     }
 
     // Find the region "location_id_west"
     $regionData = null;
-    foreach ($data['regions'] as $region) {
-      if ($region['locationTitle'] === 'location_id_west') {
-        $regionData = $region;
-        break;
+    if (!empty($data['regions']) && is_array($data['regions'])) {
+      foreach ($data['regions'] as $region) {
+        if (isset($region['locationTitle']) && $region['locationTitle'] === 'location_id_west') {
+          $regionData = $region;
+          break;
+        }
       }
     }
-    if (!$regionData) {
-      echo "<p>Region not found</p>";
-    }
+
     $forecastDays = $regionData['days'] ?? [];
     $dayInfos = $data['dayInfos'] ?? [];
     ?>
@@ -384,9 +390,9 @@
                 <div class="col-lg-auto" style="width: 150px">
                   <div class="card weather-card-data">
                     <div class="card-body text-center">
-                      <p class="card-title"><?= htmlspecialchars($dayName) ?></p>
-                      <img src="<?= htmlspecialchars($iconUrl) ?>" alt="Weather icon" class="img-fluid my-1" style="max-height: 40px;">
-                      <p class="card-text"><?= htmlspecialchars($tempMin) ?>°C | <?= htmlspecialchars($tempMax) ?>°C</p>
+                      <p class="card-title"><?= htmlspecialchars($dayName, ENT_QUOTES | ENT_SUBSTITUTE) ?></p>
+                      <img src="<?= htmlspecialchars($iconUrl, ENT_QUOTES | ENT_SUBSTITUTE) ?>" alt="Weather icon" class="img-fluid my-1" style="max-height: 40px;">
+                      <p class="card-text"><?= htmlspecialchars($tempMin, ENT_QUOTES | ENT_SUBSTITUTE) ?>°C | <?= htmlspecialchars($tempMax, ENT_QUOTES | ENT_SUBSTITUTE) ?>°C</p>
                     </div>
                   </div>
                 </div>
@@ -435,8 +441,12 @@
       curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
       curl_setopt($ch, CURLOPT_HEADER, 0);
       $data = curl_exec($ch);
+      $err = curl_error($ch);
       curl_close($ch);
-      // the response contains an error message
+      if ($data === false || $data === null) {
+        return false;
+      }
+      // the response may contain an error message
       if (strpos($data, '<Code>NoSuchKey</Code>') !== false) {
         return false;
       }
@@ -481,12 +491,12 @@
       <div id="rendered-box-154" class="my-4 container">
         <div class="row">
           <div class="col-md-6 my-4">
-            <h4><?php echo $resToday[2]; ?></h4>
-            <img class="img-fluid" src="<?php echo $resToday[0]; ?>" >
+            <h4><?php echo htmlspecialchars($resToday[2] ?? '', ENT_QUOTES | ENT_SUBSTITUTE); ?></h4>
+            <img class="img-fluid" src="<?php echo htmlspecialchars($resToday[0] ?? '', ENT_QUOTES | ENT_SUBSTITUTE); ?>" >
           </div>
           <div class="col-md-6 my-4">
-            <h4><?php echo $resToday[3]; ?></h4>
-            <img class="img-fluid" src="<?php echo $resToday[1]; ?>" >
+            <h4><?php echo htmlspecialchars($resToday[3] ?? '', ENT_QUOTES | ENT_SUBSTITUTE); ?></h4>
+            <img class="img-fluid" src="<?php echo htmlspecialchars($resToday[1] ?? '', ENT_QUOTES | ENT_SUBSTITUTE); ?>" >
           </div>
           <div class="col-md-6 my-4">
             <h4>Prévision <?php echo $tomorrowFormatted; ?> 00h UTC</h4>
@@ -507,11 +517,10 @@
           <div class="col-md-12">
             <h3>Pression et vents en Europe</h3>
             <div class="iframe-wrapper">
-              <div class="iframe-overlay">
-              </div>
+              <div class="iframe-overlay"></div>
               <iframe width="100%" height="650" src="https://embed.windy.com/embed2.html?lat=45.613&lon=9.406&detailLat=46.291&detailLon=7.539&width=650&height=650&zoom=2&level=surface&overlay=pressure&product=ecmwf&menu=&message=&marker=&calendar=now&pressure=true&type=map&location=coordinates&detail=&metricWind=default&metricTemp=default&radarRange=-1"
-                  allowfullscreen="true" allow="geolocation" frameborder="0" class="my-iframe"></iframe>
-              <a href="https://www.windy.com/-Pressure-pressure?pressure,47.364,8.544,5,i:pressure" target="_blank">windy</a>
+                  allowfullscreen="true" allow="geolocation" frameborder="0" class="my-iframe" loading="lazy"></iframe>
+              <a href="https://www.windy.com/-Pressure-pressure?pressure,47.364,8.544,5,i:pressure" target="_blank" rel="noopener">windy</a>
               </div>
             </div>
           </div>
@@ -526,11 +535,10 @@
             <div class="col-md-12">
               <h3>Vents en Suisse</h3>
               <div class="iframe-wrapper">
-                <div class="iframe-overlay">
-                </div>
+                <div class="iframe-overlay"></div>
                 <iframe src="https://www.meteoblue.com/en/weather/maps/widget/charmey_switzerland_2661211?windAnimation=0&windAnimation=1&gust=0&gust=1&satellite=0&satellite=1&cloudsAndPrecipitation=0&cloudsAndPrecipitation=1&temperature=0&temperature=1&sunshine=0&sunshine=1&extremeForecastIndex=0&extremeForecastIndex=1&geoloc=fixed&tempunit=C&windunit=km%252Fh&lengthunit=metric&zoom=5&autowidth=auto#coords=8/46.423/7.129&map=windAnimation~rainbow~NEMS4~850%20mb~none"
                     frameborder="0" scrolling="NO" allowtransparency="true" sandbox="allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox"
-                    style="width: 100%; height: 720px" class="my-iframe"></iframe>
+                    style="width: 100%; height: 720px" class="my-iframe" loading="lazy"></iframe>
               </div>
               <div>
                 <a href="https://www.meteoblue.com/en/weather/maps/charmey_switzerland_2661211?utm_source=weather_widget&utm_medium=linkus&utm_content=map&utm_campaign=Weather%2BWidget"
@@ -550,11 +558,10 @@
             <div class="col-md-12">
               <h3>XC-term ICON D2/CH1</h3>
               <div class="iframe-wrapper">
-                <div class="iframe-overlay">
-                </div>
+                <div class="iframe-overlay"></div>
                 <iframe width="100%" height="650" src="https://xctherm.com/icon?lat=46.4505639&lon=6.9924254&zoom=9"
-                    allowfullscreen="true" allow="geolocation" name="iframe-xcterm" id="iframe-xcterm" class="my-iframe"></iframe><br>
-                <a href="https://xctherm.com/icon?lat=46.2505639&lon=7.3924254&zoom=9" target="_blank">XC Term</a>
+                    allowfullscreen="true" allow="geolocation" name="iframe-xcterm" id="iframe-xcterm" class="my-iframe" loading="lazy"></iframe><br>
+                <a href="https://xctherm.com/icon?lat=46.2505639&lon=7.3924254&zoom=9" target="_blank" rel="noopener">XC Term</a>
               </div>
             </div>
           </div>
@@ -567,15 +574,15 @@
         <div class="row">
           <div class="col-md-12">
             <img class="img-fluid"
-              src="https://my.meteoblue.com/visimage/meteogram_web_hd?look=KILOMETER_PER_HOUR%2CCELSIUS%2CMILLIMETER&amp;apikey=5838a18e295d&amp;winddirection=3char&amp;temperature=C&amp;windspeed=kmh&amp;precipitationamount=mm&amp;city=Charmey&amp;iso2=ch&amp;lat=46.6196&amp;lon=7.16486&amp;asl=895&amp;tz=Europe%2FZurich&amp;lang=fr&amp;sig=e477e9b21e39f451d48c7e8ca9ef69f1">
+              src="https://my.meteoblue.com/visimage/meteogram_web_hd?look=KILOMETER_PER_HOUR%2CCELSIUS%2CMILLIMETER&amp;apikey=5838a18e295d&amp;winddirection=3char&amp;temperature=C&amp;windspeed=kmh&amp;precipitationamount=mm&amp;city=Charmey&amp;iso2=ch&amp;lat=46.6196&amp;lon=7.16486&amp;asl=895&amp;tz=Europe%2FZurich&amp;lang=fr&amp;sig=e477e9b21e39f451d48c7e8ca9ef69f1" alt="cannot load image for Charmey">
           </div>
           <div class="col-md-12">
             <img class="img-fluid"
-              src="https://my.meteoblue.com/visimage/meteogram_web_hd?look=KILOMETER_PER_HOUR%2CCELSIUS%2CMILLIMETER&amp;apikey=5838a18e295d&amp;winddirection=3char&amp;temperature=C&amp;windspeed=kmh&amp;precipitationamount=mm&amp;city=Bex&amp;iso2=ch&amp;lat=46.2496&amp;lon=7.0098&amp;asl=421&amp;tz=Europe%2FZurich&amp;lang=fr&amp;sig=208862b9e08efcb4d575496047005de4">
+              src="https://my.meteoblue.com/visimage/meteogram_web_hd?look=KILOMETER_PER_HOUR%2CCELSIUS%2CMILLIMETER&amp;apikey=5838a18e295d&amp;winddirection=3char&amp;temperature=C&amp;windspeed=kmh&amp;precipitationamount=mm&amp;city=Bex&amp;iso2=ch&amp;lat=46.2496&amp;lon=7.0098&amp;asl=421&amp;tz=Europe%2FZurich&amp;lang=fr&amp;sig=208862b9e08efcb4d575496047005de4"  alt="cannot load image for Bex">
           </div>
           <div class="col-md-12">
             <img class="img-fluid"
-              src="https://my.meteoblue.com/visimage/meteogram_web_hd?look=KILOMETER_PER_HOUR%2CCELSIUS%2CMILLIMETER&amp;apikey=5838a18e295d&amp;temperature=C&amp;windspeed=kmh&amp;precipitationamount=mm&amp;winddirection=3char&amp;city=Vercorin&amp;iso2=ch&amp;lat=46.256500&amp;lon=7.531040&amp;asl=1340&amp;tz=Europe%2FZurich&amp;lang=fr&amp;sig=106c5f8e751346e105fb75aabe45a2eb">
+              src="https://my.meteoblue.com/visimage/meteogram_web_hd?look=KILOMETER_PER_HOUR%2CCELSIUS%2CMILLIMETER&amp;apikey=5838a18e295d&amp;temperature=C&amp;windspeed=kmh&amp;precipitationamount=mm&amp;winddirection=3char&amp;city=Vercorin&amp;iso2=ch&amp;lat=46.256500&amp;lon=7.531040&amp;asl=1340&amp;tz=Europe%2FZurich&amp;lang=fr&amp;sig=106c5f8e751346e105fb75aabe45a2eb"  alt="cannot load image for Vercorin">
           </div>
         </div>
       </div>
@@ -587,7 +594,7 @@
           <div class="col-md-12 my-4">
             <h3>DABS (aujourd'hui)</h3>
             <div id="dabs_today_container" class="pdf-container"></div>
-            <a href="https://www.skybriefing.com/fr/dabs" target="_blank">Skybriefing</a>
+            <a href="https://www.skybriefing.com/fr/dabs" target="_blank" rel="noopener">Skybriefing</a>
           </div>
         </div>
       </div>
@@ -598,7 +605,7 @@
           <div class="col-md-12 my-4">
             <h3>DABS (demain)</h3>
             <div id="dabs_tomorrow_container" class="pdf-container"></div>
-            <a href="https://www.skybriefing.com/fr/dabs" target="_blank">Skybriefing</a>
+            <a href="https://www.skybriefing.com/fr/dabs" target="_blank" rel="noopener">Skybriefing</a>
           </div>
         </div>
       </div>
@@ -610,13 +617,11 @@
           <div class="col-md-12 my-4">
             <h3>Carte de vol à voile</h3>
             <div class="iframe-wrapper">
-              <div class="iframe-overlay">
-              </div>
+              <div class="iframe-overlay"></div>
               <iframe src="https://map.geo.admin.ch/#/embed?lang=en&center=2587196.94,1144748.25&z=3.285&bgLayer=ch.swisstopo.pixelkarte-farbe&topic=ech&layers=ch.swisstopo.zeitreihen@year=1864,f;ch.bfs.gebaeude_wohnungs_register,f;ch.bav.haltestellen-oev,f;ch.swisstopo.swisstlm3d-wanderwege,f;ch.vbs.schiessanzeigen,f;ch.astra.wanderland-sperrungen_umleitungen,f;ch.bazl.segelflugkarte"
-                    style="border: 0;width: 100%;height: 650px;max-width: 100%;max-height: 100%;" allow="geolocation" class="my-iframe"></iframe>
+                    style="border: 0;width: 100%;height: 650px;max-width: 100%;max-height: 100%;" allow="geolocation" class="my-iframe" loading="lazy"></iframe>
               <br>
-              <a href="https://map.geo.admin.ch/?zoom=2.984824051441887&bgLayer=ch.swisstopo.pixelkarte-farbe&time_current=latest&lang=fr&topic=ech&layers=ch.bazl.segelflugkarte&E=2582968.49&N=1128202.41"
-                  target="_blank">Map Geo Admin</a>
+              <a href="https://map.geo.admin.ch/?zoom=2.984824051441887&bgLayer=ch.swisstopo.pixelkarte-farbe&time_current=latest&lang=fr&topic=ech&layers=ch.bazl.segelflugkarte&E=2582968.49&N=1128202.41" target="_blank" rel="noopener">Map Geo Admin</a>
             </div>
           </div>
         </div>
@@ -631,14 +636,14 @@
             <div class="mb-5 h-100">
               <div class="row">
                 <div class="col-md-6 img-thingy-right">
-                  <a href="https://www.meteo-fsvl.ch/system/login.html" target="_blank">
-                    <img class="img-fluid" src="./assets/png/fsvl_meteo.png" >
+                  <a href="https://www.meteo-fsvl.ch/system/login.html" target="_blank" rel="noopener">
+                    <img class="img-fluid" src="./assets/png/fsvl_meteo.png" alt="">
                   </a>
                 </div>
                 <div class="col-md-5 offset-md-1">
                   <h4 class="mt-5 mt-md-0">SHV/FSVL Meteo - Login</h4>
                   <small>
-                    <a href="https://www.meteo-fsvl.ch/system/login.html" class="thick_link text-dark" target="_blank">https://www.meteo-fsvl.ch/s...</a>
+                    <a href="https://www.meteo-fsvl.ch/system/login.html" class="thick_link text-dark" target="_blank" rel="noopener">https://www.meteo-fsvl.ch/s...</a>
                   </small>
                 </div>
               </div>
@@ -648,14 +653,14 @@
             <div class="mb-5 h-100">
               <div class="row">
                 <div class="col-md-6 img-thingy-right">
-                  <a href="https://meteo-parapente.com/" target="_blank">
-                    <img class="img-fluid" src="./assets/png/meteo_parapente.png" >
+                  <a href="https://meteo-parapente.com/" target="_blank" rel="noopener">
+                    <img class="img-fluid" src="./assets/png/meteo_parapente.png" alt="">
                   </a>
                 </div>
                 <div class="col-md-5 offset-md-1">
                   <h4 class="mt-5 mt-md-0">meteo-parapente.com</h4>
                   <small>
-                    <a href="https://meteo-parapente.com/" class="thick_link text-dark" target="_blank">https://meteo-parapente.com/</a>
+                    <a href="https://meteo-parapente.com/" class="thick_link text-dark" target="_blank" rel="noopener">https://meteo-parapente.com/</a>
                   </small>
                 </div>
               </div>
@@ -667,14 +672,14 @@
             <div class="mb-5 h-100">
               <div class="row">
                 <div class="col-md-6 img-thingy-right">
-                  <a href="https://flyxc.app/" target="_blank">
-                    <img class="img-fluid" src="./assets/png/flyxc.png" >
+                  <a href="https://flyxc.app/" target="_blank" rel="noopener">
+                    <img class="img-fluid" src="./assets/png/flyxc.png" alt="">
                   </a>
                 </div>
                 <div class="col-md-5 offset-md-1">
                   <h4 class="mt-5 mt-md-0">Hike &amp; FlyXC - pour préparer un cross et exporter les balises</h4>
                   <small>
-                    <a href="https://flyxc.app/" class="thick_link text-dark" target="_blank">https://flyxc.app/</a>
+                    <a href="https://flyxc.app/" class="thick_link text-dark" target="_blank" rel="noopener">https://flyxc.app/</a>
                   </small>
                 </div>
               </div>
@@ -684,14 +689,14 @@
             <div class="mb-5 h-100">
               <div class="row">
                 <div class="col-md-6 img-thingy-right">
-                  <a href="https://www.burnair.cloud/?layers=%2Cant%2Ctw&visibility=%2Cauto%2Con&base=bbt#10/46.5442/7.5510" target="_blank">
-                    <img class="img-fluid" src="./assets/png/burnair.png" >
+                  <a href="https://www.burnair.cloud/?layers=%2Cant%2Ctw&visibility=%2Cauto%2Con&base=bbt#10/46.5442/7.5510" target="_blank" rel="noopener">
+                    <img class="img-fluid" src="./assets/png/burnair.png" alt="">
                   </a>
                 </div>
                 <div class="col-md-5 offset-md-1">
                   <h4 class="mt-5 mt-md-0">Burnair - cartes, prévisions, XC planning</h4>
                   <small>
-                    <a href="https://www.burnair.cloud/?layers=%2Cant%2Ctw&visibility=%2Cauto%2Con&base=bbt#10/46.5442/7.5510" class="thick_link text-dark" target="_blank">https://www.burnair.cloud</a>
+                    <a href="https://www.burnair.cloud/?layers=%2Cant%2Ctw&visibility=%2Cauto%2Con&base=bbt#10/46.5442/7.5510" class="thick_link text-dark" target="_blank" rel="noopener">https://www.burnair.cloud</a>
                   </small>
                 </div>
               </div>
@@ -703,14 +708,14 @@
             <div class="mb-5 h-100">
               <div class="row">
                 <div class="col-md-6 img-thingy-right">
-                  <a href="https://www.hikeandfly.org/" target="_blank">
-                    <img class="img-fluid" src="./assets/png/HF_planer.png" >
+                  <a href="https://www.hikeandfly.org/" target="_blank" rel="noopener">
+                    <img class="img-fluid" src="./assets/png/HF_planer.png" alt="">
                   </a>
                 </div>
                 <div class="col-md-5 offset-md-1">
                   <h4 class="mt-5 mt-md-0">Hike &amp; Fly Planer - Calcule la distance de plané depuis un sommet</h4>
                   <small>
-                    <a href="https://www.hikeandfly.org/" class="thick_link text-dark" target="_blank">https://www.hikeandfly.org/</a>
+                    <a href="https://www.hikeandfly.org/" class="thick_link text-dark" target="_blank" rel="noopener">https://www.hikeandfly.org/</a>
                   </small>
                 </div>
               </div>
@@ -720,14 +725,14 @@
             <div class="mb-5 h-100">
               <div class="row">
                 <div class="col-md-6 img-thingy-right">
-                  <a href="https://thermal.kk7.ch/#46.379,7.388,11" target="_blank">
-                    <img class="img-fluid" src="./assets/png/thermal.kk7.ch.png" >
+                  <a href="https://thermal.kk7.ch/#46.379,7.388,11" target="_blank" rel="noopener">
+                    <img class="img-fluid" src="./assets/png/thermal.kk7.ch.png" alt="">
                   </a>
                 </div>
                 <div class="col-md-5 offset-md-1">
                   <h4 class="mt-5 mt-md-0">Thermal KK7 - thermiques et routes</h4>
                   <small>
-                    <a href="https://thermal.kk7.ch/#46.379,7.388,11" class="thick_link text-dark" target="_blank">https://thermal.kk7.ch</a>
+                    <a href="https://thermal.kk7.ch/#46.379,7.388,11" class="thick_link text-dark" target="_blank" rel="noopener">https://thermal.kk7.ch</a>
                   </small>
                 </div>
               </div>
@@ -744,7 +749,7 @@
             <p>
               <b>Avec le résumé de tous ces points, cherche le danger de la journée.&nbsp;</b><br>
               Tu peux utiliser pour cela la
-              <a href="https://www.meteo-fsvl.ch/assets/media/Downloads/Meteo/Strategie_de_decision_meteo.pdf" target="_blank">stratégie de décision météo de la FSVL.</a>
+              <a href="https://www.meteo-fsvl.ch/assets/media/Downloads/Meteo/Strategie_de_decision_meteo.pdf" target="_blank" rel="noopener">stratégie de décision météo de la FSVL.</a>
             </p>
           </div>
         </div>
@@ -757,13 +762,13 @@
           <ul class="list-inline">
             <li>
               Inspiré de la
-              <a href="https://www.twistair.ch/ecole-parapente/42-meteo-parapente-vercorin" target="_blank">page meteo de Twist'air</a>
+              <a href="https://www.twistair.ch/ecole-parapente/42-meteo-parapente-vercorin" target="_blank" rel="noopener">page meteo de Twist'air</a>
             </li>
             <li class="list-inline-item">
               <script type="text/javascript">
                 var user = "webmaster";
                 var domain = "bluelift.ch";
-                document.write('© <!-- -->2025<!-- --> Bluelift.ch  -  <a href="mailto:' + user + '@' + domain + '">' + 'contact</a>');
+                document.write('© 2025 Bluelift.ch  -  <a href="mailto:' + user + '@' + domain + '">contact</a>');
               </script>
             </li>
           </ul>
@@ -776,10 +781,10 @@
   <script>
     // to allow scrolling on iframes after a click
     document.querySelectorAll('.iframe-wrapper').forEach(wrapper => {
-      
       const iframe = wrapper.querySelector('.my-iframe');
       const overlay = wrapper.querySelector('.iframe-overlay');
-    
+      if (!iframe || !overlay) return;
+
       overlay.addEventListener('click', () => {
         iframe.style.pointerEvents = 'auto';  // enable interaction
         overlay.style.display = 'none';        // remove overlay
@@ -803,47 +808,90 @@
       const day = date.getDate().toString().padStart(2, '0');
       return `${year}-${month}-${day}`;
     }
-    function createTables(data) {
-      const today = getDateString(new Date());
-      const tomorrow = getDateString(new Date(Date.now() + 86400000));
-      const todayTable = createTableForDate(data[today]);
-      const tomorrowTable = createTableForDate(data[tomorrow]);
-      document.getElementById('todayForecastTable').innerHTML = todayTable;
-      document.getElementById('tomorrowForecastTable').innerHTML = tomorrowTable;
+
+    function clamp01(v) {
+      if (typeof v !== 'number' || !isFinite(v)) return 0;
+      return Math.min(1, Math.max(0, v));
     }
+
     function getColorByProbability(probability) {
+      const p = clamp01(probability);
       const red = [215, 48, 39];
       const green = [26, 152, 80];
-      const r = Math.round(red[0] + probability * (green[0] - red[0]));
-      const g = Math.round(red[1] + probability * (green[1] - red[1]));
-      const b = Math.round(red[2] + probability * (green[2] - red[2]));
+      const r = Math.round(red[0] + p * (green[0] - red[0]));
+      const g = Math.round(red[1] + p * (green[1] - red[1]));
+      const b = Math.round(red[2] + p * (green[2] - red[2]));
       return `rgb(${r},${g},${b})`;
     }
+
     function createTableForDate(entries) {
-      if (!entries) return '';
-      const sortedEntries = entries.sort((a, b) => b.forecast.fly - a.forecast.fly);
+      if (!entries || !Array.isArray(entries) || entries.length === 0) return '<p>Aucune donnée.</p>';
+      // sort by forecast.fly descending (defensive)
+      const safeEntries = entries.slice().sort((a, b) => {
+        const af = (a && a.forecast && typeof a.forecast.fly === 'number') ? a.forecast.fly : 0;
+        const bf = (b && b.forecast && typeof b.forecast.fly === 'number') ? b.forecast.fly : 0;
+        return bf - af;
+      });
+
       let table = `<table class="forecast-table" style="width:100%"><tr><th>Name</th><th>Fly Probability</th><th>XC Probability</th></tr>`;
-      sortedEntries.forEach((entry, index) => {
-        let name = entry.name;
+      safeEntries.forEach((entry, index) => {
+        const rawName = (entry && entry.name) ? entry.name : '—';
+        let name = rawName;
         if (name === "Vercorin Village") name = "Vercorin";
         else if (name === "Lévanchy (Levanchy) Grandvillard") name = "Grandvillard";
         else if (name === "Verbier Les Ruinettes") name = "Verbier";
-        const flyProbability = entry.forecast.fly;
+
+        const flyProbability = (entry && entry.forecast && typeof entry.forecast.fly === 'number') ? entry.forecast.fly : 0;
+        const xcProbability = (entry && entry.forecast && typeof entry.forecast.XC === 'number') ? entry.forecast.XC : 0;
+
         const flyColor = getColorByProbability(flyProbability);
-        const xcProbability = entry.forecast.XC || 0;
         const xcColor = getColorByProbability(xcProbability);
-        const rowClass = index >= 4 ? "hidden-row initially-hidden" : "";
-        table += `<tr class="${rowClass}"><td>${name}</td><td class="red-text" style="color:${flyColor};">${(flyProbability * 100).toFixed(2)}%</td><td class="green-text" style="color:${xcColor};">${(xcProbability * 100).toFixed(2)}%</td></tr>`;
+
+        const rowClass = index >= 4 ? 'hidden-row initially-hidden' : '';
+        table += `<tr class="${rowClass}"><td>${escapeHtml(name)}</td>`;
+        table += `<td class="red-text" style="color:${flyColor};">${(flyProbability * 100).toFixed(2)}%</td>`;
+        table += `<td class="green-text" style="color:${xcColor};">${(xcProbability * 100).toFixed(2)}%</td></tr>`;
       });
       table += '</table>';
       return table;
     }
+
+    function escapeHtml(s) {
+      if (s === null || s === undefined) return '';
+      return String(s)
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
+    function createTables(data) {
+      if (!data || typeof data !== 'object') {
+        document.getElementById('todayForecastTable').innerHTML = '<p>Erreur de données</p>';
+        document.getElementById('tomorrowForecastTable').innerHTML = '<p>Erreur de données</p>';
+        return;
+      }
+      const today = getDateString(new Date());
+      const tomorrow = getDateString(new Date(Date.now() + 86400000));
+      const todayTable = createTableForDate(data[today]);
+      const tomorrowTable = createTableForDate(data[tomorrow]);
+      const todayElem = document.getElementById('todayForecastTable');
+      const tomorrowElem = document.getElementById('tomorrowForecastTable');
+      if (todayElem) todayElem.innerHTML = todayTable;
+      if (tomorrowElem) tomorrowElem.innerHTML = tomorrowTable;
+    }
+
     fetchForecastData();
-    document.getElementById('toggleButton').addEventListener('click', function () {
-      const hiddenRows = document.querySelectorAll('.initially-hidden');
-      hiddenRows.forEach(row => row.classList.toggle('hidden-row'));
-      this.textContent = this.textContent === 'Plus de sites' ? 'Moins de sites' : 'Plus de sites';
-    });
+
+    const toggleBtn = document.getElementById('toggleButton');
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', function () {
+        const hiddenRows = document.querySelectorAll('.initially-hidden');
+        hiddenRows.forEach(row => row.classList.toggle('hidden-row'));
+        this.textContent = this.textContent === 'Plus de sites' ? 'Moins de sites' : 'Plus de sites';
+      });
+    }
   </script>
 
   <script>
@@ -870,7 +918,8 @@
     function toggleText() {
       const fullText = document.getElementById('fullText');
       const btn = document.getElementById('showMoreBtn');
-      if (fullText.style.display === 'none') {
+      if (!fullText || !btn) return;
+      if (fullText.style.display === 'none' || fullText.style.display === '') {
         fullText.style.display = 'block';
         btn.textContent = 'Afficher moins';
       } else {
@@ -903,7 +952,7 @@
             const renderContext = { canvasContext: context, viewport: viewport };
             page.render(renderContext);
             container.appendChild(canvas);
-          });
+          }).catch(err => console.error('Error rendering page', err));
         }
       }).catch(error => {
         console.error(`Error loading PDF: ${pdfUrl}`, error);
@@ -918,7 +967,10 @@
   <!-- Carousel Card Grouping Script -->
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      const cardColumns = Array.from(document.querySelectorAll('.weather-card-data')).map(card => card.parentElement.cloneNode(true));
+      const cardElements = Array.from(document.querySelectorAll('.weather-card-data'));
+      // When we built cards on the server side, we wrapped each card in a col with class col-lg-auto.
+      // To clone structure for carousel we clone the parent column node if present.
+      const cardColumns = cardElements.map(card => card.closest('.col-lg-auto') ? card.closest('.col-lg-auto').cloneNode(true) : card.parentElement.cloneNode(true));
       const carouselInner = document.getElementById('weather-carousel-inner');
       if (!carouselInner) return;
       function getCardsPerSlide() {
