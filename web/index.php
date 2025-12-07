@@ -214,7 +214,7 @@
       <div class="py-3">
         <div id="rendered-box-159" class="container">
           <div class="row justify-content-around">
-            <h3>Mesure du vent actuel</h3>
+            <h3>Mesures actuelles</h3>
             <div class="col-sm-4">
               <p>
                 <!--button class="button1">&#x2794; Carte winds.mobi</button-->
