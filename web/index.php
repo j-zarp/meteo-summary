@@ -162,12 +162,12 @@
         gap: 12px;
         text-decoration: none;
         color: #1e293b;
-        padding: 16px 24px;
+        padding: 2% 4%;
         border-radius: 20px;
         background: white;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         transition: all 0.2s ease;
-        font-size: 20px;
+        font-size: 100%;
         font-weight: 500;
         max-width: 300px;
       }
@@ -345,7 +345,7 @@
                 <p>
                   <!--button class="button1">&#x2794; Carte winds.mobi</button-->
                   <a href="https://winds.mobi/stations/map?lat=46.4075639&lon=7.3924254&zoom=9" target="_blank"
-                    class="icon-link-bl" aria-label="Open winds.mobi map">
+                    class="icon-link-bl" aria-label="Open winds.<wbr>mobi map">
                     <i class="material-icons">air</i>
                     Carte winds.mobi
                   </a>
@@ -367,7 +367,7 @@
                 <div class="iframe-overlay">
                 </div>
                 <iframe src="https://breezedude.de/?lat=46.4316&lon=7.1299&z=8.0" width="100%" height="600px"
-                  border=None allow="geolocation" class="my-iframe">
+                  allow="geolocation" loading="lazy" style="border: none; display: block;" class="my-iframe">
                 </iframe>
                 <a href="https://breezedude.de/?lat=46.4316&lon=7.1299&z=8.0" target="_blank">Breezedude.de</a>
               </div>
