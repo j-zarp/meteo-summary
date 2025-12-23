@@ -8,7 +8,7 @@
     <meta name="description"
       content="Les infos essentielles météo pour préparer un vol en parapente en Suisse. Probabilités, carte synoptiques, vent, différence de pression, balise, DABS, etc.">
     <meta name="keywords"
-      content="bluelift, meteo, parapente, carte, fronts, balises, vent, dabs, suisse, weather, paragliding, switzerland, wind, windy, meteoblue, map, mountain, montagne, rain, cloud, europe, vol libre, fsvl">
+      content="bluelift, meteo, parapente, carte, fronts, balises, vent, dabs, suisse, weather, paragliding, switzerland, wind, windy, meteoblue, map, mountain, montagne, rain, cloud, europe, vol libr[...]
     <meta name="robots" content="index,follow">
     <meta name="msapplication-TileColor" content="#d6eaf8">
     <meta name="theme-color" content="#d6eaf8">
@@ -144,15 +144,28 @@
         position: relative;
       }
 
+      /* By default allow interaction */
       .my-iframe {
-        pointer-events: none;
+        pointer-events: auto;
       }
 
+      /* Hide the overlay by default; only show on small screens via the media query below */
       .iframe-overlay {
+        display: none;
         position: absolute;
         inset: 0;
         z-index: 10;
         cursor: pointer;
+      }
+
+      /* On small screens keep the old behavior: overlay active, iframe non-interactive until user taps */
+      @media (max-width: 991.98px) {
+        .my-iframe {
+          pointer-events: none;
+        }
+        .iframe-overlay {
+          display: block;
+        }
       }
 
       /* Icon link container */
@@ -790,7 +803,7 @@
               <div class="iframe-wrapper">
                 <div class="iframe-overlay">
                 </div>
-                <iframe width="100%" height="650" src="https://embed.windy.com/embed2.html?lat=45.613&lon=9.406&detailLat=46.291&detailLon=7.539&width=650&height=650&zoom=2&level=surface&overlay=pressure&product=ecmwf&menu=&message=&marker=&calendar=now&pressure=true&type=map&location=coordinates&detail=&metricWind=default&metricTemp=default&radarRange=-1"
+                <iframe width="100%" height="650" src="https://embed.windy.com/embed2.html?lat=45.613&lon=9.406&detailLat=46.291&detailLon=7.539&width=650&height=650&zoom=2&level=surface&overlay=press[...]
                   allowfullscreen="true" allow="geolocation" frameborder="0" class="my-iframe" loading="lazy"></iframe>
                 <a href="https://www.windy.com/-Pressure-pressure?pressure,47.364,8.544,5,i:pressure" target="_blank" rel="noopener">windy</a>
               </div>
@@ -809,7 +822,7 @@
                   <div class="iframe-overlay">
                   </div>
                   <iframe
-                    src="https://www.meteoblue.com/en/weather/maps/widget/charmey_switzerland_2661211?windAnimation=0&windAnimation=1&gust=0&gust=1&satellite=0&satellite=1&cloudsAndPrecipitation=0&cloudsAndPrecipitation=1&temperature=0&temperature=1&sunshine=0&sunshine=1&extremeForecastIndex=0&extremeForecastIndex=1&geoloc=fixed&tempunit=C&windunit=km%252Fh&lengthunit=metric&zoom=5&autowidth=auto#coords=8/46.423/7.129&map=windAnimation~rainbow~NEMS4~850%20mb~none"
+                    src="https://www.meteoblue.com/en/weather/maps/widget/charmey_switzerland_2661211?windAnimation=0&windAnimation=1&gust=0&gust=1&satellite=0&satellite=1&cloudsAndPrecipitation=0&clo[...]
                     frameborder="0" scrolling="NO" allowtransparency="true"
                     sandbox="allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox"
                     style="width: 100%; height: 720px" class="my-iframe"></iframe>
@@ -851,15 +864,15 @@
           <div class="row">
             <div class="col-md-12">
               <img class="img-fluid"
-                src="https://my.meteoblue.com/visimage/meteogram_web_hd?look=KILOMETER_PER_HOUR%2CCELSIUS%2CMILLIMETER&amp;apikey=5838a18e295d&amp;winddirection=3char&amp;temperature=C&amp;windspeed=kmh&amp;precipitationamount=mm&amp;city=Charmey&amp;iso2=ch&amp;lat=46.6196&amp;lon=7.16486&amp;asl=895&amp;tz=Europe%2FZurich&amp;lang=fr&amp;sig=e477e9b21e39f451d48c7e8ca9ef69f1">
+                src="https://my.meteoblue.com/visimage/meteogram_web_hd?look=KILOMETER_PER_HOUR%2CCELSIUS%2CMILLIMETER&amp;apikey=5838a18e295d&amp;winddirection=3char&amp;temperature=C&amp;windspeed=k[...]
             </div>
             <div class="col-md-12">
               <img class="img-fluid"
-                src="https://my.meteoblue.com/visimage/meteogram_web_hd?look=KILOMETER_PER_HOUR%2CCELSIUS%2CMILLIMETER&amp;apikey=5838a18e295d&amp;winddirection=3char&amp;temperature=C&amp;windspeed=kmh&amp;precipitationamount=mm&amp;city=Bex&amp;iso2=ch&amp;lat=46.2496&amp;lon=7.0098&amp;asl=421&amp;tz=Europe%2FZurich&amp;lang=fr&amp;sig=208862b9e08efcb4d575496047005de4">
+                src="https://my.meteoblue.com/visimage/meteogram_web_hd?look=KILOMETER_PER_HOUR%2CCELSIUS%2CMILLIMETER&amp;apikey=5838a18e295d&amp;winddirection=3char&amp;temperature=C&amp;windspeed=k[...]
             </div>
             <div class="col-md-12">
               <img class="img-fluid"
-                src="https://my.meteoblue.com/visimage/meteogram_web_hd?look=KILOMETER_PER_HOUR%2CCELSIUS%2CMILLIMETER&amp;apikey=5838a18e295d&amp;temperature=C&amp;windspeed=kmh&amp;precipitationamount=mm&amp;winddirection=3char&amp;city=Vercorin&amp;iso2=ch&amp;lat=46.256500&amp;lon=7.531040&amp;asl=1340&amp;tz=Europe%2FZurich&amp;lang=fr&amp;sig=106c5f8e751346e105fb75aabe45a2eb">
+                src="https://my.meteoblue.com/visimage/meteogram_web_hd?look=KILOMETER_PER_HOUR%2CCELSIUS%2CMILLIMETER&amp;apikey=5838a18e295d&amp;temperature=C&amp;windspeed=kmh&amp;precipitationamou[...]
             </div>
           </div>
         </div>
@@ -897,11 +910,11 @@
                 <div class="iframe-overlay">
                 </div>
                 <iframe
-                  src="https://map.geo.admin.ch/#/embed?lang=en&center=2587196.94,1144748.25&z=3.285&bgLayer=ch.swisstopo.pixelkarte-farbe&topic=ech&layers=ch.swisstopo.zeitreihen@year=1864,f;ch.bfs.gebaeude_wohnungs_register,f;ch.bav.haltestellen-oev,f;ch.swisstopo.swisstlm3d-wanderwege,f;ch.vbs.schiessanzeigen,f;ch.astra.wanderland-sperrungen_umleitungen,f;ch.bazl.segelflugkarte"
+                  src="https://map.geo.admin.ch/#/embed?lang=en&center=2587196.94,1144748.25&z=3.285&bgLayer=ch.swisstopo.pixelkarte-farbe&topic=ech&layers=ch.swisstopo.zeitreihen@year=1864,f;ch.bfs.g[...]
                   style="border: 0;width: 100%;height: 650px;max-width: 100%;max-height: 100%;" allow="geolocation"
                   class="my-iframe"></iframe>
                 <br>
-                <a href="https://map.geo.admin.ch/?zoom=2.984824051441887&bgLayer=ch.swisstopo.pixelkarte-farbe&time_current=latest&lang=fr&topic=ech&layers=ch.bazl.segelflugkarte&E=2582968.49&N=1128202.41"
+                <a href="https://map.geo.admin.ch/?zoom=2.984824051441887&bgLayer=ch.swisstopo.pixelkarte-farbe&time_current=latest&lang=fr&topic=ech&layers=ch.bazl.segelflugkarte&E=2582968.49&N=11282[...]
                   target="_blank">Map Geo Admin</a>
               </div>
             </div>
@@ -1069,22 +1082,75 @@
     </div>
 
     <script>
-      // to allow scrolling on iframes after a click
-      document.querySelectorAll('.iframe-wrapper').forEach(wrapper => {
-        const iframe = wrapper.querySelector('.my-iframe');
-        const overlay = wrapper.querySelector('.iframe-overlay');
-        if (!iframe || !overlay) return;
+      // Responsive handling for iframe interaction:
+      // - On large screens (>= BREAKPOINT) iframes are interactive (no overlay, no click-to-activate).
+      // - On smaller screens (< BREAKPOINT) overlay is visible and a tap is required to enable iframe interaction (preserves previous mobile behavior).
+      (function () {
+        const BREAKPOINT = 992; // px - adjust if you prefer a different cutoff
+        const wrappers = Array.from(document.querySelectorAll('.iframe-wrapper'));
 
-        overlay.addEventListener('click', () => {
-          iframe.style.pointerEvents = 'auto';  // enable interaction
-          overlay.style.display = 'none';        // remove overlay
-        });
-        // Optional: disable iframe again when user scrolls away
-        wrapper.addEventListener('mouseleave', () => {
+        function enableInteraction(iframe, overlay) {
+          iframe.style.pointerEvents = 'auto';
+          if (overlay) overlay.style.display = 'none';
+        }
+
+        function disableInteraction(iframe, overlay) {
           iframe.style.pointerEvents = 'none';
-          overlay.style.display = 'block';
+          if (overlay) overlay.style.display = 'block';
+        }
+
+        function clearListeners(wrapper) {
+          // replace overlay with a clone to remove any attached listeners
+          const overlay = wrapper.querySelector('.iframe-overlay');
+          if (overlay && overlay.parentNode) {
+            const clone = overlay.cloneNode(true);
+            overlay.parentNode.replaceChild(clone, overlay);
+          }
+          // remove any inline mouseleave handler
+          wrapper.onmouseleave = null;
+        }
+
+        function setupWrapper(wrapper) {
+          const iframe = wrapper.querySelector('.my-iframe');
+          const overlay = wrapper.querySelector('.iframe-overlay');
+          if (!iframe || !overlay) return;
+
+          clearListeners(wrapper);
+          const activeOverlay = wrapper.querySelector('.iframe-overlay'); // re-select after clone
+
+          if (window.innerWidth >= BREAKPOINT) {
+            // large screens: let users interact directly
+            enableInteraction(iframe, activeOverlay);
+          } else {
+            // small screens: require a tap to enable interaction
+            disableInteraction(iframe, activeOverlay);
+
+            // one-time click to enable interaction
+            activeOverlay.addEventListener('click', function onClick() {
+              enableInteraction(iframe, activeOverlay);
+            }, { once: true });
+
+            // when the user moves pointer/focus away, disable again (helps when leaving iframe region)
+            wrapper.addEventListener('mouseleave', function () {
+              disableInteraction(iframe, activeOverlay);
+            });
+          }
+        }
+
+        function setupAll() {
+          wrappers.forEach(setupWrapper);
+        }
+
+        // initial setup (page scripts are at the end of body, but keep safe)
+        setupAll();
+
+        // debounce resize so we don't thrash event handlers
+        let resizeTimer = null;
+        window.addEventListener('resize', function () {
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(setupAll, 150);
         });
-      });
+      })();
 
       function fetchForecastData() {
         fetch('get_forecast.php')
