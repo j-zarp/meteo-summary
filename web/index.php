@@ -308,7 +308,7 @@
       }
     </style>
     <!-- Matomo -->
-    <!--script>
+    <script>
       var _paq = window._paq = window._paq || [];
       _paq.push(['trackPageView']);
       _paq.push(['enableLinkTracking']);
@@ -319,7 +319,7 @@
         var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
         g.async = true; g.src = u + 'matomo.js'; s.parentNode.insertBefore(g, s);
       })();
-    </script-->
+    </script>
     <!-- End Matomo Code -->
   </head>
 
@@ -1069,6 +1069,7 @@
     </div>
 
     <script>
+      // improved UX for iframe (scrolling block)
       // To allow scrolling on iframes based on device type and interaction
       document.querySelectorAll('.iframe-wrapper').forEach(wrapper => {
         const iframe = wrapper.querySelector('.my-iframe');
@@ -1099,7 +1100,6 @@
         }
       });
     </script>
-     // -----------------------------------------------------
     
     <script>
       function fetchForecastData() {
