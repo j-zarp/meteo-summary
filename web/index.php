@@ -1069,23 +1069,39 @@
     </div>
 
     <script>
-      // to allow scrolling on iframes after a click
+      // improved UX for iframe (scrolling block)
+      // To allow scrolling on iframes based on device type and interaction
       document.querySelectorAll('.iframe-wrapper').forEach(wrapper => {
         const iframe = wrapper.querySelector('.my-iframe');
         const overlay = wrapper.querySelector('.iframe-overlay');
         if (!iframe || !overlay) return;
-
-        overlay.addEventListener('click', () => {
-          iframe.style.pointerEvents = 'auto';  // enable interaction
-          overlay.style.display = 'none';        // remove overlay
-        });
-        // Optional: disable iframe again when user scrolls away
-        wrapper.addEventListener('mouseleave', () => {
-          iframe.style.pointerEvents = 'none';
-          overlay.style.display = 'block';
-        });
+      
+        // Check if the device has a mouse/fine pointer
+        const isFinePointer = window.matchMedia('(pointer: fine)').matches;
+      
+        if (isFinePointer) {
+          // DESKTOP BEHAVIOR: 
+          // Remove the overlay immediately so the iframe is interactive by default
+          overlay.style.display = 'none';
+          iframe.style.pointerEvents = 'auto';
+        } else {
+          // MOBILE/TOUCH BEHAVIOR: 
+          // Maintain the "click to activate" logic
+          overlay.addEventListener('click', () => {
+            iframe.style.pointerEvents = 'auto'; // enable interaction
+            overlay.style.display = 'none';      // remove overlay 
+          });
+      
+          // Optional: Reset when the user scrolls away
+          wrapper.addEventListener('mouseleave', () => {
+            iframe.style.pointerEvents = 'none';
+            overlay.style.display = 'block';
+          });
+        }
       });
-
+    </script>
+    
+    <script>
       function fetchForecastData() {
         fetch('get_forecast.php')
           .then(response => response.json())
