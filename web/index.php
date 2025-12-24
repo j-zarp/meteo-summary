@@ -144,28 +144,15 @@
         position: relative;
       }
 
-      /* By default allow interaction */
       .my-iframe {
-        pointer-events: auto;
+        pointer-events: none;
       }
 
-      /* Hide the overlay by default; only show on small screens via the media query below */
       .iframe-overlay {
-        display: none;
         position: absolute;
         inset: 0;
         z-index: 10;
         cursor: pointer;
-      }
-
-      /* On small screens keep the old behavior: overlay active, iframe non-interactive until user taps */
-      @media (max-width: 991.98px) {
-        .my-iframe {
-          pointer-events: none;
-        }
-        .iframe-overlay {
-          display: block;
-        }
       }
 
       /* Icon link container */
@@ -321,7 +308,7 @@
       }
     </style>
     <!-- Matomo -->
-    <script>
+    <!--script>
       var _paq = window._paq = window._paq || [];
       _paq.push(['trackPageView']);
       _paq.push(['enableLinkTracking']);
@@ -332,7 +319,7 @@
         var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
         g.async = true; g.src = u + 'matomo.js'; s.parentNode.insertBefore(g, s);
       })();
-    </script>
+    </script-->
     <!-- End Matomo Code -->
   </head>
 
@@ -1082,76 +1069,39 @@
     </div>
 
     <script>
-      // Responsive handling for iframe interaction:
-      // - On large screens (>= BREAKPOINT) iframes are interactive (no overlay, no click-to-activate).
-      // - On smaller screens (< BREAKPOINT) overlay is visible and a tap is required to enable iframe interaction (preserves previous mobile behavior).
-      (function () {
-        const BREAKPOINT = 992; // px - adjust if you prefer a different cutoff
-        const wrappers = Array.from(document.querySelectorAll('.iframe-wrapper'));
-
-        function enableInteraction(iframe, overlay) {
+      // To allow scrolling on iframes based on device type and interaction
+      document.querySelectorAll('.iframe-wrapper').forEach(wrapper => {
+        const iframe = wrapper.querySelector('.my-iframe');
+        const overlay = wrapper.querySelector('.iframe-overlay');
+        if (!iframe || !overlay) return;
+      
+        // Check if the device has a mouse/fine pointer
+        const isFinePointer = window.matchMedia('(pointer: fine)').matches;
+      
+        if (isFinePointer) {
+          // DESKTOP BEHAVIOR: 
+          // Remove the overlay immediately so the iframe is interactive by default
+          overlay.style.display = 'none';
           iframe.style.pointerEvents = 'auto';
-          if (overlay) overlay.style.display = 'none';
+        } else {
+          // MOBILE/TOUCH BEHAVIOR: 
+          // Maintain the "click to activate" logic
+          overlay.addEventListener('click', () => {
+            iframe.style.pointerEvents = 'auto'; // enable interaction
+            overlay.style.display = 'none';      // remove overlay 
+          });
+      
+          // Optional: Reset when the user scrolls away
+          wrapper.addEventListener('mouseleave', () => {
+            iframe.style.pointerEvents = 'none';
+            overlay.style.display = 'block';
+          });
         }
-
-        function disableInteraction(iframe, overlay) {
-          iframe.style.pointerEvents = 'none';
-          if (overlay) overlay.style.display = 'block';
-        }
-
-        function clearListeners(wrapper) {
-          // replace overlay with a clone to remove any attached listeners
-          const overlay = wrapper.querySelector('.iframe-overlay');
-          if (overlay && overlay.parentNode) {
-            const clone = overlay.cloneNode(true);
-            overlay.parentNode.replaceChild(clone, overlay);
-          }
-          // remove any inline mouseleave handler
-          wrapper.onmouseleave = null;
-        }
-
-        function setupWrapper(wrapper) {
-          const iframe = wrapper.querySelector('.my-iframe');
-          const overlay = wrapper.querySelector('.iframe-overlay');
-          if (!iframe || !overlay) return;
-
-          clearListeners(wrapper);
-          const activeOverlay = wrapper.querySelector('.iframe-overlay'); // re-select after clone
-
-          if (window.innerWidth >= BREAKPOINT) {
-            // large screens: let users interact directly
-            enableInteraction(iframe, activeOverlay);
-          } else {
-            // small screens: require a tap to enable interaction
-            disableInteraction(iframe, activeOverlay);
-
-            // one-time click to enable interaction
-            activeOverlay.addEventListener('click', function onClick() {
-              enableInteraction(iframe, activeOverlay);
-            }, { once: true });
-
-            // when the user moves pointer/focus away, disable again (helps when leaving iframe region)
-            wrapper.addEventListener('mouseleave', function () {
-              disableInteraction(iframe, activeOverlay);
-            });
-          }
-        }
-
-        function setupAll() {
-          wrappers.forEach(setupWrapper);
-        }
-
-        // initial setup (page scripts are at the end of body, but keep safe)
-        setupAll();
-
-        // debounce resize so we don't thrash event handlers
-        let resizeTimer = null;
-        window.addEventListener('resize', function () {
-          clearTimeout(resizeTimer);
-          resizeTimer = setTimeout(setupAll, 150);
-        });
-      })();
-
+      });
+    </script>
+     // -----------------------------------------------------
+    
+    <script>
       function fetchForecastData() {
         fetch('get_forecast.php')
           .then(response => response.json())
