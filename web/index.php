@@ -716,7 +716,8 @@
         $data = curl_exec($ch);
         curl_close($ch);
         // the response contains an error message
-        if (strpos($data, '<Code>NoSuchKey</Code>') !== false) {
+        if (strpos($data, '<Code>NoSuchKey</Code>') or 
+            strpos($data, '<Code>AccessDenied</Code>')) {
           return false;
         }
         return true;
