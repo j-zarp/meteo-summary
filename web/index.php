@@ -1060,7 +1060,7 @@
                 <script type="text/javascript">
                   var user = "webmaster";
                   var domain = "bluelift.ch";
-                  document.write('© 2025 Bluelift.ch  -  <a href="mailto:' + user + '@' + domain + '">contact</a>');
+                  document.write('© 2026 Bluelift.ch  -  <a href="mailto:' + user + '@' + domain + '">contact</a>');
                 </script>
               </li>
             </ul>
