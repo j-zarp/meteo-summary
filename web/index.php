@@ -366,7 +366,7 @@
               <div class="iframe-wrapper">
                 <div class="iframe-overlay">
                 </div>
-                <iframe src="https://breezedude.de/?lat=46.4316&lon=7.1299&z=8.0" width="100%" height="600px"
+                <iframe src="https://breezedude.de/?lat=46.4316&lon=7.1299&z=8.0&solo=arrow" width="100%" height="600px"
                   allow="geolocation" loading="lazy" style="border: none; display: block;" class="my-iframe">
                 </iframe>
                 <a href="https://breezedude.de/?lat=46.4316&lon=7.1299&z=8.0" target="_blank">Breezedude.de</a>
