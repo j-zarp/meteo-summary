@@ -148,20 +148,6 @@
     #stxt { max-width: 75px; }
   }
 </style>
-  <!-- Matomo -->
-  <script>
-    var _paq = window._paq = window._paq || [];
-    _paq.push(['trackPageView']);
-    _paq.push(['enableLinkTracking']);
-    (function () {
-      var u = "//matomo.steambot.ch/";
-      _paq.push(['setTrackerUrl', u + 'matomo.php']);
-      _paq.push(['setSiteId', '7']);
-      var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
-      g.async = true; g.src = u + 'matomo.js'; s.parentNode.insertBefore(g, s);
-    })();
-  </script>
-  <!-- End Matomo Code -->
 </head>
 <body>
 <div id="app">
@@ -248,11 +234,14 @@ const CFG = {
 //   • small viewport (phone / narrow embed)
 //   • loaded inside an <iframe>
 //   • ?compact=1 URL param set explicitly
+// Result is memoized — it never changes mid-session except on window resize.
+let _isCompactCache = null;
 function isCompact() {
-  return CFG._compact
-      || window.self !== window.top
-      || window.innerWidth < 640;
+  if (_isCompactCache === null)
+    _isCompactCache = CFG._compact || window.self !== window.top || window.innerWidth < 640;
+  return _isCompactCache;
 }
+window.addEventListener('resize', () => { _isCompactCache = null; });
 
 // ═══════════════════════════════════════════════════════════════
 //  FOEHN CORRIDORS
@@ -407,17 +396,31 @@ const foehnWarningLayer = L.layerGroup().addTo(map);  // index dots — on top o
 //    FS  – speed label font size
 //    TW  – reserved pixel width for the label (fits 2–3 digit numbers)
 // ═══════════════════════════════════════════════════════════════
+// Cache divIcon objects keyed by quantized inputs.
+// Direction is quantized to the nearest 5° (72 buckets), gust to nearest km/h.
+// A cache miss recomputes and stores the icon; hits return the stored object.
+const _iconCache = new Map();
+
 function makeArrowIcon(speedKmh, dirDeg, gustKmh) {
-  const color   = windColor(gustKmh ?? speedKmh);
-  const sc      = CFG.arrowScale;
   const gustSpd = gustKmh ?? speedKmh;
+  const showLabel = !isCompact() || map.getZoom() >= CFG.labelMinZoom;
+
+  // Build a compact cache key from quantized visual inputs
+  const cacheKey = gustSpd == null || gustSpd < 1
+    ? `calm-${gustSpd == null ? 'n' : '0'}`
+    : `${Math.round(gustSpd)}-${Math.round((dirDeg ?? 0) / 5) * 5}-${showLabel ? 1 : 0}`;
+
+  if (_iconCache.has(cacheKey)) return _iconCache.get(cacheKey);
+
+  const color   = windColor(gustSpd == null || gustSpd < 1 ? (gustKmh ?? speedKmh) : Math.round(gustSpd));
+  const sc      = CFG.arrowScale;
 
   // ── Calm / unknown: double concentric circles (WMO calm symbol) ──────────
   if (gustSpd == null || gustSpd < 1) {
     const r = 6 * sc, pad = 5 * sc;
     const S = Math.ceil((r + pad) * 2);
     const c = S / 2;
-    return L.divIcon({
+    const icon = L.divIcon({
       className: '',
       html: `<svg width="${S}" height="${S}" viewBox="0 0 ${S} ${S}"
                xmlns="${NS}" overflow="visible" class="wa-wrap">
@@ -430,6 +433,8 @@ function makeArrowIcon(speedKmh, dirDeg, gustKmh) {
              </svg>`,
       iconSize: [S, S], iconAnchor: [c, c], popupAnchor: [0, -c - 2],
     });
+    _iconCache.set(cacheKey, icon);
+    return icon;
   }
 
   // ── Geometry constants (pre-scale) ───────────────────────────────────────
@@ -437,9 +442,7 @@ function makeArrowIcon(speedKmh, dirDeg, gustKmh) {
   const FS  = 10;   // speed label font size
   const GAP =  2;   // horizontal gap between arrow right edge and label
 
-  // In compact mode at low zoom levels, suppress the number label so arrows
-  // don't overlap.  At higher zoom there's enough space to show numbers again.
-  const showLabel = !isCompact() || map.getZoom() >= CFG.labelMinZoom;
+  // showLabel already computed above for the cache key.
   const TW  = showLabel ? 19 : 0;   // reserved width for speed label
 
   const Ass = AS  * sc;   // scaled arrow square
@@ -480,7 +483,7 @@ function makeArrowIcon(speedKmh, dirDeg, gustKmh) {
   const labelY   = (cy + Fss * 0.36).toFixed(1);
   const labelSW  = (2.6 * sc).toFixed(1);   // white outline on the text
 
-  return L.divIcon({
+  const icon = L.divIcon({
     className: '',
     html: `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"
                xmlns="${NS}" overflow="visible" class="wa-wrap">
@@ -509,31 +512,29 @@ function makeArrowIcon(speedKmh, dirDeg, gustKmh) {
     iconAnchor:  [Math.round(cx), Math.round(cy)],
     popupAnchor: [0, -Math.round(cy) - 4],
   });
+  _iconCache.set(cacheKey, icon);
+  return icon;
 }
 
 // ═══════════════════════════════════════════════════════════════
 //  STATION MARKER
 // ═══════════════════════════════════════════════════════════════
-function buildStationMarker(st) {
-  const coords = st.loc?.coordinates;
-  if (!coords || coords.length < 2) return null;
-  const [lon, lat] = coords;
-  const last = st.last || {};
 
+// Build popup HTML separately so it can be refreshed independently of the icon.
+// timeAgo(ts) is recomputed on every refresh even if measurement data is unchanged.
+function buildPopupHtml(st) {
+  const last = st.last || {};
   const wavg = last['w-avg'] ?? null;
   const wmax = last['w-max'] ?? null;
   const wdir = last['w-dir'] ?? null;
   const temp = last.temp     ?? null;
   const pres = last.pres     ?? null;
   const ts   = last['_id']   ?? null;
-
-  // Separate colors: avg (popup label) and gust (arrow + gust row)
   const avgColor  = windColor(wavg);
   const gustColor = windColor(wmax);
   const name   = st.short || st.name || st._id;
   const dirStr = wdir != null ? `${dirLabel(wdir)} (${Math.round(wdir)}°)` : '–';
-
-  const popup = `
+  return `
     <div class="pop">
       <div class="pop-name">${name}</div>
       <div class="pop-grid">
@@ -552,12 +553,34 @@ function buildStationMarker(st) {
       </div>
       <div class="pm">Updated ${timeAgo(ts)}</div>
     </div>`;
-
-  return L.marker([lat, lon], {
-    icon: makeArrowIcon(wavg, wdir, wmax),   // size = avg, colour = gust
-    zIndexOffset: Math.round(wavg || 0),
-  }).bindPopup(popup, { maxWidth: 250 });
 }
+
+// Hash of the fields that affect the arrow icon (colour + rotation + label visibility).
+// The measurement timestamp (_id) is not included so that popup-only updates
+// (timeAgo) don't force an icon rebuild.
+function iconHash(st) {
+  const last = st.last || {};
+  return `${Math.round(last['w-max'] ?? last['w-avg'] ?? 0)}`
+       + `-${Math.round(last['w-dir'] ?? -1)}`
+       + `-${Math.round(last['w-avg'] ?? 0)}`;
+}
+
+function buildStationMarker(st) {
+  const coords = st.loc?.coordinates;
+  if (!coords || coords.length < 2) return null;
+  const [lon, lat] = coords;
+  const last = st.last || {};
+  const wavg = last['w-avg'] ?? null;
+  const wmax = last['w-max'] ?? null;
+  const wdir = last['w-dir'] ?? null;
+  return L.marker([lat, lon], {
+    icon: makeArrowIcon(wavg, wdir, wmax),
+    zIndexOffset: Math.round(wavg || 0),
+  }).bindPopup(buildPopupHtml(st), { maxWidth: 250 });
+}
+
+// Persistent map of stationId → { marker, hash } for incremental updates.
+const stMarkers = new Map();
 
 // ═══════════════════════════════════════════════════════════════
 //  FOEHN CORRIDOR — ANIMATED LINES + PERSISTENT PRESSURE LABELS
@@ -634,8 +657,13 @@ function updateCorridorLabels() {
   }
 }
 
-// Register once — runs on every pan/zoom frame.
-map.on('move', updateCorridorLabels);
+// RAF-throttle: deduplicate rapid 'move' events so updateCorridorLabels
+// runs at most once per display frame, not for every intermediate event.
+let _corridorRaf = null;
+map.on('move', () => {
+  if (_corridorRaf) return;
+  _corridorRaf = requestAnimationFrame(() => { _corridorRaf = null; updateCorridorLabels(); });
+});
 
 function drawCorridor(corridor, absDP, fromPt, toPt) {
   const color   = foehnColor(absDP);
@@ -835,34 +863,22 @@ function cullByDensity(stations) {
   if (!isCompact()) return stations;
 
   const spacing = CFG.minSpacingPxMobile;
-  const kept    = [];
-  // Map from "cellX,cellY" → best gust seen in that cell
-  const cells   = {};
+  // Map from "col,row" → { gust, st } — O(n), no linear search or splice needed.
+  const cells = new Map();
 
   for (const st of stations) {
     const coords = st.loc?.coordinates;
-    if (!coords || coords.length < 2) { kept.push(st); continue; }
+    if (!coords || coords.length < 2) continue;
     const [lon, lat] = coords;
 
-    // Convert geographic coordinates → screen pixels at current zoom
     const pt  = map.latLngToContainerPoint([lat, lon]);
-    const col = Math.floor(pt.x / spacing);
-    const row = Math.floor(pt.y / spacing);
-    const key = `${col},${row}`;
-
+    const key = `${Math.floor(pt.x / spacing)},${Math.floor(pt.y / spacing)}`;
     const gust = st.last?.['w-max'] ?? st.last?.['w-avg'] ?? 0;
 
-    if (cells[key] == null || gust > cells[key].gust) {
-      if (cells[key] != null) {
-        // Remove previously kept station for this cell
-        const idx = kept.indexOf(cells[key].st);
-        if (idx !== -1) kept.splice(idx, 1);
-      }
-      cells[key] = { gust, st };
-      kept.push(st);
-    }
+    const cur = cells.get(key);
+    if (!cur || gust > cur.gust) cells.set(key, { gust, st });
   }
-  return kept;
+  return [...cells.values()].map(c => c.st);
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -885,11 +901,41 @@ async function loadStations() {
 
     const data    = await apiFetch(url);
     const visible = cullByDensity(data);
-    stLayer.clearLayers();
+
+    // ── Incremental update — avoid full DOM rebuild on every refresh ──────────
+    // For each station in the new culled set:
+    //   • New station → create marker and add to layer
+    //   • Existing, data unchanged → refresh popup only (timeAgo changes)
+    //   • Existing, data changed → refresh popup + icon
+    // Stations no longer in the culled set are removed.
+    const newIds = new Set();
     let n = 0;
     for (const st of visible) {
-      const m = buildStationMarker(st);
-      if (m) { stLayer.addLayer(m); n++; }
+      const coords = st.loc?.coordinates;
+      if (!coords || coords.length < 2) continue;
+      const id   = st._id;
+      const hash = iconHash(st);
+      newIds.add(id);
+
+      const existing = stMarkers.get(id);
+      if (existing) {
+        // Always refresh popup so "Updated X min ago" stays accurate
+        existing.marker.setPopupContent(buildPopupHtml(st));
+        if (existing.hash !== hash) {
+          const last = st.last || {};
+          existing.marker.setIcon(makeArrowIcon(last['w-avg'] ?? null, last['w-dir'] ?? null, last['w-max'] ?? null));
+          existing.marker.setZIndexOffset(Math.round(last['w-avg'] || 0));
+          existing.hash = hash;
+        }
+      } else {
+        const m = buildStationMarker(st);
+        if (m) { stLayer.addLayer(m); stMarkers.set(id, { marker: m, hash }); }
+      }
+      n++;
+    }
+    // Remove markers for stations no longer in the culled viewport
+    for (const [id, { marker }] of stMarkers) {
+      if (!newIds.has(id)) { stLayer.removeLayer(marker); stMarkers.delete(id); }
     }
     setStatus(
       'ok',
