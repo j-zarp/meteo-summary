@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Bluelift – live wind</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg:     #f0f2f5;
+    --surf:   #ffffff;
+    --border: #d0d8e4;
+    --text:   #1a2535;
+    --muted:  #7a90a8;
+    --accent: #1a6fb5;
+  }
+  html, body { height: 100%; background: var(--bg); color: var(--text);
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    -webkit-font-smoothing: antialiased; overflow: hidden; }
+  #app { display: flex; flex-direction: column; height: 100%; }
+
+  /* ── Legend bar (also contains status) ── */
+  #legend { flex-shrink: 0; height: 32px; display: flex; align-items: center;
+    gap: 0; padding: 0 12px; background: var(--surf);
+    border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; }
+  #legend::-webkit-scrollbar { display: none; }
+  #leg-gradient { height: 8px; width: 160px; min-width: 160px; border-radius: 4px;
+    /* Shifted palette — saturated so the lighter tones stay visible on white */
+    background: linear-gradient(to right,
+      #2b5fa8, #3d8ecf, #4fb8c9, #38a882, #6dbd3a,
+      #c8d930, #f5c400, #f08020, #e04822, #c01820, #7a0018);
+    margin-right: 6px; flex-shrink: 0;
+    border: 1px solid rgba(0,0,0,.10); }
+  .leg-labels { display: flex; justify-content: space-between;
+    width: 160px; min-width: 160px; font-size: 9px; color: var(--muted);
+    margin-right: 10px; flex-shrink: 0; }
+  .leg-sep { width: 1px; height: 18px; background: var(--border); margin: 0 10px; flex-shrink: 0; }
+  .leg-foehn { display: flex; align-items: center; gap: 5px;
+    font-size: 10px; color: var(--muted); white-space: nowrap; flex-shrink: 0; }
+  .leg-fline { height: 4px; width: 28px;
+    background: linear-gradient(to right, #1aaa5e, #e8b800, #d42020);
+    border-radius: 2px; border: 1px solid rgba(0,0,0,.12); }
+  /* Static legend dots (no animation — avoid visual noise in the legend bar) */
+  .leg-dot { width: 8px; height: 8px; border-radius: 50%;
+    border: 1px solid rgba(0,0,0,.2); flex-shrink: 0; display: inline-block; }
+  .leg-dot-o { background: #ff8c00; }
+  .leg-dot-r { background: #d42020; }
+  .gap { flex: 1; }
+  #sdot { width: 7px; height: 7px; border-radius: 50%; background: var(--muted);
+    flex-shrink: 0; transition: background .3s; }
+  #sdot.loading { background: #e8a800; animation: blink 1s ease-in-out infinite; }
+  #sdot.ok      { background: #1aaa5e; }
+  #sdot.error   { background: #d42020; }
+  #stxt { font-size: 10.5px; color: var(--muted); white-space: nowrap;
+    overflow: hidden; text-overflow: ellipsis; max-width: 180px; }
+  #rbtn { padding: 4px 9px; background: transparent; border: 1px solid var(--border);
+    border-radius: 5px; color: var(--accent); font-size: 12px; cursor: pointer;
+    flex-shrink: 0; -webkit-tap-highlight-color: transparent; }
+  #rbtn:active { background: var(--border); }
+
+  /* ── Map ── */
+  #map { flex: 1; }
+
+  /* ── Leaflet overrides ── */
+  .leaflet-popup-content-wrapper { background: var(--surf); border: 1px solid var(--border);
+    border-radius: 10px; color: var(--text); box-shadow: 0 4px 20px rgba(0,0,0,.18); padding: 0; }
+  .leaflet-popup-tip { background: var(--surf); }
+  .leaflet-popup-content { margin: 0 !important; width: auto !important; }
+  .leaflet-popup-close-button { color: var(--muted) !important; top: 6px !important;
+    right: 8px !important; font-size: 17px !important; }
+  .leaflet-control-attribution { background: rgba(255,255,255,.85) !important;
+    color: var(--muted) !important; font-size: 9px !important; }
+  .leaflet-control-attribution a { color: var(--accent) !important; }
+  .leaflet-bar a { background: var(--surf) !important; border-color: var(--border) !important;
+    color: var(--text) !important; }
+  .leaflet-bar a:hover { background: var(--bg) !important; }
+
+  /* ── Wind arrow: hover darkens slightly (light map) ── */
+  .wa-wrap:hover .wa-g { filter: brightness(0.82); }
+
+  /* ── Popup card ── */
+  .pop { padding: 11px 14px 10px; min-width: 178px; max-width: 235px; }
+  .pop-name { font-size: 12.5px; font-weight: 700; color: var(--accent);
+    margin-bottom: 8px; padding-right: 18px; line-height: 1.3; }
+  .pop-grid { display: grid; grid-template-columns: auto 1fr;
+    column-gap: 10px; row-gap: 3px; font-size: 11.5px; }
+  .pl { color: var(--muted); }
+  .pv { font-weight: 600; text-align: right; }
+  .pw { font-size: 14px; font-weight: 800; }
+  .pm { font-size: 9.5px; color: var(--muted); margin-top: 7px; text-align: right; }
+
+  /* ── Foehn corridor pressure label ── */
+  .foehn-tt-inner {
+    /* inline-block forces the box to shrink-wrap its text content.
+       Without it, a block div inside the 0×0 Leaflet divIcon wrapper collapses
+       to 0 width so the border/background don't span the full label. */
+    display:        inline-block;
+    background:     rgba(255,255,255,0.92);
+    border-radius:  5px;
+    padding:        3px 8px;
+    font-size:      11px;
+    font-weight:    700;
+    white-space:    nowrap;
+    pointer-events: none;
+    line-height:    1.4;
+    box-shadow:     0 1px 6px rgba(0,0,0,.15);
+    /* Centre the label over its anchor point (iconSize [0,0] / iconAnchor [0,0]) */
+    transform:      translate(-50%, -50%);
+  }
+
+  /* ── Foehn warning pulse markers ── */
+  @keyframes pulse-orange {
+    0%   { box-shadow: 0 0 0 0   rgba(255,140,0,0.85); }
+    70%  { box-shadow: 0 0 0 9px rgba(255,140,0,0);    }
+    100% { box-shadow: 0 0 0 0   rgba(255,140,0,0);    }
+  }
+  @keyframes pulse-red {
+    0%   { box-shadow: 0 0 0 0   rgba(212,32,32,0.85); }
+    70%  { box-shadow: 0 0 0 9px rgba(212,32,32,0);    }
+    100% { box-shadow: 0 0 0 0   rgba(212,32,32,0);    }
+  }
+  .foehn-warn-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    border: 1.5px solid rgba(0,0,0,.25);
+  }
+  .foehn-warn-1 { background: #ff8c00; animation: pulse-orange 1.4s ease-out infinite; }
+  .foehn-warn-2 { background: #d42020; animation: pulse-red   0.9s ease-out infinite; }
+
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.35} }
+
+  @media (max-width: 400px) {
+    #stxt { max-width: 90px; }
+  }
+
+  /* ── Compact / mobile legend ── */
+  @media (max-width: 640px) {
+    /* Shrink wind colorbar to fit only "0" and ">50 km/h" at its edges */
+    #leg-gradient { width: 52px; min-width: 52px; }
+    .leg-labels   { width: 52px; min-width: 52px; font-size: 8px; margin-right: 6px; }
+    /* Remove 15, 30, 45 — flex space-between keeps 0 and >50 at the two ends */
+    .leg-labels span:nth-child(2),
+    .leg-labels span:nth-child(3),
+    .leg-labels span:nth-child(4) { display: none; }
+    /* Hide only the parenthetical detail, keep the label ("ΔP", "Föhn index") */
+    .leg-detail { display: none; }
+    #stxt { max-width: 75px; }
+  }
+</style>
+  <!-- Matomo -->
+  <script>
+    var _paq = window._paq = window._paq || [];
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function () {
+      var u = "//matomo.steambot.ch/";
+      _paq.push(['setTrackerUrl', u + 'matomo.php']);
+      _paq.push(['setSiteId', '7']);
+      var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+      g.async = true; g.src = u + 'matomo.js'; s.parentNode.insertBefore(g, s);
+    })();
+  </script>
+  <!-- End Matomo Code -->
+</head>
+<body>
+<div id="app">
+
+  <div id="legend">
+    <div id="leg-gradient"></div>
+    <div class="leg-labels">
+      <span>0</span><span>15</span><span>30</span><span>45</span><span>&gt;50 km/h</span>
+    </div>
+    <div class="leg-sep"></div>
+    <div class="leg-foehn">
+      <div class="leg-fline"></div>
+      <span>ΔP</span><span class="leg-detail"> (green=safe · red=risk)</span>
+    </div>
+    <div class="leg-sep"></div>
+    <div class="leg-foehn">
+      <span class="leg-dot leg-dot-o"></span>
+      <span class="leg-dot leg-dot-r"></span>
+      <span>Föhn index</span><span class="leg-detail"> (orange=mixed air · red=active)</span>
+    </div>
+    <span class="gap"></span>
+    <span id="sdot" class="loading"></span>
+    <span id="stxt" style="margin:0 6px">Loading…</span>
+    <button id="rbtn" onclick="forceRefresh()" aria-label="Refresh">↻</button>
+  </div>
+
+  <div id="map"></div>
+</div>
+
+<script>
+'use strict';
+
+// ═══════════════════════════════════════════════════════════════
+//  CONFIG  — edit the values below to tune the app
+// ═══════════════════════════════════════════════════════════════
+const CFG = {
+  apiBase:     'winds-proxy.php',
+  limit:       300,
+  lastMeasure: 7200,
+  refreshMs:   5 * 60 * 1000,    // wind stations refresh interval
+  debounceMs:  700,
+  foehnDanger: 4,
+  metarProxy:  'metar-proxy.php',
+
+  // ── Foehn index warnings (MeteoSwiss) ──────────────────────
+  // URL of the MeteoSwiss foehn index GeoJSON feed (updated every 10 min).
+  // Change to a local path for offline testing, e.g.:
+  //   'mock/foehn-index-foehn.json'   → strong foehn
+  //   'mock/foehn-index-mixed.json'   → mixed air / partial foehn
+  //   'mock/foehn-index-bise.json'    → bise (no foehn)
+  foehnIndexUrl:       'https://data.geo.admin.ch/ch.meteoschweiz.messwerte-foehn-10min/ch.meteoschweiz.messwerte-foehn-10min_en.json',
+  foehnIndexRefreshMs: 10 * 60 * 1000,   // 10 minutes — matches feed update cadence
+
+  // ── Foehn arrow sizing ──────────────────────────────────────
+  // weight = foehnWeightBase + absDP * foehnWeightScale  (capped at Max)
+  // Base=4, Scale=1.2 → 0hPa=4px · 2hPa=6.4px · 4hPa=8.8px
+  foehnWeightBase:  4,
+  foehnWeightScale: 1.2,
+  foehnWeightMax:   10,
+
+  // ── Wind arrow sizing ───────────────────────────────────────
+  // Increase arrowScale to make all wind arrows larger uniformly.
+  // 1.0 = original size, 1.4 = 40% bigger (good for smartphone)
+  arrowScale: 1.4,
+
+  // ── Density culling (mobile / iframe clutter reduction) ─────
+  // Minimum pixel distance between any two station markers.
+  // When two stations are closer, only the one with the higher gust is kept.
+  minSpacingPx:       52,   // desktop / large screens
+  minSpacingPxMobile: 75,   // compact mode (small screen / iframe / ?compact=1)
+  // Zoom level below which the speed number label is suppressed in compact mode.
+  labelMinZoom:       10,
+};
+
+(function () {
+  const p = new URLSearchParams(location.search);
+  if (p.get('lat'))              CFG.initLat  = +p.get('lat');
+  if (p.get('lon'))              CFG.initLon  = +p.get('lon');
+  if (p.get('z') ?? p.get('zoom')) CFG.initZoom = +(p.get('z') ?? p.get('zoom'));
+  if (p.get('compact') === '1') CFG._compact = true;
+})();
+
+// Returns true when the map should use a simplified, decluttered layout:
+//   • small viewport (phone / narrow embed)
+//   • loaded inside an <iframe>
+//   • ?compact=1 URL param set explicitly
+function isCompact() {
+  return CFG._compact
+      || window.self !== window.top
+      || window.innerWidth < 640;
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  FOEHN CORRIDORS
+// ═══════════════════════════════════════════════════════════════
+const FOEHN_CORRIDORS = [
+  { label: 'Genève – Zürich',  from: [46.24, 6.11], to: [47.46, 8.55], icaoA: 'LSGG', icaoB: 'LSZH' },
+  { label: 'Lugano – Bern',    from: [45.99, 8.91], to: [46.91, 7.50], icaoA: 'LSZA', icaoB: 'LSZB' },
+  { label: 'Payerne – Aosta',  from: [46.84, 6.92], to: [45.74, 7.37], icaoA: 'LSGS', icaoB: 'LIMW' },
+  { label: 'Genève – Aosta',   from: [46.24, 6.11], to: [45.74, 7.37], icaoA: 'LSGG', icaoB: 'LIMW' },
+];
+
+const FOEHN_ICAO_IDS = [...new Set(
+  FOEHN_CORRIDORS.flatMap(c => [c.icaoA, c.icaoB])
+)];
+
+// ═══════════════════════════════════════════════════════════════
+//  UTILITIES
+// ═══════════════════════════════════════════════════════════════
+const $  = id => document.getElementById(id);
+const NS = 'http://www.w3.org/2000/svg';
+
+function apiUrl(path, params, keys = []) {
+  const qs = [];
+  Object.entries(params).forEach(([k, v]) => {
+    if (v != null) qs.push(`${encodeURIComponent(k)}=${encodeURIComponent(v)}`);
+  });
+  keys.forEach(k => qs.push(`keys=${encodeURIComponent(k)}`));
+  return `${CFG.apiBase}?path=${encodeURIComponent(path)}&${qs.join('&')}`;
+}
+
+async function apiFetch(url) {
+  const r = await fetch(url);
+  if (!r.ok) {
+    const t = await r.text().catch(() => '');
+    throw new Error(`HTTP ${r.status}: ${t.slice(0, 120)}`);
+  }
+  return r.json();
+}
+
+// ── Wind color palette — saturated so every stop stays visible on white ────
+// The palette covers 0–50+ km/h; used for both wind avg (popup) and gust (arrow).
+function windColor(kmh) {
+  if (kmh == null) return '#8899aa';   // calm/unknown: medium grey (visible on white)
+  const t = Math.min(1, Math.max(0, kmh / 50));
+  const stops = [
+    [0.00, [ 43,  95, 168]],   //  0 km/h  deep blue
+    [0.10, [ 61, 142, 207]],   //  5 km/h  mid blue
+    [0.20, [ 52, 174, 185]],   // 10 km/h  cyan-teal
+    [0.30, [ 30, 160, 110]],   // 15 km/h  teal-green
+    [0.40, [ 88, 178,  42]],   // 20 km/h  green
+    [0.50, [175, 195,   0]],   // 25 km/h  yellow-green
+    [0.60, [220, 165,   0]],   // 30 km/h  amber
+    [0.70, [224, 104,  10]],   // 35 km/h  orange
+    [0.80, [210,  48,  22]],   // 40 km/h  red-orange
+    [0.90, [170,  18,  18]],   // 45 km/h  red
+    [1.00, [100,   0,  20]],   // 50+ km/h dark red
+  ];
+  let lo = stops[0], hi = stops[stops.length - 1];
+  for (let i = 0; i < stops.length - 1; i++) {
+    if (t >= stops[i][0] && t <= stops[i + 1][0]) { lo = stops[i]; hi = stops[i + 1]; break; }
+  }
+  const f = lo[0] === hi[0] ? 0 : (t - lo[0]) / (hi[0] - lo[0]);
+  return `rgb(${Math.round(lo[1][0]+f*(hi[1][0]-lo[1][0]))},`
+       + `${Math.round(lo[1][1]+f*(hi[1][1]-lo[1][1]))},`
+       + `${Math.round(lo[1][2]+f*(hi[1][2]-lo[1][2]))})`;
+}
+
+// ── Foehn color — saturated green→amber→red, readable on white ─────────────
+function foehnColor(absDP) {
+  const t = Math.min(1, Math.max(0, absDP / CFG.foehnDanger));
+  let r, g, b;
+  if (t < 0.5) {
+    const f = t * 2;
+    r = Math.round( 26 + f * (230 -  26));   // #1aaa5e → #e8b800
+    g = Math.round(170 + f * (184 - 170));
+    b = Math.round( 94 + f * (  0 -  94));
+  } else {
+    const f = (t - 0.5) * 2;
+    r = Math.round(230 + f * (212 - 230));   // #e8b800 → #d42020
+    g = Math.round(184 + f * ( 32 - 184));
+    b = Math.round(  0 + f * ( 32 -   0));
+  }
+  return `rgb(${r},${g},${b})`;
+}
+
+const DIR8 = ['N','NE','E','SE','S','SW','W','NW'];
+function dirLabel(d) { return d != null ? DIR8[Math.round(d / 45) % 8] : '–'; }
+
+function timeAgo(unix) {
+  if (!unix) return '–';
+  const m = Math.round((Date.now() / 1000 - unix) / 60);
+  if (m < 1)  return 'just now';
+  if (m < 60) return `${m} min ago`;
+  return `${Math.round(m / 60)}h ago`;
+}
+
+function fmtKmh(v)  { return v != null ? `${Math.round(v)} km/h` : '–'; }
+function fmtHpa(v)  { return v != null ? `${v.toFixed(1)} hPa`   : '–'; }
+function fmtTemp(v) { return v != null ? `${v.toFixed(1)} °C`    : '–'; }
+function bestPres(p){ return p?.qnh ?? p?.qff ?? p?.qfe ?? null; }
+
+function debounce(fn, ms) {
+  let t;
+  return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
+}
+
+function bearing(from, to) {
+  const φ1 = from[0] * Math.PI / 180, φ2 = to[0] * Math.PI / 180;
+  const Δλ = (to[1] - from[1]) * Math.PI / 180;
+  const y = Math.sin(Δλ) * Math.cos(φ2);
+  const x = Math.cos(φ1) * Math.sin(φ2) - Math.sin(φ1) * Math.cos(φ2) * Math.cos(Δλ);
+  return ((Math.atan2(y, x) * 180 / Math.PI) + 360) % 360;
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  MAP INIT
+// ═══════════════════════════════════════════════════════════════
+const map = L.map('map', { preferCanvas: true, zoomControl: true })
+  .setView([CFG.initLat ?? 46.6, CFG.initLon ?? 8.1], CFG.initZoom ?? 8);
+
+/*
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+  subdomains: 'abcd', maxZoom: 20,
+}).addTo(map);
+*/
+
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
+}).addTo(map);
+
+
+const stLayer           = L.layerGroup().addTo(map);
+const foehnSvgRenderer  = L.svg({ padding: 0.5 });
+const foehnLayer        = L.layerGroup().addTo(map);
+const foehnWarningLayer = L.layerGroup().addTo(map);  // index dots — on top of everything
+
+// ═══════════════════════════════════════════════════════════════
+//  WIND MARKER ICON — coloured pointer arrow + gust speed label
+//
+//  speedKmh  – average wind (popup / zIndex only)
+//  dirDeg    – direction FROM which the wind blows
+//  gustKmh   – gust speed: drives marker COLOUR and the displayed number
+//
+//  The arrow tip points in the direction the wind flows TO
+//  (rot = dirDeg + 180), consistent with iWindsurf / standard map arrows.
+//  The speed label (rounded km/h) is always drawn upright to the right of
+//  the arrow so it stays readable at every orientation.
+//
+//  Tune-able constants (all pre-scale, multiplied by CFG.arrowScale):
+//    AS  – arrow bounding square side length
+//    FS  – speed label font size
+//    TW  – reserved pixel width for the label (fits 2–3 digit numbers)
+// ═══════════════════════════════════════════════════════════════
+function makeArrowIcon(speedKmh, dirDeg, gustKmh) {
+  const color   = windColor(gustKmh ?? speedKmh);
+  const sc      = CFG.arrowScale;
+  const gustSpd = gustKmh ?? speedKmh;
+
+  // ── Calm / unknown: double concentric circles (WMO calm symbol) ──────────
+  if (gustSpd == null || gustSpd < 1) {
+    const r = 6 * sc, pad = 5 * sc;
+    const S = Math.ceil((r + pad) * 2);
+    const c = S / 2;
+    return L.divIcon({
+      className: '',
+      html: `<svg width="${S}" height="${S}" viewBox="0 0 ${S} ${S}"
+               xmlns="${NS}" overflow="visible" class="wa-wrap">
+               <circle cx="${c}" cy="${c}" r="${(r + pad * 0.6).toFixed(1)}"
+                 fill="white" stroke="none"/>
+               <circle cx="${c}" cy="${c}" r="${r.toFixed(1)}"
+                 fill="none" stroke="${color}" stroke-width="${(1.8 * sc).toFixed(1)}"/>
+               <circle cx="${c}" cy="${c}" r="${(r * 0.42).toFixed(1)}"
+                 fill="none" stroke="${color}" stroke-width="${(1.8 * sc).toFixed(1)}"/>
+             </svg>`,
+      iconSize: [S, S], iconAnchor: [c, c], popupAnchor: [0, -c - 2],
+    });
+  }
+
+  // ── Geometry constants (pre-scale) ───────────────────────────────────────
+  const AS  = 20;   // arrow bounding square (controls overall icon footprint)
+  const FS  = 10;   // speed label font size
+  const GAP =  2;   // horizontal gap between arrow right edge and label
+
+  // In compact mode at low zoom levels, suppress the number label so arrows
+  // don't overlap.  At higher zoom there's enough space to show numbers again.
+  const showLabel = !isCompact() || map.getZoom() >= CFG.labelMinZoom;
+  const TW  = showLabel ? 19 : 0;   // reserved width for speed label
+
+  const Ass = AS  * sc;   // scaled arrow square
+  const Fss = FS  * sc;   // scaled font size
+  const Gss = showLabel ? GAP * sc : 0;
+  const Tss = TW  * sc;
+
+  // Total SVG dimensions: arrow square + gap + text area; height = arrow square
+  const W  = Math.ceil(Ass + Gss + Tss);
+  const H  = Math.ceil(Ass);
+  const cx = Ass / 2;   // arrow centre x  ← also the Leaflet anchor x
+  const cy = Ass / 2;   // arrow centre y  ← also the Leaflet anchor y
+
+  // ── Arrow shape ───────────────────────────────────────────────────────────
+  // Cursor / pointer style: four-point polygon with a concave notch at the
+  // base.  Drawn tip-up so that rot=0 means "wind from south, going north".
+  const tipX = cx,              tipY = cy - Ass * 0.44;   // pointed tip
+  const rwX  = cx + Ass * 0.28, rwY = cy + Ass * 0.44;   // right wing
+  const ntX  = cx,              ntY = cy + Ass * 0.13;    // concave base notch
+  const lwX  = cx - Ass * 0.28, lwY = cy + Ass * 0.44;   // left wing
+  const pts  = `${tipX.toFixed(1)},${tipY.toFixed(1)} ` +
+               `${rwX.toFixed(1)},${rwY.toFixed(1)} `   +
+               `${ntX.toFixed(1)},${ntY.toFixed(1)} `   +
+               `${lwX.toFixed(1)},${lwY.toFixed(1)}`;
+
+  // tip → direction wind flows TO  (same convention as original arrow)
+  const rot    = dirDeg != null ? (dirDeg + 180) % 360 : 0;
+  const haloW  = (2.5 * sc).toFixed(1);
+  const outliW = (0.5 * sc).toFixed(1);
+
+  // ── Speed label ───────────────────────────────────────────────────────────
+  // Always upright (outside the rotated group), anchored to the right of
+  // the arrow square.  White stroke (paint-order) acts as a legibility halo
+  // without needing a background rect.
+  const speedTxt = Math.round(gustSpd).toString();
+  const labelX   = (Ass + Gss).toFixed(1);
+  // Baseline placement: cy + ~35% of font-size centres the text visually
+  const labelY   = (cy + Fss * 0.36).toFixed(1);
+  const labelSW  = (2.6 * sc).toFixed(1);   // white outline on the text
+
+  return L.divIcon({
+    className: '',
+    html: `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"
+               xmlns="${NS}" overflow="visible" class="wa-wrap">
+  <!-- White halo behind the arrow for contrast on pale map tiles -->
+  <g transform="rotate(${rot} ${cx.toFixed(1)} ${cy.toFixed(1)})">
+    <polygon points="${pts}"
+      fill="white" stroke="white" stroke-width="${haloW}" stroke-linejoin="round"/>
+  </g>
+  <!-- Coloured arrow (darkens on hover via .wa-wrap:hover .wa-g) -->
+  <g class="wa-g" transform="rotate(${rot} ${cx.toFixed(1)} ${cy.toFixed(1)})">
+    <polygon points="${pts}"
+      fill="${color}" stroke="rgba(0,0,0,.30)" stroke-width="${outliW}"
+      stroke-linejoin="round"/>
+  </g>
+  <!-- Speed label — upright, white outline so it reads on any background -->
+  ${showLabel ? `<text x="${labelX}" y="${labelY}"
+    font-family="'Helvetica Neue',Arial,sans-serif"
+    font-size="${Fss.toFixed(1)}" font-weight="700" letter-spacing="-0.3"
+    fill="${color}" stroke="white" stroke-width="${labelSW}"
+    paint-order="stroke fill" text-anchor="start">${speedTxt}</text>` : ''}
+  <!-- Invisible tap/click target centred on the arrow -->
+  <circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${(Ass / 2).toFixed(1)}"
+    fill="transparent"/>
+</svg>`,
+    iconSize:    [W, H],
+    iconAnchor:  [Math.round(cx), Math.round(cy)],
+    popupAnchor: [0, -Math.round(cy) - 4],
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  STATION MARKER
+// ═══════════════════════════════════════════════════════════════
+function buildStationMarker(st) {
+  const coords = st.loc?.coordinates;
+  if (!coords || coords.length < 2) return null;
+  const [lon, lat] = coords;
+  const last = st.last || {};
+
+  const wavg = last['w-avg'] ?? null;
+  const wmax = last['w-max'] ?? null;
+  const wdir = last['w-dir'] ?? null;
+  const temp = last.temp     ?? null;
+  const pres = last.pres     ?? null;
+  const ts   = last['_id']   ?? null;
+
+  // Separate colors: avg (popup label) and gust (arrow + gust row)
+  const avgColor  = windColor(wavg);
+  const gustColor = windColor(wmax);
+  const name   = st.short || st.name || st._id;
+  const dirStr = wdir != null ? `${dirLabel(wdir)} (${Math.round(wdir)}°)` : '–';
+
+  const popup = `
+    <div class="pop">
+      <div class="pop-name">${name}</div>
+      <div class="pop-grid">
+        <span class="pl">Wind avg</span>
+        <span class="pv pw" style="color:${avgColor}">${fmtKmh(wavg)}</span>
+        <span class="pl">Gust</span>
+        <span class="pv pw" style="color:${gustColor}">${fmtKmh(wmax)}</span>
+        <span class="pl">Direction</span>
+        <span class="pv">${dirStr}</span>
+        <span class="pl">Pressure</span>
+        <span class="pv">${fmtHpa(bestPres(pres))}</span>
+        <span class="pl">Temp</span>
+        <span class="pv">${fmtTemp(temp)}</span>
+        <span class="pl">Altitude</span>
+        <span class="pv">${st.alt != null ? st.alt + ' m' : '–'}</span>
+      </div>
+      <div class="pm">Updated ${timeAgo(ts)}</div>
+    </div>`;
+
+  return L.marker([lat, lon], {
+    icon: makeArrowIcon(wavg, wdir, wmax),   // size = avg, colour = gust
+    zIndexOffset: Math.round(wavg || 0),
+  }).bindPopup(popup, { maxWidth: 250 });
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  FOEHN CORRIDOR — ANIMATED LINES + PERSISTENT PRESSURE LABELS
+// ═══════════════════════════════════════════════════════════════
+// Dynamic march keyframes — one rule per period value, generated on demand.
+// The travel distance equals exactly one dash+gap period so the loop reset
+// is visually identical to the loop start: no flicker.
+const _marchSheet = (() => {
+  const s = document.createElement('style');
+  document.head.appendChild(s);
+  return s.sheet;
+})();
+const _marchPeriods = new Set();
+
+function ensureMarchKeyframe(period) {
+  if (_marchPeriods.has(period)) return;
+  _marchPeriods.add(period);
+  _marchSheet.insertRule(
+    `@keyframes march-${period} {` +
+    ` from { stroke-dashoffset: ${period}; }` +
+    ` to   { stroke-dashoffset: 0; } }`,
+    _marchSheet.cssRules.length
+  );
+}
+
+// Each entry: { fromPt, toPt, marker } — used by updateCorridorLabels().
+const corridorLabels = [];
+
+// ── Visible-midpoint helper ─────────────────────────────────────────────────
+// Clips the lat/lon line segment [fromPt → toPt] against the current map
+// viewport using the Liang-Barsky algorithm, then returns the midpoint of the
+// visible portion.  Returns null if the segment is entirely off-screen.
+// This keeps the pressure label on the visible part of the line when the user
+// pans the map so the geographic midpoint scrolls off screen.
+function visibleMidpoint(fromPt, toPt, bounds) {
+  const S = bounds.getSouth(), N = bounds.getNorth();
+  const W = bounds.getWest(),  E = bounds.getEast();
+  const dlat = toPt[0] - fromPt[0];
+  const dlon  = toPt[1] - fromPt[1];
+  let t0 = 0, t1 = 1;
+
+  // Liang-Barsky clip against one edge: p*t <= q
+  function clip(p, q) {
+    if (Math.abs(p) < 1e-10) return q >= 0;   // parallel — inside only if q >= 0
+    const r = q / p;
+    if (p < 0) { if (r > t1) return false; if (r > t0) t0 = r; }   // entering
+    else        { if (r < t0) return false; if (r < t1) t1 = r; }   // exiting
+    return true;
+  }
+
+  if (!clip(-dlat, fromPt[0] - S)) return null;   // South
+  if (!clip( dlat, N - fromPt[0])) return null;   // North
+  if (!clip(-dlon, fromPt[1] - W)) return null;   // West
+  if (!clip( dlon, E - fromPt[1])) return null;   // East
+
+  const tm = (t0 + t1) / 2;
+  return [fromPt[0] + tm * dlat, fromPt[1] + tm * dlon];
+}
+
+// Reposition every corridor label to the midpoint of its currently visible
+// section.  Fires on every map 'move' event (not just 'moveend') so the label
+// tracks smoothly while dragging.
+function updateCorridorLabels() {
+  const bounds = map.getBounds();
+  for (const cl of corridorLabels) {
+    const pt = visibleMidpoint(cl.fromPt, cl.toPt, bounds);
+    const el = cl.marker.getElement();
+    if (pt) {
+      cl.marker.setLatLng(pt);
+      if (el) el.style.visibility = '';
+    } else {
+      if (el) el.style.visibility = 'hidden';
+    }
+  }
+}
+
+// Register once — runs on every pan/zoom frame.
+map.on('move', updateCorridorLabels);
+
+function drawCorridor(corridor, absDP, fromPt, toPt) {
+  const color   = foehnColor(absDP);
+  const opacity = Math.max(0.45, Math.min(0.90, 0.45 + (absDP / CFG.foehnDanger) * 0.45));
+  const weight  = Math.min(CFG.foehnWeightMax,
+                    CFG.foehnWeightBase + absDP * CFG.foehnWeightScale);
+
+  const dash    = Math.round(6 + weight * 0.8);
+  const gap     = dash;                            // equal dash and gap
+  const period  = dash + gap;                      // one full pattern repeat
+  const dashArr = `${dash} ${gap}`;
+
+  // Ensure a keyframe whose travel distance = exactly one period exists.
+  // This guarantees the loop reset is visually identical to the loop start.
+  let animDur;
+  if      (absDP < 0.2) { animDur = null; }
+  else if (absDP < 0.5) { animDur = '8.0s'; }
+  else if (absDP < 1.5) { animDur = '6.0s'; }
+  else if (absDP < 2.5) { animDur = '4.4s'; }
+  else if (absDP < 3.5) { animDur = '3.2s'; }
+  else                  { animDur = '2.2s'; }
+
+  if (animDur) ensureMarchKeyframe(period);
+
+  const line = L.polyline([fromPt, toPt], {
+    renderer:    foehnSvgRenderer,
+    color,
+    weight,
+    opacity,
+    dashArray:   dashArr,
+    lineCap:     'butt',
+    lineJoin:    'round',
+    interactive: false,
+  });
+
+  line.on('add', function () {
+    if (!animDur) return;
+    requestAnimationFrame(() => {
+      const g    = this.getElement?.();
+      if (!g) return;
+      const path = g.querySelector('path') ?? (g.tagName === 'path' ? g : null);
+      if (!path) return;
+      path.style.animation = `march-${period} ${animDur} linear infinite`;
+    });
+  });
+
+  foehnLayer.addLayer(line);
+
+  // Arrowhead marker at destination endpoint
+  const brng   = bearing(fromPt, toPt);
+  const headSz = Math.round(6 + weight);
+  foehnLayer.addLayer(L.marker(toPt, {
+    icon: L.divIcon({
+      className: '',
+      html: `<svg width="${headSz*2}" height="${headSz*2}"
+               viewBox="0 0 ${headSz*2} ${headSz*2}" xmlns="${NS}" overflow="visible"
+               style="transform:rotate(${brng}deg);transform-origin:50% 50%;">
+               <polygon
+                 points="${headSz},2 ${headSz*2-2},${headSz*2-2} ${headSz},${headSz*2-6} 2,${headSz*2-2}"
+                 fill="${color}" opacity="${Math.min(1, opacity + 0.1)}"
+                 stroke="rgba(0,0,0,.2)" stroke-width="1"
+                 filter="drop-shadow(0 1px 3px rgba(0,0,0,.3))"/>
+             </svg>`,
+      iconSize: [headSz*2, headSz*2], iconAnchor: [headSz, headSz],
+    }),
+    interactive: false,
+  }));
+
+  // Pressure label — placed at the geographic midpoint initially; repositioned
+  // dynamically by updateCorridorLabels() as the user pans the map.
+  // iconSize/iconAnchor [0,0] + CSS translate(-50%,-50%) centres the box.
+  const midLat = (fromPt[0] + toPt[0]) / 2;
+  const midLon = (fromPt[1] + toPt[1]) / 2;
+  const labelMarker = L.marker([midLat, midLon], {
+    icon: L.divIcon({
+      className: '',
+      html: `<div class="foehn-tt-inner" style="color:${color};border:1px solid ${color}66;">
+               +${absDP.toFixed(1)} hPa
+             </div>`,
+      iconSize:   [0, 0],
+      iconAnchor: [0, 0],
+    }),
+    interactive:  false,
+    zIndexOffset: 500,
+  });
+  foehnLayer.addLayer(labelMarker);
+  corridorLabels.push({ fromPt, toPt, marker: labelMarker });
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  METAR PRESSURE PARSING
+// ═══════════════════════════════════════════════════════════════
+function parseMetarQnh(metar) {
+  if (metar.altim != null && Number.isFinite(+metar.altim)) return +metar.altim;
+  if (typeof metar.rawOb === 'string') {
+    const m = metar.rawOb.match(/\bQ(\d{3,4})\b/);
+    if (m) return parseInt(m[1], 10);
+  }
+  return null;
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  LOAD FOEHN CORRIDORS
+// ═══════════════════════════════════════════════════════════════
+async function loadFoehn() {
+  try {
+    const data = await fetch(`${CFG.metarProxy}?ids=${FOEHN_ICAO_IDS.join(',')}`).then(r => {
+      if (!r.ok) throw new Error(`METAR proxy HTTP ${r.status}`);
+      return r.json();
+    });
+    const presMap = {};
+    for (const metar of data) {
+      if (!metar.icaoId) continue;
+      const qnh = parseMetarQnh(metar);
+      if (qnh != null) presMap[metar.icaoId] = qnh;
+    }
+    foehnLayer.clearLayers();
+    corridorLabels.length = 0;   // reset tracking array alongside the layer
+
+    for (const c of FOEHN_CORRIDORS) {
+      const pA = presMap[c.icaoA], pB = presMap[c.icaoB];
+      if (pA == null || pB == null) continue;
+      const delta = pB - pA;
+      const [fromPt, toPt] = delta > 0
+        ? [c.to, c.from] : [c.from, c.to];
+      drawCorridor(c, Math.abs(delta), fromPt, toPt);
+    }
+    // Position labels correctly for the current viewport right after drawing.
+    updateCorridorLabels();
+  } catch (e) { console.warn('Foehn load error:', e.message); }
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  LOAD FOEHN INDEX WARNINGS (MeteoSwiss)
+// ═══════════════════════════════════════════════════════════════
+// Fetches the MeteoSwiss foehn index GeoJSON feed and places pulsing warning
+// dots over stations with index ≥ 1 (1 = mixed air → orange, 2 = foehn → red).
+// The feed is updated every 10 minutes; CFG.foehnIndexRefreshMs controls how
+// often the app re-fetches it.
+async function loadFoehnIndex() {
+  try {
+    const data = await fetch(CFG.foehnIndexUrl).then(r => {
+      if (!r.ok) throw new Error(`Foehn index HTTP ${r.status}`);
+      return r.json();
+    });
+
+    foehnWarningLayer.clearLayers();
+    if (!Array.isArray(data?.features)) return;
+
+    const INDEX_LABEL = ['No foehn', 'Mixed air / possible foehn', 'Active foehn'];
+
+    for (const f of data.features) {
+      const val = f.properties?.value;
+      if (val == null || val < 1) continue;   // skip index 0 (no foehn)
+
+      const coords = f.geometry?.coordinates;
+      if (!coords || coords.length < 2) continue;
+      const [lon, lat] = coords;
+
+      const stName = f.properties.station_name
+                  ?? f.properties.station_id
+                  ?? '?';
+      const cls   = val >= 2 ? 'foehn-warn-2' : 'foehn-warn-1';
+      const label = INDEX_LABEL[Math.min(val, 2)];
+
+      L.marker([lat, lon], {
+        icon: L.divIcon({
+          className: '',
+          html: `<div class="foehn-warn-dot ${cls}"></div>`,
+          iconSize:   [10, 10],
+          iconAnchor: [ 5,  5],
+        }),
+        zIndexOffset: 2000,   // render above wind arrows
+      })
+      .bindPopup(`
+        <div class="pop">
+          <div class="pop-name">${stName}</div>
+          <div class="pop-grid">
+            <span class="pl">Föhn index</span>
+            <span class="pv">${val} – ${label}</span>
+          </div>
+        </div>`)
+      .addTo(foehnWarningLayer);
+    }
+  } catch (e) {
+    console.warn('Foehn index load error:', e.message);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  DENSITY CULLING
+//  Prevents overlapping markers by keeping only the highest-gust
+//  station within each pixel-grid cell of the current viewport.
+//  Runs only when isCompact() returns true; full mode shows all.
+// ═══════════════════════════════════════════════════════════════
+function cullByDensity(stations) {
+  if (!isCompact()) return stations;
+
+  const spacing = CFG.minSpacingPxMobile;
+  const kept    = [];
+  // Map from "cellX,cellY" → best gust seen in that cell
+  const cells   = {};
+
+  for (const st of stations) {
+    const coords = st.loc?.coordinates;
+    if (!coords || coords.length < 2) { kept.push(st); continue; }
+    const [lon, lat] = coords;
+
+    // Convert geographic coordinates → screen pixels at current zoom
+    const pt  = map.latLngToContainerPoint([lat, lon]);
+    const col = Math.floor(pt.x / spacing);
+    const row = Math.floor(pt.y / spacing);
+    const key = `${col},${row}`;
+
+    const gust = st.last?.['w-max'] ?? st.last?.['w-avg'] ?? 0;
+
+    if (cells[key] == null || gust > cells[key].gust) {
+      if (cells[key] != null) {
+        // Remove previously kept station for this cell
+        const idx = kept.indexOf(cells[key].st);
+        if (idx !== -1) kept.splice(idx, 1);
+      }
+      cells[key] = { gust, st };
+      kept.push(st);
+    }
+  }
+  return kept;
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  LOAD STATIONS
+// ═══════════════════════════════════════════════════════════════
+async function loadStations() {
+  setStatus('loading', 'Loading…');
+  try {
+    const b = map.getBounds();
+    const url = apiUrl('/stations/', {
+      'within-pt1-lat': b.getSouth().toFixed(4),
+      'within-pt1-lon': b.getWest().toFixed(4),
+      'within-pt2-lat': b.getNorth().toFixed(4),
+      'within-pt2-lon': b.getEast().toFixed(4),
+      'limit':          CFG.limit,
+      'last-measure':   CFG.lastMeasure,
+      'status':         'green',
+    }, ['short','name','alt','loc',
+        'last._id','last.w-avg','last.w-dir','last.w-max','last.temp','last.pres']);
+
+    const data    = await apiFetch(url);
+    const visible = cullByDensity(data);
+    stLayer.clearLayers();
+    let n = 0;
+    for (const st of visible) {
+      const m = buildStationMarker(st);
+      if (m) { stLayer.addLayer(m); n++; }
+    }
+    setStatus(
+      'ok',
+      `${n} stations · ${new Date().toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hourCycle: 'h24',
+      })}`
+    );
+  } catch (e) {
+    console.error('Stations error:', e);
+    setStatus('error', e.message.slice(0, 80));
+  }
+}
+
+function setStatus(state, txt) {
+  $('sdot').className   = state;
+  $('stxt').textContent = txt;
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  BOOT
+// ═══════════════════════════════════════════════════════════════
+const debouncedLoadStations = debounce(loadStations, CFG.debounceMs);
+map.on('moveend', debouncedLoadStations);
+map.on('zoomend', debouncedLoadStations);
+
+function forceRefresh() { loadStations(); loadFoehn(); loadFoehnIndex(); }
+forceRefresh();
+setInterval(loadStations,   CFG.refreshMs);
+setInterval(loadFoehn,      CFG.refreshMs * 2);
+setInterval(loadFoehnIndex, CFG.foehnIndexRefreshMs);
+</script>
+</body>
+</html>
