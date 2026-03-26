@@ -148,6 +148,20 @@
     #stxt { max-width: 75px; }
   }
 </style>
+  <!-- Matomo -->
+  <script>
+    var _paq = window._paq = window._paq || [];
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function () {
+      var u = "//matomo.steambot.ch/";
+      _paq.push(['setTrackerUrl', u + 'matomo.php']);
+      _paq.push(['setSiteId', '7']);
+      var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+      g.async = true; g.src = u + 'matomo.js'; s.parentNode.insertBefore(g, s);
+    })();
+  </script>
+  <!-- End Matomo Code -->
 </head>
 <body>
 <div id="app">
@@ -346,6 +360,47 @@ function bestPres(p){ return p?.qnh ?? p?.qff ?? p?.qfe ?? null; }
 function debounce(fn, ms) {
   let t;
   return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
+}
+
+/**
+ * Convert Swiss LV95 (EPSG:2056) coordinates to WGS84 (EPSG:4326).
+ * Accuracy: ~1 m over Swiss territory.
+ * Source: swisstopo "Approximate formulas for the transformation between
+ *         Swiss projection coordinates and WGS84" (2016).
+ *
+ * @param {number} E  LV95 Easting  (e.g. 2 683 000 for Zürich)
+ * @param {number} N  LV95 Northing (e.g. 1 247 000 for Zürich)
+ * @returns {[number, number]} [longitude, latitude] in decimal degrees (WGS84)
+ */
+function lv95ToWgs84(E, N) {
+  // Shift and scale to auxiliary values centred on Bern (LV95 origin)
+  const y = (E - 2_600_000) / 1_000_000;
+  const x = (N - 1_200_000) / 1_000_000;
+
+  const lon = (2.6779094
+    + 4.728982 * y
+    + 0.791484 * y * x
+    + 0.1306   * y * x * x
+    - 0.0436   * y * y * y) * 100 / 36;
+
+  const lat = (16.9023892
+    + 3.238272 * x
+    - 0.270978 * y * y
+    - 0.002528 * x * x
+    - 0.0447   * y * y * x
+    - 0.0140   * x * x * x) * 100 / 36;
+
+  return [lon, lat];
+}
+
+/**
+ * Normalise a GeoJSON coordinate pair to WGS84 [lon, lat].
+ * geo.admin.ch feeds may use either WGS84 or LV95 depending on the dataset.
+ * Detection: LV95 Easting values are ~2.4–2.9 M, far outside the ±180° range
+ * of a valid WGS84 longitude, so Math.abs(x) > 1000 is a reliable discriminator.
+ */
+function coordsToWgs84(x, y) {
+  return Math.abs(x) > 1000 ? lv95ToWgs84(x, y) : [x, y];
 }
 
 function bearing(from, to) {
@@ -821,7 +876,10 @@ async function loadFoehnIndex() {
 
       const coords = f.geometry?.coordinates;
       if (!coords || coords.length < 2) continue;
-      const [lon, lat] = coords;
+      // Normalise to WGS84 — the live geo.admin.ch feed uses LV95 (EPSG:2056),
+      // while the local mock files use WGS84 directly. coordsToWgs84() detects
+      // which system is in use and converts only when necessary.
+      const [lon, lat] = coordsToWgs84(coords[0], coords[1]);
 
       const stName = f.properties.station_name
                   ?? f.properties.station_id

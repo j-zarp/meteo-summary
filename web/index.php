@@ -366,7 +366,7 @@
               <div class="iframe-wrapper">
                 <div class="iframe-overlay">
                 </div>
-                <iframe src="https://bluelift.ch/windmap/index.html" width="100%" height="600px"
+                <iframe src="https://bluelift.ch/windmap/index.html?lat=46.44&lon=7.40&zoom=7.35" width="100%" height="600px"
                   allow="geolocation" loading="lazy" style="border: none; display: block;" class="my-iframe">
                 </iframe>
                 <a href="https://bluelift.ch/windmap/index.html" target="_blank">bluelift.ch/windmap</a>
