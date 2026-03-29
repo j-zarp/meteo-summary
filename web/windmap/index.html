@@ -872,7 +872,7 @@ async function loadFoehnIndex() {
 
     for (const f of data.features) {
       const val = f.properties?.value;
-      if (val == null || val < 1) continue;   // skip index 0 (no foehn)
+      if (val == null || val < 1 || val > 2) continue;   // skip index 0 (no foehn) or anything higher than 2 (errors)
 
       const coords = f.geometry?.coordinates;
       if (!coords || coords.length < 2) continue;

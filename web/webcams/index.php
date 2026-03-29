@@ -41,7 +41,6 @@ function display_mauborget_image() {
   <meta name="theme-color" content="#d6eaf8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
   <script src="../web/assets/js/script.js"></script>
   <script src="https://kit.fontawesome.com/e798f160a4.js" crossorigin="anonymous"></script>
   
@@ -258,4 +257,3 @@ function display_mauborget_image() {
 
 </body>
 </html>
-
