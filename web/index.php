@@ -351,6 +351,9 @@
               </div>
             </div>
             <div class="container my-3">
+              <?php if (empty($forecastDays)): ?>
+                <p class="text-muted text-center">Données MétéoSuisse indisponibles pour le moment.</p>
+              <?php endif; ?>
               <div class="row text-center g-2 justify-content-center d-none d-lg-flex" id="weather-cards-row">
                 <?php foreach ($forecastDays as $index => $forecast):
                   $iconID = $forecast['iconId'] ?? null;
@@ -756,9 +759,19 @@
     <script>
       function fetchForecastData() {
         fetch('get_forecast.php')
-          .then(response => response.json())
+          .then(response => {
+            if (!response.ok) throw new Error('HTTP ' + response.status);
+            return response.json();
+          })
           .then(data => createTables(data))
-          .catch(error => console.error('Error fetching data:', error));
+          .catch(error => {
+            console.error('Error fetching data:', error);
+            const msg = '<p class="text-muted">Prédictions Paraglidable indisponibles.</p>';
+            const t = document.getElementById('todayForecastTable');
+            const m = document.getElementById('tomorrowForecastTable');
+            if (t) t.innerHTML = msg;
+            if (m) m.innerHTML = msg;
+          });
       }
       function getDateString(date) {
         const year = date.getFullYear().toString().padStart(4, '0');
