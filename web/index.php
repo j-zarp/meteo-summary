@@ -395,7 +395,7 @@
                   <div class="iframe-overlay">
                   </div>
                   <iframe width="100%" height="650" src="https://paraglidable.com/?lat=46.391&lon=7.094&zoom=9"
-                    allowfullscreen="true" allow="geolocation" name="iframe-parag" id="iframe-parag"
+                    allowfullscreen="true" allow="geolocation" loading="lazy" name="iframe-parag" id="iframe-parag"
                     class="my-iframe"></iframe>
                   <br>
                   <a href="https://paraglidable.com/?lat=46.391&lon=7.094&zoom=9" target="_blank">Paraglidable</a>
@@ -759,11 +759,11 @@
             <?php endforeach; ?>
             <div class="col-md-6 my-4">
               <h4>Prévisions du foehn</h4>
-              <img src="<?php echo "https://profiwetter.ch/wind_foehn_ch_fr.png?t=" . time() ?>" class="img-fluid">
+              <img src="<?php echo "https://profiwetter.ch/wind_foehn_ch_fr.png?t=" . time() ?>" class="img-fluid" loading="lazy">
             </div>
             <div class="col-md-6 my-4">
               <h4>Prévisions de la bise</h4>
-              <img src="<?php echo "https://profiwetter.ch/wind_bise_fr.png?t=" . time() ?>" class="img-fluid">
+              <img src="<?php echo "https://profiwetter.ch/wind_bise_fr.png?t=" . time() ?>" class="img-fluid" loading="lazy">
             </div>
             <div class="col-md-12">
               <h3>Pression et vents en Europe</h3>
@@ -792,7 +792,7 @@
                     src="https://www.meteoblue.com/en/weather/maps/widget/charmey_switzerland_2661211?windAnimation=0&windAnimation=1&gust=0&gust=1&satellite=0&satellite=1&cloudsAndPrecipitation=0&cloudsAndPrecipitation=1&temperature=0&temperature=1&sunshine=0&sunshine=1&extremeForecastIndex=0&extremeForecastIndex=1&geoloc=fixed&tempunit=C&windunit=km%252Fh&lengthunit=metric&zoom=5&autowidth=auto#coords=8/46.423/7.129&map=windAnimation~rainbow~NEMS4~850%20mb~none"
                     frameborder="0" scrolling="NO" allowtransparency="true"
                     sandbox="allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox"
-                    style="width: 100%; height: 720px" class="my-iframe"></iframe>
+                    loading="lazy" style="width: 100%; height: 720px" class="my-iframe"></iframe>
                 </div>
                 <div>
                   <a href="https://www.meteoblue.com/en/weather/maps/charmey_switzerland_2661211?utm_source=weather_widget&utm_medium=linkus&utm_content=map&utm_campaign=Weather%2BWidget"
@@ -816,7 +816,7 @@
                   <div class="iframe-overlay">
                   </div>
                   <iframe width="100%" height="650" src="https://xctherm.com/icon?lat=46.4505639&lon=6.9924254&zoom=9"
-                    allowfullscreen="true" allow="geolocation" name="iframe-xcterm" id="iframe-xcterm"
+                    allowfullscreen="true" allow="geolocation" loading="lazy" name="iframe-xcterm" id="iframe-xcterm"
                     class="my-iframe"></iframe><br>
                   <a href="https://xctherm.com/icon?lat=46.2505639&lon=7.3924254&zoom=9" target="_blank">XC Term</a>
                 </div>
@@ -830,15 +830,15 @@
         <div id="rendered-box-151" class="my-4 container">
           <div class="row">
             <div class="col-md-12">
-              <img class="img-fluid"
+              <img class="img-fluid" loading="lazy"
                 src="https://my.meteoblue.com/visimage/meteogram_web_hd?look=KILOMETER_PER_HOUR%2CCELSIUS%2CMILLIMETER&amp;apikey=5838a18e295d&amp;winddirection=3char&amp;temperature=C&amp;windspeed=kmh&amp;precipitationamount=mm&amp;city=Charmey&amp;iso2=ch&amp;lat=46.6196&amp;lon=7.16486&amp;asl=895&amp;tz=Europe%2FZurich&amp;lang=fr&amp;sig=e477e9b21e39f451d48c7e8ca9ef69f1">
             </div>
             <div class="col-md-12">
-              <img class="img-fluid"
+              <img class="img-fluid" loading="lazy"
                 src="https://my.meteoblue.com/visimage/meteogram_web_hd?look=KILOMETER_PER_HOUR%2CCELSIUS%2CMILLIMETER&amp;apikey=5838a18e295d&amp;winddirection=3char&amp;temperature=C&amp;windspeed=kmh&amp;precipitationamount=mm&amp;city=Bex&amp;iso2=ch&amp;lat=46.2496&amp;lon=7.0098&amp;asl=421&amp;tz=Europe%2FZurich&amp;lang=fr&amp;sig=208862b9e08efcb4d575496047005de4">
             </div>
             <div class="col-md-12">
-              <img class="img-fluid"
+              <img class="img-fluid" loading="lazy"
                 src="https://my.meteoblue.com/visimage/meteogram_web_hd?look=KILOMETER_PER_HOUR%2CCELSIUS%2CMILLIMETER&amp;apikey=5838a18e295d&amp;temperature=C&amp;windspeed=kmh&amp;precipitationamount=mm&amp;winddirection=3char&amp;city=Vercorin&amp;iso2=ch&amp;lat=46.256500&amp;lon=7.531040&amp;asl=1340&amp;tz=Europe%2FZurich&amp;lang=fr&amp;sig=106c5f8e751346e105fb75aabe45a2eb">
             </div>
           </div>
@@ -879,7 +879,7 @@
                 <iframe
                   src="https://map.geo.admin.ch/#/embed?lang=en&center=2587196.94,1144748.25&z=3.285&bgLayer=ch.swisstopo.pixelkarte-farbe&topic=ech&layers=ch.swisstopo.zeitreihen@year=1864,f;ch.bfs.gebaeude_wohnungs_register,f;ch.bav.haltestellen-oev,f;ch.swisstopo.swisstlm3d-wanderwege,f;ch.vbs.schiessanzeigen,f;ch.astra.wanderland-sperrungen_umleitungen,f;ch.bazl.segelflugkarte"
                   style="border: 0;width: 100%;height: 650px;max-width: 100%;max-height: 100%;" allow="geolocation"
-                  class="my-iframe"></iframe>
+                  loading="lazy" class="my-iframe"></iframe>
                 <br>
                 <a href="https://map.geo.admin.ch/?zoom=2.984824051441887&bgLayer=ch.swisstopo.pixelkarte-farbe&time_current=latest&lang=fr&topic=ech&layers=ch.bazl.segelflugkarte&E=2582968.49&N=1128202.41"
                   target="_blank">Map Geo Admin</a>
@@ -898,7 +898,7 @@
                 <div class="row">
                   <div class="col-md-6 img-thingy-right">
                     <a href="https://www.meteo-fsvl.ch/system/login.html" target="_blank">
-                      <img class="img-fluid" src="./assets/png/fsvl_meteo.png">
+                      <img class="img-fluid" loading="lazy" src="./assets/png/fsvl_meteo.png">
                     </a>
                   </div>
                   <div class="col-md-5 offset-md-1">
@@ -916,7 +916,7 @@
                 <div class="row">
                   <div class="col-md-6 img-thingy-right">
                     <a href="https://meteo-parapente.com/" target="_blank">
-                      <img class="img-fluid" src="./assets/png/meteo_parapente.png">
+                      <img class="img-fluid" loading="lazy" src="./assets/png/meteo_parapente.png">
                     </a>
                   </div>
                   <div class="col-md-5 offset-md-1">
@@ -936,7 +936,7 @@
                 <div class="row">
                   <div class="col-md-6 img-thingy-right">
                     <a href="https://flyxc.app/" target="_blank">
-                      <img class="img-fluid" src="./assets/png/flyxc.png">
+                      <img class="img-fluid" loading="lazy" src="./assets/png/flyxc.png">
                     </a>
                   </div>
                   <div class="col-md-5 offset-md-1">
@@ -955,7 +955,7 @@
                   <div class="col-md-6 img-thingy-right">
                     <a href="https://www.burnair.cloud/?layers=%2Cant%2Ctw&visibility=%2Cauto%2Con&base=bbt#10/46.5442/7.5510"
                       target="_blank">
-                      <img class="img-fluid" src="./assets/png/burnair.png">
+                      <img class="img-fluid" loading="lazy" src="./assets/png/burnair.png">
                     </a>
                   </div>
                   <div class="col-md-5 offset-md-1">
@@ -975,7 +975,7 @@
                 <div class="row">
                   <div class="col-md-6 img-thingy-right">
                     <a href="https://www.hikeandfly.org/" target="_blank">
-                      <img class="img-fluid" src="./assets/png/HF_planer.png">
+                      <img class="img-fluid" loading="lazy" src="./assets/png/HF_planer.png">
                     </a>
                   </div>
                   <div class="col-md-5 offset-md-1">
@@ -994,7 +994,7 @@
                 <div class="row">
                   <div class="col-md-6 img-thingy-right">
                     <a href="https://thermal.kk7.ch/#46.379,7.388,11" target="_blank">
-                      <img class="img-fluid" src="./assets/png/thermal.kk7.ch.png">
+                      <img class="img-fluid" loading="lazy" src="./assets/png/thermal.kk7.ch.png">
                     </a>
                   </div>
                   <div class="col-md-5 offset-md-1">
