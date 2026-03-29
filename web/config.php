@@ -101,44 +101,44 @@ return [
 
     // -------------------------------------------------------------------------
     // Useful links — displayed in the "Autres liens utiles" section
-    // icon: Material Icons name
+    // thumb: path relative to web root
     // -------------------------------------------------------------------------
     'useful_links' => [
         [
-            'name' => 'SHV/FSVL Meteo',
-            'desc' => 'Météo détaillée FSVL (login requis)',
-            'url'  => 'https://www.meteo-fsvl.ch/system/login.html',
-            'icon' => 'thermostat',
+            'name'  => 'SHV/FSVL Meteo',
+            'desc'  => 'Météo détaillée FSVL (login requis)',
+            'url'   => 'https://www.meteo-fsvl.ch/system/login.html',
+            'thumb' => './assets/png/fsvl_meteo.png',
         ],
         [
-            'name' => 'Meteo-Parapente',
-            'desc' => 'Prévisions vent en altitude',
-            'url'  => 'https://meteo-parapente.com/',
-            'icon' => 'paragliding',
+            'name'  => 'Meteo-Parapente',
+            'desc'  => 'Prévisions vent en altitude',
+            'url'   => 'https://meteo-parapente.com/',
+            'thumb' => './assets/png/meteo_parapente.png',
         ],
         [
-            'name' => 'FlyXC',
-            'desc' => 'Préparer un cross, exporter les balises',
-            'url'  => 'https://flyxc.app/',
-            'icon' => 'route',
+            'name'  => 'FlyXC',
+            'desc'  => 'Préparer un cross, exporter les balises',
+            'url'   => 'https://flyxc.app/',
+            'thumb' => './assets/png/flyxc.png',
         ],
         [
-            'name' => 'Burnair',
-            'desc' => 'Cartes, prévisions, XC planning',
-            'url'  => 'https://www.burnair.cloud/?layers=%2Cant%2Ctw&visibility=%2Cauto%2Con&base=bbt#10/46.5442/7.5510',
-            'icon' => 'map',
+            'name'  => 'Burnair',
+            'desc'  => 'Cartes, prévisions, XC planning',
+            'url'   => 'https://www.burnair.cloud/?layers=%2Cant%2Ctw&visibility=%2Cauto%2Con&base=bbt#10/46.5442/7.5510',
+            'thumb' => './assets/png/burnair.png',
         ],
         [
-            'name' => 'Hike & Fly Planer',
-            'desc' => 'Distance de plané depuis un sommet',
-            'url'  => 'https://www.hikeandfly.org/',
-            'icon' => 'hiking',
+            'name'  => 'Hike & Fly Planer',
+            'desc'  => 'Distance de plané depuis un sommet',
+            'url'   => 'https://www.hikeandfly.org/',
+            'thumb' => './assets/png/HF_planer.png',
         ],
         [
-            'name' => 'Thermal KK7',
-            'desc' => 'Thermiques et routes',
-            'url'  => 'https://thermal.kk7.ch/#46.379,7.388,11',
-            'icon' => 'whatshot',
+            'name'  => 'Thermal KK7',
+            'desc'  => 'Thermiques et routes',
+            'url'   => 'https://thermal.kk7.ch/#46.379,7.388,11',
+            'thumb' => './assets/png/thermal.kk7.ch.png',
         ],
     ],
 

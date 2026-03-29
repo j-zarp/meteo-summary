@@ -117,7 +117,7 @@
               <div class="iframe-wrapper">
                 <div class="iframe-overlay">
                 </div>
-                <iframe src="<?= $cfg['site_url'] ?>/windmap/index.html?lat=<?= $cfg['windmap_lat'] ?>&lon=<?= $cfg['windmap_lon'] ?>&zoom=<?= $cfg['windmap_zoom'] ?>" width="100%" height="600px"
+                <iframe src="/windmap/index.html?lat=<?= $cfg['windmap_lat'] ?>&lon=<?= $cfg['windmap_lon'] ?>&zoom=<?= $cfg['windmap_zoom'] ?>" width="100%" height="600px"
                   allow="geolocation" loading="lazy" style="border: none; display: block;" class="my-iframe">
                 </iframe>
                 <a href="https://bluelift.ch/windmap/index.html" target="_blank">bluelift.ch/windmap</a>
@@ -646,12 +646,14 @@
       <div id="section-links" class="box odd">
         <div class="container py-3">
           <h3>Autres liens utiles</h3>
-          <div class="row g-2 row-cols-1 row-cols-sm-2 row-cols-lg-3">
+          <div class="row g-3 row-cols-1 row-cols-md-2">
             <?php foreach ($cfg['useful_links'] as $link): ?>
             <div class="col">
               <a href="<?= htmlspecialchars($link['url']) ?>" target="_blank" rel="noopener" class="link-card">
-                <i class="material-icons"><?= htmlspecialchars($link['icon']) ?></i>
-                <div class="link-card-text">
+                <div class="link-card-thumb">
+                  <img src="<?= htmlspecialchars($link['thumb']) ?>" alt="<?= htmlspecialchars($link['name']) ?>" loading="lazy">
+                </div>
+                <div class="link-card-body">
                   <strong><?= htmlspecialchars($link['name']) ?></strong>
                   <small><?= htmlspecialchars($link['desc']) ?></small>
                 </div>
