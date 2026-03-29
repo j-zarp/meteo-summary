@@ -413,6 +413,8 @@
 
       <!-- === Bulletin météo Suisse === -->
       <?php
+      require_once __DIR__ . '/cache_helper.php';
+
       // --- Central Configuration ---
       $versionsUrl = 'https://www.meteosuisse.admin.ch/product/output/versions.json';
 
@@ -429,7 +431,7 @@
       // --- Data Fetching & Preparation ---
       
       // 1. Read versions.json once and decode
-      $versionsJson = @file_get_contents($versionsUrl);
+      $versionsJson = cached_fetch($versionsUrl, 300, 'meteosuisse_versions');
       $versions = [];
       if ($versionsJson !== false) {
         $decoded = json_decode($versionsJson, true);
@@ -445,7 +447,7 @@
 
       if ($current_wind_tag) {
         $wind_data_url = str_replace('{VTAG}', $current_wind_tag, $wind_data_base_url);
-        $jsonData = @file_get_contents($wind_data_url);
+        $jsonData = cached_fetch($wind_data_url, 900, 'meteosuisse_wind');
         $wind_data = null;
 
         if ($jsonData !== false) {
@@ -494,14 +496,14 @@
 
       if ($generalTag) {
         $generalUrl = "https://www.meteosuisse.admin.ch/product/output/generalsituation/text/fr/version__{$generalTag}/textproduct_fr.xhtml";
-        $tmp = @file_get_contents($generalUrl);
+        $tmp = cached_fetch($generalUrl, 900, 'meteosuisse_general');
         if ($tmp !== false) {
           $generalHtml = "<h4>Situation Générale</h4>" . $tmp;
         }
       }
       if ($regionalTag) {
         $regionalUrl = "https://www.meteosuisse.admin.ch/product/output/weather-report/fr/west/version__{$regionalTag}/textproduct_fr.xhtml";
-        $tmp = @file_get_contents($regionalUrl);
+        $tmp = cached_fetch($regionalUrl, 900, 'meteosuisse_regional');
         if ($tmp !== false) {
           $regionalHtml = "<hr>" . $tmp;
         }
@@ -514,7 +516,7 @@
 
       if ($overviewTag) {
         $jsonUrl = "https://www.meteosuisse.admin.ch/product/output/weather-region-overview/version__{$overviewTag}/weatherOverviewForecast_fr.json";
-        $jsonData = @file_get_contents($jsonUrl);
+        $jsonData = cached_fetch($jsonUrl, 900, 'meteosuisse_overview');
 
         if ($jsonData !== false && $jsonData !== '') {
           $decoded = json_decode($jsonData, true);

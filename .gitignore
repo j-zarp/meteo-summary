@@ -1,6 +1,8 @@
 #  Project specific  #
 ######################
 web/assets/pdf/*
+web/cache/*.cache
+web/cache/*.tmp
 
 # Compiled source #
 ###################
