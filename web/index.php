@@ -1,8 +1,9 @@
+<?php $cfg = require __DIR__ . '/config.php'; ?>
 <!DOCTYPE html>
 <html lang="fr">
 
   <head>
-    <title>BlueLift</title>
+    <title><?= htmlspecialchars($cfg['site_name']) ?></title>
 
     <meta name="title" content="BlueLift">
     <meta name="description"
@@ -14,13 +15,8 @@
     <meta name="theme-color" content="#d6eaf8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <script src="https://kit.fontawesome.com/e798f160a4.js" crossorigin="anonymous"></script>
-
     <link rel="stylesheet" media="all" href="./assets/css/zephyr.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Roboto:wght@300;400;700&display=swap"
-      rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap">
 
     <!-- Favicons for various platforms -->
     <link rel="shortcut icon" href="/favicon_io/favicon.ico?v=2">
@@ -46,275 +42,16 @@
     <meta name="msapplication-square310x310logo" content="/favicon_io/mstile-310x310.png" />
     <link rel="manifest" href="/favicon_io/manifest.json">
 
-    <style>
-      th,
-      td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: left;
-      }
-
-      th {
-        background-color: #f2f2f2;
-      }
-
-      .red-text {
-        color: #d73027;
-      }
-
-      .green-text {
-        color: #1a9850;
-      }
-
-      .button1 {
-        border: none;
-        color: black;
-        padding: 2px 2px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 20px;
-        margin: 0px 0px;
-        cursor: pointer;
-      }
-
-      .show-button {
-        margin-top: 20px;
-        text-align: center;
-      }
-
-      .hidden-row {
-        display: none;
-      }
-
-      .pdf-container {
-        width: 100%;
-        max-width: 100%;
-        height: 650px;
-        overflow-y: auto;
-        margin-bottom: 20px;
-        padding: 10px;
-        box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        background: #fff;
-      }
-
-      .pdf-page-canvas {
-        width: 100% !important;
-        height: auto !important;
-        margin-bottom: 10px;
-        display: block;
-      }
-
-      @media (max-width: 768px) {
-        .pdf-container {
-          height: 500px;
-        }
-      }
-
-      @media (max-width: 480px) {
-        .pdf-container {
-          height: 400px;
-        }
-      }
-
-      .carousel-control-prev-icon,
-      .carousel-control-next-icon {
-        background-color: #333;
-        border-radius: 50%;
-      }
-
-      @media (max-width: 576px) {
-        #page-content {
-          padding-left: 5vw;
-          padding-right: 5vw;
-        }
-      }
-
-      iframe,
-      img,
-      .pdf-container {
-        width: 100% !important;
-        max-width: 100%;
-      }
-
-      .iframe-wrapper {
-        position: relative;
-      }
-
-      .my-iframe {
-        pointer-events: none;
-      }
-
-      .iframe-overlay {
-        position: absolute;
-        inset: 0;
-        z-index: 10;
-        cursor: pointer;
-      }
-
-      /* Icon link container */
-      .icon-link-bl {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        text-decoration: none;
-        color: #1e293b;
-        padding: 2% 4%;
-        border-radius: 20px;
-        background: white;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        transition: all 0.2s ease;
-        font-size: 100%;
-        font-weight: 500;
-        max-width: 300px;
-      }
-
-      /* Icon styling */
-      .icon-link-bl i {
-        font-size: 48px;
-        color: #3b82f6;
-        flex-shrink: 0;
-        transition: transform 0.2s ease;
-      }
-
-      /* Hover and focus states */
-      .icon-link-bl:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-        color: #1e293b;
-      }
-
-      .icon-link-bl:hover i {
-        transform: scale(1.1);
-        color: #1d4ed8;
-      }
-
-      .icon-link-bl:focus {
-        outline: 2px solid #3b82f6;
-        outline-offset: 2px;
-      }
-
-      /* Responsive adjustments */
-      @media (max-width: 480px) {
-        .icon-link-bl {
-          padding: 12px 16px;
-          font-size: 14px;
-        }
-
-        .icon-link-bl i {
-          font-size: 28px;
-        }
-      }
-
-      /* --- Mountain Card / Wind Info Styles from wind.php, adapted for smaller container --- */
-      .weather-card-data {
-        /* Ensure the card has a dark background for the wind info */
-        background-color: #2c3e50;
-        /* Dark background like the example */
-        color: white;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      }
-
-      .weather-card-data p,
-      .weather-card-data span {
-        color: white;
-        /* Make text inside the card white */
-      }
-
-      .mountain-container {
-        position: relative;
-        min-height: 150px;
-        background-image: url('https://www.meteosuisse.admin.ch/static/resources/mountain/mountain.svg');
-        background-size: 200% auto;
-        /* Smaller size for card */
-        background-repeat: no-repeat;
-        background-position: center;
-        /* Center the mountain graphic */
-        margin-top: 0px;
-        padding-bottom: 5px;
-        /* Add padding for the bottom alt level */
-      }
-
-      .altitude-level {
-        position: absolute;
-        /* Absolute positioning within the mountain-container */
-        left: 5px;
-        /* Start from the left */
-        display: flex;
-        align-items: center;
-        width: 90%;
-      }
-
-      .alt-label {
-        margin-right: auto;
-        /* Push alt label to the left, wind info to the right */
-        font-size: 0.8em;
-        color: #bdc3c7;
-      }
-
-      /* Positioning based on the mountain example */
-      .alt-4000 {
-        top: 10%;
-      }
-
-      .alt-3000 {
-        top: 40%;
-      }
-
-      .alt-2000 {
-        top: 70%;
-      }
-
-      .wind-icon {
-        width: 20px;
-        /* Slightly smaller */
-        height: 20px;
-        margin-right: 3px;
-      }
-
-      .wind-speed {
-        font-size: 1em;
-        /* Smaller font */
-        font-weight: bold;
-        margin-right: 2px;
-      }
-
-      .wind-units {
-        font-size: 0.8em;
-        /* Smaller font */
-        color: #ecf0f1;
-      }
-
-      .wind-info-container {
-        border-top: 1px solid #444;
-        /* Separator for wind info */
-        padding-top: 5px;
-        margin-top: 5px;
-      }
-
-      .no-wind-data {
-        font-size: 0.8em;
-        text-align: center;
-        margin: 0;
-      }
-
-      /* Override the original card padding to fit content better */
-      .weather-card-data .card-body {
-        padding: 8px !important;
-      }
-    </style>
+    <link rel="stylesheet" href="./assets/css/bluelift.css" />
     <!-- Matomo -->
     <script>
       var _paq = window._paq = window._paq || [];
       _paq.push(['trackPageView']);
       _paq.push(['enableLinkTracking']);
       (function () {
-        var u = "//matomo.steambot.ch/";
+        var u = "<?= htmlspecialchars($cfg['matomo_url']) ?>";
         _paq.push(['setTrackerUrl', u + 'matomo.php']);
-        _paq.push(['setSiteId', '7']);
+        _paq.push(['setSiteId', '<?= htmlspecialchars($cfg['matomo_site_id']) ?>']);
         var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
         g.async = true; g.src = u + 'matomo.js'; s.parentNode.insertBefore(g, s);
       })();
@@ -323,10 +60,25 @@
   </head>
 
   <body>
+    <nav class="section-nav" aria-label="Sections">
+      <a href="#section-wind">Vent</a>
+      <a href="#section-paraglidable">Paraglidable</a>
+      <a href="#section-bulletin">Bulletin</a>
+      <a href="#section-synoptic">Synoptique</a>
+      <a href="#section-foehn-bise">Foehn et bise</a>
+      <a href="#section-windy">Windy</a>
+      <a href="#section-meteoblue">Meteoblue</a>
+      <a href="#section-xctherm">XC-Therm</a>
+      <a href="#section-meteograms">Météogrammes</a>
+      <a href="#section-dabs">DABS</a>
+      <a href="#section-gliding">Espace aérien</a>
+      <a href="#section-links">Liens</a>
+    </nav>
+
     <div id="page-content" class="striped">
-      
+
       <div class="py-3">
-        <div id="rendered-box-567" class="container">
+        <div class="container">
           <div class="row">
             <div class="col-md-12">
               <h2>Les infos essentielles pour ta journée de vol</h2>
@@ -335,15 +87,15 @@
         </div>
       </div>
 
-      <div class="box odd">
+      <div id="section-wind" class="box odd">
         <div class="py-3">
-          <div id="rendered-box-159" class="container">
+          <div class="container">
             <div class="row justify-content-around">
               <h3>Mesure du vent actuel</h3>
               <div class="col-sm-4">
                 <p>
                   <!--button class="button1">&#x2794; Carte winds.mobi</button-->
-                  <a href="https://winds.mobi/stations/map?lat=46.4075639&lon=7.3924254&zoom=9" target="_blank"
+                  <a href="https://winds.mobi/stations/map?lat=<?= $cfg['windsmobi_lat'] ?>&lon=<?= $cfg['windsmobi_lon'] ?>&zoom=<?= $cfg['windsmobi_zoom'] ?>" target="_blank"
                     class="icon-link-bl" aria-label="Open winds.<wbr>mobi map">
                     <i class="material-icons">air</i>
                     Carte winds.mobi
@@ -365,7 +117,7 @@
               <div class="iframe-wrapper">
                 <div class="iframe-overlay">
                 </div>
-                <iframe src="https://bluelift.ch/windmap/index.html?lat=46.44&lon=7.40&zoom=7.35" width="100%" height="600px"
+                <iframe src="/windmap/index.html?lat=<?= $cfg['windmap_lat'] ?>&lon=<?= $cfg['windmap_lon'] ?>&zoom=<?= $cfg['windmap_zoom'] ?>" width="100%" height="600px"
                   allow="geolocation" loading="lazy" style="border: none; display: block;" class="my-iframe">
                 </iframe>
                 <a href="https://bluelift.ch/windmap/index.html" target="_blank">bluelift.ch/windmap</a>
@@ -375,10 +127,10 @@
         </div>
       </div>
 
-      <div id="box_155" class="box odd">
+      <div id="section-paraglidable" class="box odd">
         <div class="py-3">
-          <div id="rendered-box-155" class="container">
-            <div class="row" id="anchor">
+          <div class="container">
+            <div class="row">
               <div class="col-md-12">
                 <h3>Prédictions Paraglidable</h3>
               </div>
@@ -399,11 +151,11 @@
                 <div class="iframe-wrapper">
                   <div class="iframe-overlay">
                   </div>
-                  <iframe width="100%" height="650" src="https://paraglidable.com/?lat=46.391&lon=7.094&zoom=9"
-                    allowfullscreen="true" allow="geolocation" name="iframe-parag" id="iframe-parag"
+                  <iframe width="100%" height="650" src="https://paraglidable.com/?lat=<?= $cfg['paraglidable_lat'] ?>&lon=<?= $cfg['paraglidable_lon'] ?>&zoom=<?= $cfg['paraglidable_zoom'] ?>"
+                    allowfullscreen="true" allow="geolocation" loading="lazy" name="iframe-parag" id="iframe-parag"
                     class="my-iframe"></iframe>
                   <br>
-                  <a href="https://paraglidable.com/?lat=46.391&lon=7.094&zoom=9" target="_blank">Paraglidable</a>
+                  <a href="https://paraglidable.com/?lat=<?= $cfg['paraglidable_lat'] ?>&lon=<?= $cfg['paraglidable_lon'] ?>&zoom=<?= $cfg['paraglidable_zoom'] ?>" target="_blank">Paraglidable</a>
                 </div>
               </div>
             </div>
@@ -413,6 +165,8 @@
 
       <!-- === Bulletin météo Suisse === -->
       <?php
+      require_once __DIR__ . '/cache_helper.php';
+
       // --- Central Configuration ---
       $versionsUrl = 'https://www.meteosuisse.admin.ch/product/output/versions.json';
 
@@ -420,8 +174,8 @@
       $windKey = 'altitude-levels';
       $wind_data_base_url = 'https://www.meteosuisse.admin.ch/product/output/altitude-levels/version__{VTAG}/heights_wind_fr.json';
       $wind_icon_base_url = 'https://www.meteosuisse.admin.ch/static/resources/wind-directions/';
-      $target_region_key = 'location_id_west';
-      $target_region_name = 'Région Ouest';
+      $target_region_key = $cfg['meteosuisse_region_key'];
+      $target_region_name = $cfg['meteosuisse_region_name'];
       $generalKey = 'generalsituation/text/fr';
       $regionalKey = 'weather-report/fr/west';
       $regionOverviewKey = 'weather-region-overview';
@@ -429,7 +183,7 @@
       // --- Data Fetching & Preparation ---
       
       // 1. Read versions.json once and decode
-      $versionsJson = @file_get_contents($versionsUrl);
+      $versionsJson = cached_fetch($versionsUrl, $cfg['cache_ttl_versions'], 'meteosuisse_versions');
       $versions = [];
       if ($versionsJson !== false) {
         $decoded = json_decode($versionsJson, true);
@@ -445,7 +199,7 @@
 
       if ($current_wind_tag) {
         $wind_data_url = str_replace('{VTAG}', $current_wind_tag, $wind_data_base_url);
-        $jsonData = @file_get_contents($wind_data_url);
+        $jsonData = cached_fetch($wind_data_url, $cfg['cache_ttl_forecast'], 'meteosuisse_wind');
         $wind_data = null;
 
         if ($jsonData !== false) {
@@ -494,14 +248,14 @@
 
       if ($generalTag) {
         $generalUrl = "https://www.meteosuisse.admin.ch/product/output/generalsituation/text/fr/version__{$generalTag}/textproduct_fr.xhtml";
-        $tmp = @file_get_contents($generalUrl);
+        $tmp = cached_fetch($generalUrl, $cfg['cache_ttl_forecast'], 'meteosuisse_general');
         if ($tmp !== false) {
           $generalHtml = "<h4>Situation Générale</h4>" . $tmp;
         }
       }
       if ($regionalTag) {
         $regionalUrl = "https://www.meteosuisse.admin.ch/product/output/weather-report/fr/west/version__{$regionalTag}/textproduct_fr.xhtml";
-        $tmp = @file_get_contents($regionalUrl);
+        $tmp = cached_fetch($regionalUrl, $cfg['cache_ttl_forecast'], 'meteosuisse_regional');
         if ($tmp !== false) {
           $regionalHtml = "<hr>" . $tmp;
         }
@@ -514,7 +268,7 @@
 
       if ($overviewTag) {
         $jsonUrl = "https://www.meteosuisse.admin.ch/product/output/weather-region-overview/version__{$overviewTag}/weatherOverviewForecast_fr.json";
-        $jsonData = @file_get_contents($jsonUrl);
+        $jsonData = cached_fetch($jsonUrl, $cfg['cache_ttl_forecast'], 'meteosuisse_overview');
 
         if ($jsonData !== false && $jsonData !== '') {
           $decoded = json_decode($jsonData, true);
@@ -590,15 +344,18 @@
       }
       ?>
 
-      <div id="box_155" class="box odd">
+      <div id="section-bulletin" class="box odd">
         <div class="py-3">
-          <div id="rendered-box-155" class="container">
-            <div class="row" id="anchor">
+          <div class="container">
+            <div class="row">
               <div class="col-md-12">
                 <h3>Bulletin Météo (MétéoSuisse)</h3>
               </div>
             </div>
             <div class="container my-3">
+              <?php if (empty($forecastDays)): ?>
+                <p class="text-muted text-center">Données MétéoSuisse indisponibles pour le moment.</p>
+              <?php endif; ?>
               <div class="row text-center g-2 justify-content-center d-none d-lg-flex" id="weather-cards-row">
                 <?php foreach ($forecastDays as $index => $forecast):
                   $iconID = $forecast['iconId'] ?? null;
@@ -706,86 +463,69 @@
       </div>
 
       <?php
-      // Function to check if a URL points to a valid location on cdn.knmi.nl
-      function isValidUrl($url)
-      {
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        $data = curl_exec($ch);
-        curl_close($ch);
-        // the response contains an error message
-        if (strpos($data, '<Code>NoSuchKey</Code>') or 
-            strpos($data, '<Code>AccessDenied</Code>')) {
-          return false;
-        }
-        return true;
-      }
-      // Return a URL for an analyzed synoptic map, if it exists, otherwise return a URL for the forecast map
-      function getValidImageUrl($date, &$time, &$text)
-      {
-        $dayFormatted = $date->format('d.m.Y');
-        $dayStr = $date->format('Ymd');
-        $dayOfTheMonth = $date->format('d');
-        $timestr = sprintf("%02d", $time);
-        $url = "https://cdn.knmi.nl/knmi/map/page/klimatologie/daggegevens/weerkaarten/analyse_{$dayStr}{$timestr}.gif?1234";
-        if (isValidUrl($url)) {
-          $text = "Etat " . $dayFormatted . " " . $timestr . " UTC";
-          return $url;
-        }
-        // fallback for 06/18 UTC: return 00 or 12 UTC
-        if ($time == 6 || $time == 18) {
-          $time -= 6;
-          return getValidImageUrl($date, $time, $text);
-        }
-        $text = "Prévision " . $dayFormatted . " " . $timestr . " UTC";
-        return "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonth}{$timestr}_large.gif?1234";
-      }
-      function getImageUrls($date)
-      {
-        $time2 = 18;
-        $url2 = getValidImageUrl($date, $time2, $text2);
-        $time1 = $time2 - 6;
-        $url1 = getValidImageUrl($date, $time1, $text1);
-        return array($url1, $url2, $text1, $text2);
-      }
+      // --- KNMI Synoptic Maps ---
+      // Generate URLs without blocking curl checks. Client-side onerror handles fallback.
       $date_utc = new DateTime("now", new DateTimeZone("UTC"));
       $tomorrow = new DateTime('tomorrow', new DateTimeZone("UTC"));
+      $todayFormatted = $date_utc->format('d.m.Y');
       $tomorrowFormatted = $tomorrow->format('d.m.Y');
+      $dayStr = $date_utc->format('Ymd');
+      $dayOfTheMonth = $date_utc->format('d');
       $dayOfTheMonthForTomorrow = $tomorrow->format('d');
-      $resToday = getImageUrls($date_utc);
-      $linkTomorrow00 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonthForTomorrow}00_large.gif?1234";
-      $linkTomorrow12 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonthForTomorrow}12_large.gif?1234";
+
+      // For today: try analysis maps first (06 & 12 UTC), forecast maps as fallback
+      $knmiMaps = [
+        [
+          'primary' => "https://cdn.knmi.nl/knmi/map/page/klimatologie/daggegevens/weerkaarten/analyse_{$dayStr}06.gif",
+          'fallback' => "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonth}06_large.gif",
+          'primaryLabel' => "Etat {$todayFormatted} 06 UTC",
+          'fallbackLabel' => "Prévision {$todayFormatted} 06 UTC",
+        ],
+        [
+          'primary' => "https://cdn.knmi.nl/knmi/map/page/klimatologie/daggegevens/weerkaarten/analyse_{$dayStr}12.gif",
+          'fallback' => "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonth}12_large.gif",
+          'primaryLabel' => "Etat {$todayFormatted} 12 UTC",
+          'fallbackLabel' => "Prévision {$todayFormatted} 12 UTC",
+        ],
+        [
+          'primary' => "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonthForTomorrow}00_large.gif",
+          'fallback' => '',
+          'primaryLabel' => "Prévision {$tomorrowFormatted} 00h UTC",
+          'fallbackLabel' => '',
+        ],
+        [
+          'primary' => "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonthForTomorrow}12_large.gif",
+          'fallback' => '',
+          'primaryLabel' => "Prévision {$tomorrowFormatted} 12h UTC",
+          'fallbackLabel' => '',
+        ],
+      ];
       ?>
 
-      <div id="box_154" class="box even">
-        <div id="rendered-box-154" class="my-4 container">
+      <div id="section-synoptic" class="box even">
+        <div class="my-4 container">
           <div class="row">
+            <?php foreach ($knmiMaps as $map): ?>
             <div class="col-md-6 my-4">
-              <h4><?php echo $resToday[2]; ?></h4>
-              <img class="img-fluid" src="<?php echo $resToday[0]; ?>">
+              <h4 class="knmi-label"><?= htmlspecialchars($map['primaryLabel']) ?></h4>
+              <img class="img-fluid" loading="lazy"
+                src="<?= htmlspecialchars($map['primary']) ?>"
+                <?php if ($map['fallback']): ?>
+                  data-fallback="<?= htmlspecialchars($map['fallback']) ?>"
+                  data-fallback-label="<?= htmlspecialchars($map['fallbackLabel']) ?>"
+                  onerror="if(this.dataset.fallback){this.src=this.dataset.fallback;this.previousElementSibling.textContent=this.dataset.fallbackLabel;this.removeAttribute('onerror');}"
+                <?php endif; ?>>
             </div>
-            <div class="col-md-6 my-4">
-              <h4><?php echo $resToday[3]; ?></h4>
-              <img class="img-fluid" src="<?php echo $resToday[1]; ?>">
-            </div>
-            <div class="col-md-6 my-4">
-              <h4>Prévision <?php echo $tomorrowFormatted; ?> 00h UTC</h4>
-              <img class="img-fluid" src="<?php echo $linkTomorrow00; ?>">
-            </div>
-            <div class="col-md-6 my-4">
-              <h4>Prévision <?php echo $tomorrowFormatted; ?> 12h UTC</h4>
-              <img class="img-fluid" src="<?php echo $linkTomorrow12; ?>">
-            </div>
-            <div class="col-md-6 my-4">
+            <?php endforeach; ?>
+            <div id="section-foehn-bise" class="col-md-6 my-4">
               <h4>Prévisions du foehn</h4>
-              <img src="<?php echo "https://profiwetter.ch/wind_foehn_ch_fr.png?t=" . time() ?>" class="img-fluid">
+              <img src="<?php echo "https://profiwetter.ch/wind_foehn_ch_fr.png?t=" . time() ?>" class="img-fluid" loading="lazy">
             </div>
             <div class="col-md-6 my-4">
               <h4>Prévisions de la bise</h4>
-              <img src="<?php echo "https://profiwetter.ch/wind_bise_fr.png?t=" . time() ?>" class="img-fluid">
+              <img src="<?php echo "https://profiwetter.ch/wind_bise_fr.png?t=" . time() ?>" class="img-fluid" loading="lazy">
             </div>
-            <div class="col-md-12">
+            <div id="section-windy" class="col-md-12">
               <h3>Pression et vents en Europe</h3>
               <div class="iframe-wrapper">
                 <div class="iframe-overlay">
@@ -799,9 +539,9 @@
         </div>
       </div>
 
-      <div id="box_158" class="box odd">
+      <div id="section-meteoblue" class="box odd">
         <div class="py-3">
-          <div id="rendered-box-158" class="container">
+          <div class="container">
             <div class="row">
               <div class="col-md-12">
                 <h3>Vents en Suisse</h3>
@@ -812,7 +552,7 @@
                     src="https://www.meteoblue.com/en/weather/maps/widget/charmey_switzerland_2661211?windAnimation=0&windAnimation=1&gust=0&gust=1&satellite=0&satellite=1&cloudsAndPrecipitation=0&cloudsAndPrecipitation=1&temperature=0&temperature=1&sunshine=0&sunshine=1&extremeForecastIndex=0&extremeForecastIndex=1&geoloc=fixed&tempunit=C&windunit=km%252Fh&lengthunit=metric&zoom=5&autowidth=auto#coords=8/46.423/7.129&map=windAnimation~rainbow~NEMS4~850%20mb~none"
                     frameborder="0" scrolling="NO" allowtransparency="true"
                     sandbox="allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox"
-                    style="width: 100%; height: 720px" class="my-iframe"></iframe>
+                    loading="lazy" style="width: 100%; height: 720px" class="my-iframe"></iframe>
                 </div>
                 <div>
                   <a href="https://www.meteoblue.com/en/weather/maps/charmey_switzerland_2661211?utm_source=weather_widget&utm_medium=linkus&utm_content=map&utm_campaign=Weather%2BWidget"
@@ -826,17 +566,17 @@
         </div>
       </div>
 
-      <div id="box_159" class="box odd">
+      <div id="section-xctherm" class="box odd">
         <div class="py-3">
-          <div id="rendered-box-159" class="container">
-            <div class="row" id="anchor159">
+          <div class="container">
+            <div class="row">
               <div class="col-md-12">
                 <h3>XC-term ICON D2/CH1</h3>
                 <div class="iframe-wrapper">
                   <div class="iframe-overlay">
                   </div>
-                  <iframe width="100%" height="650" src="https://xctherm.com/icon?lat=46.4505639&lon=6.9924254&zoom=9"
-                    allowfullscreen="true" allow="geolocation" name="iframe-xcterm" id="iframe-xcterm"
+                  <iframe width="100%" height="650" src="https://xctherm.com/icon?lat=<?= $cfg['xctherm_lat'] ?>&lon=<?= $cfg['xctherm_lon'] ?>&zoom=<?= $cfg['xctherm_zoom'] ?>"
+                    allowfullscreen="true" allow="geolocation" loading="lazy" name="iframe-xcterm" id="iframe-xcterm"
                     class="my-iframe"></iframe><br>
                   <a href="https://xctherm.com/icon?lat=46.2505639&lon=7.3924254&zoom=9" target="_blank">XC Term</a>
                 </div>
@@ -846,27 +586,21 @@
         </div>
       </div>
 
-      <div id="box_151" class="box even">
-        <div id="rendered-box-151" class="my-4 container">
+      <div id="section-meteograms" class="box even">
+        <div class="my-4 container">
           <div class="row">
+            <?php foreach ($cfg['meteograms'] as $mg): ?>
             <div class="col-md-12">
-              <img class="img-fluid"
-                src="https://my.meteoblue.com/visimage/meteogram_web_hd?look=KILOMETER_PER_HOUR%2CCELSIUS%2CMILLIMETER&amp;apikey=5838a18e295d&amp;winddirection=3char&amp;temperature=C&amp;windspeed=kmh&amp;precipitationamount=mm&amp;city=Charmey&amp;iso2=ch&amp;lat=46.6196&amp;lon=7.16486&amp;asl=895&amp;tz=Europe%2FZurich&amp;lang=fr&amp;sig=e477e9b21e39f451d48c7e8ca9ef69f1">
+              <img class="img-fluid" loading="lazy"
+                src="https://my.meteoblue.com/visimage/meteogram_web_hd?look=KILOMETER_PER_HOUR%2CCELSIUS%2CMILLIMETER&amp;apikey=<?= urlencode($cfg['meteoblue_apikey']) ?><?= $mg['url_end'] ?>">
             </div>
-            <div class="col-md-12">
-              <img class="img-fluid"
-                src="https://my.meteoblue.com/visimage/meteogram_web_hd?look=KILOMETER_PER_HOUR%2CCELSIUS%2CMILLIMETER&amp;apikey=5838a18e295d&amp;winddirection=3char&amp;temperature=C&amp;windspeed=kmh&amp;precipitationamount=mm&amp;city=Bex&amp;iso2=ch&amp;lat=46.2496&amp;lon=7.0098&amp;asl=421&amp;tz=Europe%2FZurich&amp;lang=fr&amp;sig=208862b9e08efcb4d575496047005de4">
-            </div>
-            <div class="col-md-12">
-              <img class="img-fluid"
-                src="https://my.meteoblue.com/visimage/meteogram_web_hd?look=KILOMETER_PER_HOUR%2CCELSIUS%2CMILLIMETER&amp;apikey=5838a18e295d&amp;temperature=C&amp;windspeed=kmh&amp;precipitationamount=mm&amp;winddirection=3char&amp;city=Vercorin&amp;iso2=ch&amp;lat=46.256500&amp;lon=7.531040&amp;asl=1340&amp;tz=Europe%2FZurich&amp;lang=fr&amp;sig=106c5f8e751346e105fb75aabe45a2eb">
-            </div>
+            <?php endforeach; ?>
           </div>
         </div>
       </div>
 
-      <div id="box_152" class="box even">
-        <div id="rendered-box-152" class="my-4 container">
+      <div id="section-dabs" class="box even">
+        <div class="my-4 container">
           <div class="row">
             <div class="col-md-12 my-4">
               <h3>DABS (aujourd'hui)</h3>
@@ -876,8 +610,8 @@
           </div>
         </div>
       </div>
-      <div id="box_153" class="box even">
-        <div id="rendered-box-153" class="my-4 container">
+      <div class="box even">
+        <div class="my-4 container">
           <div class="row">
             <div class="col-md-12 my-4">
               <h3>DABS (demain)</h3>
@@ -888,8 +622,8 @@
         </div>
       </div>
 
-      <div id="box_157" class="box even">
-        <div id="rendered-box-157" class="my-4 container">
+      <div id="section-gliding" class="box even">
+        <div class="my-4 container">
           <div class="row">
             <div class="col-md-12 my-4">
               <h3>Carte de vol à voile</h3>
@@ -899,7 +633,7 @@
                 <iframe
                   src="https://map.geo.admin.ch/#/embed?lang=en&center=2587196.94,1144748.25&z=3.285&bgLayer=ch.swisstopo.pixelkarte-farbe&topic=ech&layers=ch.swisstopo.zeitreihen@year=1864,f;ch.bfs.gebaeude_wohnungs_register,f;ch.bav.haltestellen-oev,f;ch.swisstopo.swisstlm3d-wanderwege,f;ch.vbs.schiessanzeigen,f;ch.astra.wanderland-sperrungen_umleitungen,f;ch.bazl.segelflugkarte"
                   style="border: 0;width: 100%;height: 650px;max-width: 100%;max-height: 100%;" allow="geolocation"
-                  class="my-iframe"></iframe>
+                  loading="lazy" class="my-iframe"></iframe>
                 <br>
                 <a href="https://map.geo.admin.ch/?zoom=2.984824051441887&bgLayer=ch.swisstopo.pixelkarte-farbe&time_current=latest&lang=fr&topic=ech&layers=ch.bazl.segelflugkarte&E=2582968.49&N=1128202.41"
                   target="_blank">Map Geo Admin</a>
@@ -909,124 +643,23 @@
         </div>
       </div>
 
-      <div id="box_164" class="box odd">
-        <div id="rendered-box-165" class="container">
-          <h2 class="">Autres liens utiles</h2>
-          <div class="row row-cols-1 row-cols-md-2">
+      <div id="section-links" class="box odd">
+        <div class="container py-3">
+          <h3>Autres liens utiles</h3>
+          <div class="row g-3 row-cols-1 row-cols-md-2">
+            <?php foreach ($cfg['useful_links'] as $link): ?>
             <div class="col">
-              <div class="mb-5 h-100">
-                <div class="row">
-                  <div class="col-md-6 img-thingy-right">
-                    <a href="https://www.meteo-fsvl.ch/system/login.html" target="_blank">
-                      <img class="img-fluid" src="./assets/png/fsvl_meteo.png">
-                    </a>
-                  </div>
-                  <div class="col-md-5 offset-md-1">
-                    <h4 class="mt-5 mt-md-0">SHV/FSVL Meteo - Login</h4>
-                    <small>
-                      <a href="https://www.meteo-fsvl.ch/system/login.html" class="thick_link text-dark"
-                        target="_blank">https://www.meteo-fsvl.ch/s...</a>
-                    </small>
-                  </div>
+              <a href="<?= htmlspecialchars($link['url']) ?>" target="_blank" rel="noopener" class="link-card">
+                <div class="link-card-thumb">
+                  <img src="<?= htmlspecialchars($link['thumb']) ?>" alt="<?= htmlspecialchars($link['name']) ?>" loading="lazy">
                 </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="mb-5 h-100">
-                <div class="row">
-                  <div class="col-md-6 img-thingy-right">
-                    <a href="https://meteo-parapente.com/" target="_blank">
-                      <img class="img-fluid" src="./assets/png/meteo_parapente.png">
-                    </a>
-                  </div>
-                  <div class="col-md-5 offset-md-1">
-                    <h4 class="mt-5 mt-md-0">meteo-parapente.com</h4>
-                    <small>
-                      <a href="https://meteo-parapente.com/" class="thick_link text-dark"
-                        target="_blank">https://meteo-parapente.com/</a>
-                    </small>
-                  </div>
+                <div class="link-card-body">
+                  <strong><?= htmlspecialchars($link['name']) ?></strong>
+                  <small><?= htmlspecialchars($link['desc']) ?></small>
                 </div>
-              </div>
+              </a>
             </div>
-          </div>
-          <div class="row row-cols-1 row-cols-md-2">
-            <div class="col">
-              <div class="mb-5 h-100">
-                <div class="row">
-                  <div class="col-md-6 img-thingy-right">
-                    <a href="https://flyxc.app/" target="_blank">
-                      <img class="img-fluid" src="./assets/png/flyxc.png">
-                    </a>
-                  </div>
-                  <div class="col-md-5 offset-md-1">
-                    <h4 class="mt-5 mt-md-0">Hike &amp; FlyXC - pour préparer un cross et exporter les
-                      balises</h4>
-                    <small>
-                      <a href="https://flyxc.app/" class="thick_link text-dark" target="_blank">https://flyxc.app/</a>
-                    </small>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="mb-5 h-100">
-                <div class="row">
-                  <div class="col-md-6 img-thingy-right">
-                    <a href="https://www.burnair.cloud/?layers=%2Cant%2Ctw&visibility=%2Cauto%2Con&base=bbt#10/46.5442/7.5510"
-                      target="_blank">
-                      <img class="img-fluid" src="./assets/png/burnair.png">
-                    </a>
-                  </div>
-                  <div class="col-md-5 offset-md-1">
-                    <h4 class="mt-5 mt-md-0">Burnair - cartes, prévisions, XC planning</h4>
-                    <small>
-                      <a href="https://www.burnair.cloud/?layers=%2Cant%2Ctw&visibility=%2Cauto%2Con&base=bbt#10/46.5442/7.5510"
-                        class="thick_link text-dark" target="_blank">https://www.burnair.cloud</a>
-                    </small>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row row-cols-1 row-cols-md-2">
-            <div class="col">
-              <div class="mb-5 h-100">
-                <div class="row">
-                  <div class="col-md-6 img-thingy-right">
-                    <a href="https://www.hikeandfly.org/" target="_blank">
-                      <img class="img-fluid" src="./assets/png/HF_planer.png">
-                    </a>
-                  </div>
-                  <div class="col-md-5 offset-md-1">
-                    <h4 class="mt-5 mt-md-0">Hike &amp; Fly Planer - Calcule la distance de plané depuis
-                      un sommet</h4>
-                    <small>
-                      <a href="https://www.hikeandfly.org/" class="thick_link text-dark"
-                        target="_blank">https://www.hikeandfly.org/</a>
-                    </small>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="mb-5 h-100">
-                <div class="row">
-                  <div class="col-md-6 img-thingy-right">
-                    <a href="https://thermal.kk7.ch/#46.379,7.388,11" target="_blank">
-                      <img class="img-fluid" src="./assets/png/thermal.kk7.ch.png">
-                    </a>
-                  </div>
-                  <div class="col-md-5 offset-md-1">
-                    <h4 class="mt-5 mt-md-0">Thermal KK7 - thermiques et routes</h4>
-                    <small>
-                      <a href="https://thermal.kk7.ch/#46.379,7.388,11" class="thick_link text-dark"
-                        target="_blank">https://thermal.kk7.ch</a>
-                    </small>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <?php endforeach; ?>
           </div>
         </div>
       </div>
@@ -1100,13 +733,49 @@
         }
       });
     </script>
-    
+
+    <script>
+      // Highlight active section in nav and auto-scroll to center it
+      (function() {
+        const nav = document.querySelector('.section-nav');
+        if (!nav) return;
+        const links = nav.querySelectorAll('a[href^="#section-"]');
+        const sections = Array.from(links).map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+        const observer = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              links.forEach(a => {
+                const isActive = a.getAttribute('href') === '#' + entry.target.id;
+                a.classList.toggle('active', isActive);
+                if (isActive) {
+                  // Scroll the nav so the active link is centered horizontally
+                  const linkCenter = a.offsetLeft + a.offsetWidth / 2;
+                  nav.scrollTo({ left: linkCenter - nav.offsetWidth / 2, behavior: 'smooth' });
+                }
+              });
+            }
+          });
+        }, { rootMargin: '-50px 0px -70% 0px' });
+        sections.forEach(s => observer.observe(s));
+      })();
+    </script>
+
     <script>
       function fetchForecastData() {
         fetch('get_forecast.php')
-          .then(response => response.json())
+          .then(response => {
+            if (!response.ok) throw new Error('HTTP ' + response.status);
+            return response.json();
+          })
           .then(data => createTables(data))
-          .catch(error => console.error('Error fetching data:', error));
+          .catch(error => {
+            console.error('Error fetching data:', error);
+            const msg = '<p class="text-muted">Prédictions Paraglidable indisponibles.</p>';
+            const t = document.getElementById('todayForecastTable');
+            const m = document.getElementById('tomorrowForecastTable');
+            if (t) t.innerHTML = msg;
+            if (m) m.innerHTML = msg;
+          });
       }
       function getDateString(date) {
         const year = date.getFullYear().toString().padStart(4, '0');
@@ -1233,10 +902,9 @@
       }
     </script>
 
-    <script src="//mozilla.github.io/pdf.js/build/pdf.mjs" type="module"></script>
     <script type="module">
-      const { pdfjsLib } = globalThis;
-      pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.mjs';
+      const pdfjsLib = await import('https://mozilla.github.io/pdf.js/build/pdf.mjs');
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.mjs';
       function renderPdfAllPages(pdfUrl, containerId) {
         const container = document.getElementById(containerId);
         if (!container) {
@@ -1262,8 +930,8 @@
           console.error(`Error loading PDF: ${pdfUrl}`, error);
         });
       }
-      renderPdfAllPages('https://bluelift.ch/assets/pdf/dabs_today.pdf', 'dabs_today_container');
-      renderPdfAllPages('https://bluelift.ch/assets/pdf/dabs_tomorrow.pdf', 'dabs_tomorrow_container');
+      renderPdfAllPages('<?= $cfg['dabs_today_pdf'] ?>', 'dabs_today_container');
+      renderPdfAllPages('<?= $cfg['dabs_tomorrow_pdf'] ?>', 'dabs_tomorrow_container');
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

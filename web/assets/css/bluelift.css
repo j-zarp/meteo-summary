@@ -1,0 +1,353 @@
+/* ============================================================
+   BlueLift — Main stylesheet
+   All custom styles for the paragliding weather dashboard.
+   ============================================================ */
+
+/* --- Tables --- */
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+.red-text {
+  color: #d73027;
+}
+
+.green-text {
+  color: #1a9850;
+}
+
+/* --- Buttons --- */
+.button1 {
+  border: none;
+  color: black;
+  padding: 2px 2px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.show-button {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.hidden-row {
+  display: none;
+}
+
+/* --- PDF viewer --- */
+.pdf-container {
+  width: 100%;
+  max-width: 100%;
+  height: 650px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+  padding: 10px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.pdf-page-canvas {
+  width: 100% !important;
+  height: auto !important;
+  margin-bottom: 10px;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .pdf-container {
+    height: 500px;
+  }
+}
+
+@media (max-width: 480px) {
+  .pdf-container {
+    height: 400px;
+  }
+}
+
+/* --- Carousel --- */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: #333;
+  border-radius: 50%;
+}
+
+/* --- Page layout --- */
+@media (max-width: 576px) {
+  #page-content {
+    padding-left: 5vw;
+    padding-right: 5vw;
+  }
+}
+
+/* --- Sticky section nav --- */
+.section-nav {
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid #dee2e6;
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.section-nav::-webkit-scrollbar { display: none; }
+.section-nav a {
+  display: inline-block;
+  padding: 8px 12px;
+  color: #495057;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+}
+.section-nav a:hover,
+.section-nav a.active {
+  color: #3459e6;
+  border-bottom-color: #3459e6;
+}
+@media (max-width: 576px) {
+  .section-nav a {
+    padding: 6px 8px;
+    font-size: 0.78rem;
+  }
+}
+
+/* Offset scroll targets below the sticky nav */
+[id^="section-"] {
+  scroll-margin-top: 50px;
+}
+
+/* --- Responsive media --- */
+iframe,
+img,
+.pdf-container {
+  width: 100% !important;
+  max-width: 100%;
+}
+
+/* --- Iframe interaction --- */
+.iframe-wrapper {
+  position: relative;
+}
+
+.my-iframe {
+  pointer-events: none;
+}
+
+.iframe-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  cursor: pointer;
+}
+
+/* --- Icon link buttons --- */
+.icon-link-bl {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: #1e293b;
+  padding: 2% 4%;
+  border-radius: 20px;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  font-size: 100%;
+  font-weight: 500;
+  max-width: 300px;
+}
+
+.icon-link-bl i {
+  font-size: 48px;
+  color: #3b82f6;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.icon-link-bl:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  color: #1e293b;
+}
+
+.icon-link-bl:hover i {
+  transform: scale(1.1);
+  color: #1d4ed8;
+}
+
+.icon-link-bl:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+@media (max-width: 480px) {
+  .icon-link-bl {
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+
+  .icon-link-bl i {
+    font-size: 28px;
+  }
+}
+
+/* --- Weather cards (MétéoSuisse) --- */
+.weather-card-data {
+  background-color: #2c3e50;
+  color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.weather-card-data p,
+.weather-card-data span {
+  color: white;
+}
+
+.mountain-container {
+  position: relative;
+  min-height: 150px;
+  background-image: url('https://www.meteosuisse.admin.ch/static/resources/mountain/mountain.svg');
+  background-size: 200% auto;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-top: 0;
+  padding-bottom: 5px;
+}
+
+.altitude-level {
+  position: absolute;
+  left: 5px;
+  display: flex;
+  align-items: center;
+  width: 90%;
+}
+
+.alt-label {
+  margin-right: auto;
+  font-size: 0.8em;
+  color: #bdc3c7;
+}
+
+.alt-4000 { top: 10%; }
+.alt-3000 { top: 40%; }
+.alt-2000 { top: 70%; }
+
+.wind-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 3px;
+}
+
+.wind-speed {
+  font-size: 1em;
+  font-weight: bold;
+  margin-right: 2px;
+}
+
+.wind-units {
+  font-size: 0.8em;
+  color: #ecf0f1;
+}
+
+.wind-info-container {
+  border-top: 1px solid #444;
+  padding-top: 5px;
+  margin-top: 5px;
+}
+
+.no-wind-data {
+  font-size: 0.8em;
+  text-align: center;
+  margin: 0;
+}
+
+.weather-card-data .card-body {
+  padding: 8px !important;
+}
+
+/* --- Useful links with thumbnails --- */
+.link-card {
+  display: flex;
+  align-items: stretch;
+  text-decoration: none;
+  color: #1e293b;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid #dee2e6;
+  overflow: hidden;
+  transition: box-shadow 0.2s, transform 0.2s;
+  height: 100%;
+}
+
+.link-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+  color: #1e293b;
+}
+
+.link-card-thumb {
+  flex: 0 0 120px;
+  overflow: hidden;
+  background: #f0f2f5;
+}
+
+.link-card-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s;
+}
+
+.link-card:hover .link-card-thumb img {
+  transform: scale(1.05);
+}
+
+.link-card-body {
+  flex: 1;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+
+.link-card-body strong {
+  display: block;
+  font-size: 0.95rem;
+  margin-bottom: 2px;
+}
+
+.link-card-body small {
+  color: #6c757d;
+  font-size: 0.82rem;
+  line-height: 1.3;
+}
+
+@media (max-width: 480px) {
+  .link-card-thumb {
+    flex: 0 0 80px;
+  }
+  .link-card-body {
+    padding: 8px 12px;
+  }
+}
