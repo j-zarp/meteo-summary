@@ -902,10 +902,9 @@
       }
     </script>
 
-    <script src="//mozilla.github.io/pdf.js/build/pdf.mjs" type="module"></script>
     <script type="module">
-      const { pdfjsLib } = globalThis;
-      pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.mjs';
+      const pdfjsLib = await import('https://mozilla.github.io/pdf.js/build/pdf.mjs');
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.mjs';
       function renderPdfAllPages(pdfUrl, containerId) {
         const container = document.getElementById(containerId);
         if (!container) {
