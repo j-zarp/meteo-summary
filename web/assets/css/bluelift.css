@@ -283,3 +283,42 @@ img,
 .weather-card-data .card-body {
   padding: 8px !important;
 }
+
+/* --- Compact useful-links grid --- */
+.link-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: #f8f9fa;
+  text-decoration: none;
+  color: #1e293b;
+  transition: background 0.15s, box-shadow 0.15s;
+}
+
+.link-card:hover {
+  background: #e9ecef;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  color: #1e293b;
+}
+
+.link-card i {
+  font-size: 28px;
+  color: #3459e6;
+  flex-shrink: 0;
+}
+
+.link-card-text {
+  min-width: 0;
+}
+
+.link-card-text strong {
+  display: block;
+  font-size: 0.95rem;
+}
+
+.link-card-text small {
+  color: #6c757d;
+  font-size: 0.8rem;
+}

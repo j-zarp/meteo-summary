@@ -639,123 +639,20 @@
       </div>
 
       <div id="section-links" class="box odd">
-        <div class="container">
-          <h2 class="">Autres liens utiles</h2>
-          <div class="row row-cols-1 row-cols-md-2">
+        <div class="container py-3">
+          <h3>Autres liens utiles</h3>
+          <div class="row g-2 row-cols-1 row-cols-sm-2 row-cols-lg-3">
+            <?php foreach ($cfg['useful_links'] as $link): ?>
             <div class="col">
-              <div class="mb-5 h-100">
-                <div class="row">
-                  <div class="col-md-6 img-thingy-right">
-                    <a href="https://www.meteo-fsvl.ch/system/login.html" target="_blank">
-                      <img class="img-fluid" loading="lazy" src="./assets/png/fsvl_meteo.png">
-                    </a>
-                  </div>
-                  <div class="col-md-5 offset-md-1">
-                    <h4 class="mt-5 mt-md-0">SHV/FSVL Meteo - Login</h4>
-                    <small>
-                      <a href="https://www.meteo-fsvl.ch/system/login.html" class="thick_link text-dark"
-                        target="_blank">https://www.meteo-fsvl.ch/s...</a>
-                    </small>
-                  </div>
+              <a href="<?= htmlspecialchars($link['url']) ?>" target="_blank" rel="noopener" class="link-card">
+                <i class="material-icons"><?= htmlspecialchars($link['icon']) ?></i>
+                <div class="link-card-text">
+                  <strong><?= htmlspecialchars($link['name']) ?></strong>
+                  <small><?= htmlspecialchars($link['desc']) ?></small>
                 </div>
-              </div>
+              </a>
             </div>
-            <div class="col">
-              <div class="mb-5 h-100">
-                <div class="row">
-                  <div class="col-md-6 img-thingy-right">
-                    <a href="https://meteo-parapente.com/" target="_blank">
-                      <img class="img-fluid" loading="lazy" src="./assets/png/meteo_parapente.png">
-                    </a>
-                  </div>
-                  <div class="col-md-5 offset-md-1">
-                    <h4 class="mt-5 mt-md-0">meteo-parapente.com</h4>
-                    <small>
-                      <a href="https://meteo-parapente.com/" class="thick_link text-dark"
-                        target="_blank">https://meteo-parapente.com/</a>
-                    </small>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row row-cols-1 row-cols-md-2">
-            <div class="col">
-              <div class="mb-5 h-100">
-                <div class="row">
-                  <div class="col-md-6 img-thingy-right">
-                    <a href="https://flyxc.app/" target="_blank">
-                      <img class="img-fluid" loading="lazy" src="./assets/png/flyxc.png">
-                    </a>
-                  </div>
-                  <div class="col-md-5 offset-md-1">
-                    <h4 class="mt-5 mt-md-0">Hike &amp; FlyXC - pour préparer un cross et exporter les
-                      balises</h4>
-                    <small>
-                      <a href="https://flyxc.app/" class="thick_link text-dark" target="_blank">https://flyxc.app/</a>
-                    </small>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="mb-5 h-100">
-                <div class="row">
-                  <div class="col-md-6 img-thingy-right">
-                    <a href="https://www.burnair.cloud/?layers=%2Cant%2Ctw&visibility=%2Cauto%2Con&base=bbt#10/46.5442/7.5510"
-                      target="_blank">
-                      <img class="img-fluid" loading="lazy" src="./assets/png/burnair.png">
-                    </a>
-                  </div>
-                  <div class="col-md-5 offset-md-1">
-                    <h4 class="mt-5 mt-md-0">Burnair - cartes, prévisions, XC planning</h4>
-                    <small>
-                      <a href="https://www.burnair.cloud/?layers=%2Cant%2Ctw&visibility=%2Cauto%2Con&base=bbt#10/46.5442/7.5510"
-                        class="thick_link text-dark" target="_blank">https://www.burnair.cloud</a>
-                    </small>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row row-cols-1 row-cols-md-2">
-            <div class="col">
-              <div class="mb-5 h-100">
-                <div class="row">
-                  <div class="col-md-6 img-thingy-right">
-                    <a href="https://www.hikeandfly.org/" target="_blank">
-                      <img class="img-fluid" loading="lazy" src="./assets/png/HF_planer.png">
-                    </a>
-                  </div>
-                  <div class="col-md-5 offset-md-1">
-                    <h4 class="mt-5 mt-md-0">Hike &amp; Fly Planer - Calcule la distance de plané depuis
-                      un sommet</h4>
-                    <small>
-                      <a href="https://www.hikeandfly.org/" class="thick_link text-dark"
-                        target="_blank">https://www.hikeandfly.org/</a>
-                    </small>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="mb-5 h-100">
-                <div class="row">
-                  <div class="col-md-6 img-thingy-right">
-                    <a href="https://thermal.kk7.ch/#46.379,7.388,11" target="_blank">
-                      <img class="img-fluid" loading="lazy" src="./assets/png/thermal.kk7.ch.png">
-                    </a>
-                  </div>
-                  <div class="col-md-5 offset-md-1">
-                    <h4 class="mt-5 mt-md-0">Thermal KK7 - thermiques et routes</h4>
-                    <small>
-                      <a href="https://thermal.kk7.ch/#46.379,7.388,11" class="thick_link text-dark"
-                        target="_blank">https://thermal.kk7.ch</a>
-                    </small>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <?php endforeach; ?>
           </div>
         </div>
       </div>

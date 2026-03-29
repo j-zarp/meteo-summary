@@ -112,6 +112,49 @@ return [
     'cache_ttl_paraglidable' => 900, // Paraglidable API — 15 min
 
     // -------------------------------------------------------------------------
+    // Useful links — displayed in the "Autres liens utiles" section
+    // icon: Material Icons name
+    // -------------------------------------------------------------------------
+    'useful_links' => [
+        [
+            'name' => 'SHV/FSVL Meteo',
+            'desc' => 'Météo détaillée FSVL (login requis)',
+            'url'  => 'https://www.meteo-fsvl.ch/system/login.html',
+            'icon' => 'thermostat',
+        ],
+        [
+            'name' => 'Meteo-Parapente',
+            'desc' => 'Prévisions vent en altitude',
+            'url'  => 'https://meteo-parapente.com/',
+            'icon' => 'paragliding',
+        ],
+        [
+            'name' => 'FlyXC',
+            'desc' => 'Préparer un cross, exporter les balises',
+            'url'  => 'https://flyxc.app/',
+            'icon' => 'route',
+        ],
+        [
+            'name' => 'Burnair',
+            'desc' => 'Cartes, prévisions, XC planning',
+            'url'  => 'https://www.burnair.cloud/?layers=%2Cant%2Ctw&visibility=%2Cauto%2Con&base=bbt#10/46.5442/7.5510',
+            'icon' => 'map',
+        ],
+        [
+            'name' => 'Hike & Fly Planer',
+            'desc' => 'Distance de plané depuis un sommet',
+            'url'  => 'https://www.hikeandfly.org/',
+            'icon' => 'hiking',
+        ],
+        [
+            'name' => 'Thermal KK7',
+            'desc' => 'Thermiques et routes',
+            'url'  => 'https://thermal.kk7.ch/#46.379,7.388,11',
+            'icon' => 'whatshot',
+        ],
+    ],
+
+    // -------------------------------------------------------------------------
     // Matomo analytics
     // -------------------------------------------------------------------------
     'matomo_url'     => '//matomo.steambot.ch/',
