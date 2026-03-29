@@ -602,7 +602,11 @@
           <div class="row">
             <div class="col-md-12 my-4">
               <h3>DABS (aujourd'hui)</h3>
-              <div id="dabs_today_container" class="pdf-container"></div>
+              <object data="<?= htmlspecialchars($cfg['dabs_today_pdf']) ?>" type="application/pdf" class="pdf-embed">
+                <iframe src="<?= htmlspecialchars($cfg['dabs_today_pdf']) ?>" class="pdf-embed" loading="lazy">
+                  <p>Votre navigateur ne supporte pas l'affichage PDF. <a href="<?= htmlspecialchars($cfg['dabs_today_pdf']) ?>">Télécharger le DABS</a></p>
+                </iframe>
+              </object>
               <a href="https://www.skybriefing.com/fr/dabs" target="_blank">Skybriefing</a>
             </div>
           </div>
@@ -613,7 +617,11 @@
           <div class="row">
             <div class="col-md-12 my-4">
               <h3>DABS (demain)</h3>
-              <div id="dabs_tomorrow_container" class="pdf-container"></div>
+              <object data="<?= htmlspecialchars($cfg['dabs_tomorrow_pdf']) ?>" type="application/pdf" class="pdf-embed">
+                <iframe src="<?= htmlspecialchars($cfg['dabs_tomorrow_pdf']) ?>" class="pdf-embed" loading="lazy">
+                  <p>Votre navigateur ne supporte pas l'affichage PDF. <a href="<?= htmlspecialchars($cfg['dabs_tomorrow_pdf']) ?>">Télécharger le DABS</a></p>
+                </iframe>
+              </object>
               <a href="https://www.skybriefing.com/fr/dabs" target="_blank">Skybriefing</a>
             </div>
           </div>
@@ -890,38 +898,6 @@
       }
     </script>
 
-    <script src="//mozilla.github.io/pdf.js/build/pdf.mjs" type="module"></script>
-    <script type="module">
-      const { pdfjsLib } = globalThis;
-      pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.mjs';
-      function renderPdfAllPages(pdfUrl, containerId) {
-        const container = document.getElementById(containerId);
-        if (!container) {
-          console.error(`Container with ID "${containerId}" not found.`);
-          return;
-        }
-        pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
-          for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
-            pdf.getPage(pageNum).then(page => {
-              const scale = 1.5;
-              const viewport = page.getViewport({ scale });
-              const canvas = document.createElement('canvas');
-              canvas.className = 'pdf-page-canvas';
-              canvas.height = viewport.height;
-              canvas.width = viewport.width;
-              const context = canvas.getContext('2d');
-              const renderContext = { canvasContext: context, viewport: viewport };
-              page.render(renderContext);
-              container.appendChild(canvas);
-            }).catch(err => console.error('Error rendering page', err));
-          }
-        }).catch(error => {
-          console.error(`Error loading PDF: ${pdfUrl}`, error);
-        });
-      }
-      renderPdfAllPages('<?= $cfg['site_url'] . $cfg['dabs_today_pdf'] ?>', 'dabs_today_container');
-      renderPdfAllPages('<?= $cfg['site_url'] . $cfg['dabs_tomorrow_pdf'] ?>', 'dabs_tomorrow_container');
-    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
