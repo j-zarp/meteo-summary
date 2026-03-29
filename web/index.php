@@ -14,7 +14,6 @@
     <meta name="theme-color" content="#d6eaf8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script src="https://kit.fontawesome.com/e798f160a4.js" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" media="all" href="./assets/css/zephyr.css" />
@@ -366,10 +365,10 @@
               <div class="iframe-wrapper">
                 <div class="iframe-overlay">
                 </div>
-                <iframe src="https://breezedude.de/?lat=46.4316&lon=7.1299&z=8.0&solo=arrow" width="100%" height="600px"
+                <iframe src="https://bluelift.ch/windmap/index.html?lat=46.44&lon=7.40&zoom=7.35" width="100%" height="600px"
                   allow="geolocation" loading="lazy" style="border: none; display: block;" class="my-iframe">
                 </iframe>
-                <a href="https://breezedude.de/?lat=46.4316&lon=7.1299&z=8.0" target="_blank">Breezedude.de</a>
+                <a href="https://bluelift.ch/windmap/index.html" target="_blank">bluelift.ch/windmap</a>
               </div>
             </div>
           </div>

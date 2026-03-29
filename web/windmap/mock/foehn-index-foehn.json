@@ -1,0 +1,175 @@
+{
+  "_comment": "Mock scenario: STRONG FOEHN — Classic southerly föhn event across the northern Alpine valleys. Most foehn-sensitive stations report index 2 (active foehn); a few transition stations report index 1 (mixed air). To use, set CFG.foehnIndexUrl = 'mock/foehn-index-foehn.json'",
+  "type": "FeatureCollection",
+  "mapname": "ch.meteoschweiz.messwerte-foehn-10min",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "AIR",
+      "geometry": { "type": "Point", "coordinates": [8.6101, 46.5473, 1065] },
+      "properties": {
+        "station_name": "Airolo",
+        "station_id": "AIR",
+        "reference_ts": "2024-03-15T12:00:00Z",
+        "value": 2,
+        "unit": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "ALT",
+      "geometry": { "type": "Point", "coordinates": [8.6222, 46.8824, 448] },
+      "properties": {
+        "station_name": "Altdorf",
+        "station_id": "ALT",
+        "reference_ts": "2024-03-15T12:00:00Z",
+        "value": 2,
+        "unit": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "ENG",
+      "geometry": { "type": "Point", "coordinates": [8.4019, 46.8226, 1035] },
+      "properties": {
+        "station_name": "Engelberg",
+        "station_id": "ENG",
+        "reference_ts": "2024-03-15T12:00:00Z",
+        "value": 2,
+        "unit": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "AND",
+      "geometry": { "type": "Point", "coordinates": [8.5932, 46.6368, 1444] },
+      "properties": {
+        "station_name": "Andermatt",
+        "station_id": "AND",
+        "reference_ts": "2024-03-15T12:00:00Z",
+        "value": 2,
+        "unit": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "GLA",
+      "geometry": { "type": "Point", "coordinates": [9.0613, 47.0415, 516] },
+      "properties": {
+        "station_name": "Glarus",
+        "station_id": "GLA",
+        "reference_ts": "2024-03-15T12:00:00Z",
+        "value": 2,
+        "unit": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "ELM",
+      "geometry": { "type": "Point", "coordinates": [9.1744, 46.9267, 958] },
+      "properties": {
+        "station_name": "Elm",
+        "station_id": "ELM",
+        "reference_ts": "2024-03-15T12:00:00Z",
+        "value": 2,
+        "unit": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "VAD",
+      "geometry": { "type": "Point", "coordinates": [9.5227, 47.1285, 457] },
+      "properties": {
+        "station_name": "Vaduz",
+        "station_id": "VAD",
+        "reference_ts": "2024-03-15T12:00:00Z",
+        "value": 2,
+        "unit": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "CHU",
+      "geometry": { "type": "Point", "coordinates": [9.5330, 46.8701, 556] },
+      "properties": {
+        "station_name": "Chur",
+        "station_id": "CHU",
+        "reference_ts": "2024-03-15T12:00:00Z",
+        "value": 1,
+        "unit": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "LUZ",
+      "geometry": { "type": "Point", "coordinates": [8.3017, 47.0359, 454] },
+      "properties": {
+        "station_name": "Luzern",
+        "station_id": "LUZ",
+        "reference_ts": "2024-03-15T12:00:00Z",
+        "value": 1,
+        "unit": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "SCU",
+      "geometry": { "type": "Point", "coordinates": [10.2842, 46.7988, 1298] },
+      "properties": {
+        "station_name": "Scuol",
+        "station_id": "SCU",
+        "reference_ts": "2024-03-15T12:00:00Z",
+        "value": 2,
+        "unit": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "FAI",
+      "geometry": { "type": "Point", "coordinates": [8.7953, 46.4773, 728] },
+      "properties": {
+        "station_name": "Faido",
+        "station_id": "FAI",
+        "reference_ts": "2024-03-15T12:00:00Z",
+        "value": 0,
+        "unit": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "GVE",
+      "geometry": { "type": "Point", "coordinates": [6.1292, 46.2477, 416] },
+      "properties": {
+        "station_name": "Genève-Cointrin",
+        "station_id": "GVE",
+        "reference_ts": "2024-03-15T12:00:00Z",
+        "value": 0,
+        "unit": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "PAY",
+      "geometry": { "type": "Point", "coordinates": [6.9411, 46.8126, 491] },
+      "properties": {
+        "station_name": "Payerne",
+        "station_id": "PAY",
+        "reference_ts": "2024-03-15T12:00:00Z",
+        "value": 0,
+        "unit": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "ZUE",
+      "geometry": { "type": "Point", "coordinates": [8.5640, 47.3769, 556] },
+      "properties": {
+        "station_name": "Zürich-Fluntern",
+        "station_id": "ZUE",
+        "reference_ts": "2024-03-15T12:00:00Z",
+        "value": 0,
+        "unit": ""
+      }
+    }
+  ]
+}
