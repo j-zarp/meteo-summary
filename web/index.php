@@ -733,7 +733,7 @@
     </script>
 
     <script>
-      // Highlight active section in nav on scroll
+      // Highlight active section in nav and auto-scroll to center it
       (function() {
         const nav = document.querySelector('.section-nav');
         if (!nav) return;
@@ -742,7 +742,15 @@
         const observer = new IntersectionObserver(entries => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
-              links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id));
+              links.forEach(a => {
+                const isActive = a.getAttribute('href') === '#' + entry.target.id;
+                a.classList.toggle('active', isActive);
+                if (isActive) {
+                  // Scroll the nav so the active link is centered horizontally
+                  const linkCenter = a.offsetLeft + a.offsetWidth / 2;
+                  nav.scrollTo({ left: linkCenter - nav.offsetWidth / 2, behavior: 'smooth' });
+                }
+              });
             }
           });
         }, { rootMargin: '-50px 0px -70% 0px' });
