@@ -14,13 +14,8 @@
     <meta name="theme-color" content="#d6eaf8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <script src="https://kit.fontawesome.com/e798f160a4.js" crossorigin="anonymous"></script>
-
     <link rel="stylesheet" media="all" href="./assets/css/zephyr.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Roboto:wght@300;400;700&display=swap"
-      rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap">
 
     <!-- Favicons for various platforms -->
     <link rel="shortcut icon" href="/favicon_io/favicon.ico?v=2">
