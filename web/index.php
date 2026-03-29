@@ -63,7 +63,7 @@
     <nav class="section-nav" aria-label="Sections">
       <a href="#section-wind">Vent</a>
       <a href="#section-paraglidable">Paraglidable</a>
-      <a href="#section-meteo">MétéoSuisse</a>
+      <a href="#section-bulletin">Bulletin</a>
       <a href="#section-synoptic">Synoptique</a>
       <a href="#section-foehn-bise">Foehn et bise</a>
       <a href="#section-windy">Windy</a>
@@ -344,7 +344,7 @@
       }
       ?>
 
-      <div id="section-meteo" class="box odd">
+      <div id="section-bulletin" class="box odd">
         <div class="py-3">
           <div class="container">
             <div class="row">
