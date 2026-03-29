@@ -929,8 +929,8 @@
           console.error(`Error loading PDF: ${pdfUrl}`, error);
         });
       }
-      renderPdfAllPages('<?= $cfg['site_url'] . $cfg['dabs_today_pdf'] ?>', 'dabs_today_container');
-      renderPdfAllPages('<?= $cfg['site_url'] . $cfg['dabs_tomorrow_pdf'] ?>', 'dabs_tomorrow_container');
+      renderPdfAllPages('<?= $cfg['dabs_today_pdf'] ?>', 'dabs_today_container');
+      renderPdfAllPages('<?= $cfg['dabs_tomorrow_pdf'] ?>', 'dabs_tomorrow_container');
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
