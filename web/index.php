@@ -64,12 +64,14 @@
       <a href="#section-wind">Vent</a>
       <a href="#section-paraglidable">Paraglidable</a>
       <a href="#section-meteo">MétéoSuisse</a>
-      <a href="#section-synoptic">Cartes</a>
-      <a href="#section-windch">Vents CH</a>
+      <a href="#section-synoptic">Synoptique</a>
+      <a href="#section-foehn-bise">Foehn et bise</a>
+      <a href="#section-windy">Windy</a>
+      <a href="#section-meteoblue">Meteoblue</a>
       <a href="#section-xctherm">XC-Therm</a>
       <a href="#section-meteograms">Météogrammes</a>
       <a href="#section-dabs">DABS</a>
-      <a href="#section-gliding">Vol à voile</a>
+      <a href="#section-gliding">Espace aérien</a>
       <a href="#section-links">Liens</a>
     </nav>
 
@@ -515,7 +517,7 @@
                 <?php endif; ?>>
             </div>
             <?php endforeach; ?>
-            <div class="col-md-6 my-4">
+            <div id="section-foehn-bise" class="col-md-6 my-4">
               <h4>Prévisions du foehn</h4>
               <img src="<?php echo "https://profiwetter.ch/wind_foehn_ch_fr.png?t=" . time() ?>" class="img-fluid" loading="lazy">
             </div>
@@ -523,7 +525,7 @@
               <h4>Prévisions de la bise</h4>
               <img src="<?php echo "https://profiwetter.ch/wind_bise_fr.png?t=" . time() ?>" class="img-fluid" loading="lazy">
             </div>
-            <div class="col-md-12">
+            <div id="section-windy" class="col-md-12">
               <h3>Pression et vents en Europe</h3>
               <div class="iframe-wrapper">
                 <div class="iframe-overlay">
@@ -537,7 +539,7 @@
         </div>
       </div>
 
-      <div id="section-windch" class="box odd">
+      <div id="section-meteoblue" class="box odd">
         <div class="py-3">
           <div class="container">
             <div class="row">
@@ -590,7 +592,7 @@
             <?php foreach ($cfg['meteograms'] as $mg): ?>
             <div class="col-md-12">
               <img class="img-fluid" loading="lazy"
-                src="https://my.meteoblue.com/visimage/meteogram_web_hd?look=KILOMETER_PER_HOUR%2CCELSIUS%2CMILLIMETER&amp;apikey=<?= urlencode($cfg['meteoblue_apikey']) ?>&amp;winddirection=3char&amp;temperature=C&amp;windspeed=kmh&amp;precipitationamount=mm&amp;city=<?= urlencode($mg['city']) ?>&amp;iso2=<?= urlencode($mg['iso2']) ?>&amp;lat=<?= $mg['lat'] ?>&amp;lon=<?= $mg['lon'] ?>&amp;asl=<?= $mg['asl'] ?>&amp;tz=Europe%2FZurich&amp;lang=fr&amp;sig=<?= urlencode($mg['sig']) ?>">
+                src="https://my.meteoblue.com/visimage/meteogram_web_hd?look=KILOMETER_PER_HOUR%2CCELSIUS%2CMILLIMETER&amp;apikey=<?= urlencode($cfg['meteoblue_apikey']) ?><?= $mg['url_end'] ?>">
             </div>
             <?php endforeach; ?>
           </div>

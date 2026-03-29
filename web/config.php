@@ -68,28 +68,16 @@ return [
     // -------------------------------------------------------------------------
     'meteograms' => [
         [
-            'city' => 'Charmey',
-            'iso2' => 'ch',
-            'lat'  => 46.6196,
-            'lon'  => 7.16486,
-            'asl'  => 895,
-            'sig'  => 'e477e9b21e39f451d48c7e8ca9ef69f1',
+            'city'     => 'Charmey',
+            'url_end'  => '&amp;winddirection=3char&amp;temperature=C&amp;windspeed=kmh&amp;precipitationamount=mm&amp;city=Charmey&amp;iso2=ch&amp;lat=46.6196&amp;lon=7.16486&amp;asl=895&amp;tz=Europe%2FZurich&amp;lang=fr&amp;sig=e477e9b21e39f451d48c7e8ca9ef69f1',
         ],
         [
-            'city' => 'Bex',
-            'iso2' => 'ch',
-            'lat'  => 46.2496,
-            'lon'  => 7.0098,
-            'asl'  => 421,
-            'sig'  => '208862b9e08efcb4d575496047005de4',
+            'city'     => 'Bex',
+            'url_end'  => '&amp;winddirection=3char&amp;temperature=C&amp;windspeed=kmh&amp;precipitationamount=mm&amp;city=Bex&amp;iso2=ch&amp;lat=46.2496&amp;lon=7.0098&amp;asl=421&amp;tz=Europe%2FZurich&amp;lang=fr&amp;sig=208862b9e08efcb4d575496047005de4',
         ],
         [
-            'city' => 'Vercorin',
-            'iso2' => 'ch',
-            'lat'  => 46.256500,
-            'lon'  => 7.531040,
-            'asl'  => 1340,
-            'sig'  => '106c5f8e751346e105fb75aabe45a2eb',
+            'city'     => 'Vercorin',
+            'url_end'  => '&amp;temperature=C&amp;windspeed=kmh&amp;precipitationamount=mm&amp;winddirection=3char&amp;city=Vercorin&amp;iso2=ch&amp;lat=46.256500&amp;lon=7.531040&amp;asl=1340&amp;tz=Europe%2FZurich&amp;lang=fr&amp;sig=106c5f8e751346e105fb75aabe45a2eb',
         ],
     ],
 
