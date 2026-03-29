@@ -708,77 +708,60 @@
       </div>
 
       <?php
-      // Function to check if a URL points to a valid location on cdn.knmi.nl
-      function isValidUrl($url)
-      {
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        $data = curl_exec($ch);
-        curl_close($ch);
-        // the response contains an error message
-        if (strpos($data, '<Code>NoSuchKey</Code>') or 
-            strpos($data, '<Code>AccessDenied</Code>')) {
-          return false;
-        }
-        return true;
-      }
-      // Return a URL for an analyzed synoptic map, if it exists, otherwise return a URL for the forecast map
-      function getValidImageUrl($date, &$time, &$text)
-      {
-        $dayFormatted = $date->format('d.m.Y');
-        $dayStr = $date->format('Ymd');
-        $dayOfTheMonth = $date->format('d');
-        $timestr = sprintf("%02d", $time);
-        $url = "https://cdn.knmi.nl/knmi/map/page/klimatologie/daggegevens/weerkaarten/analyse_{$dayStr}{$timestr}.gif?1234";
-        if (isValidUrl($url)) {
-          $text = "Etat " . $dayFormatted . " " . $timestr . " UTC";
-          return $url;
-        }
-        // fallback for 06/18 UTC: return 00 or 12 UTC
-        if ($time == 6 || $time == 18) {
-          $time -= 6;
-          return getValidImageUrl($date, $time, $text);
-        }
-        $text = "Prévision " . $dayFormatted . " " . $timestr . " UTC";
-        return "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonth}{$timestr}_large.gif?1234";
-      }
-      function getImageUrls($date)
-      {
-        $time2 = 18;
-        $url2 = getValidImageUrl($date, $time2, $text2);
-        $time1 = $time2 - 6;
-        $url1 = getValidImageUrl($date, $time1, $text1);
-        return array($url1, $url2, $text1, $text2);
-      }
+      // --- KNMI Synoptic Maps ---
+      // Generate URLs without blocking curl checks. Client-side onerror handles fallback.
       $date_utc = new DateTime("now", new DateTimeZone("UTC"));
       $tomorrow = new DateTime('tomorrow', new DateTimeZone("UTC"));
+      $todayFormatted = $date_utc->format('d.m.Y');
       $tomorrowFormatted = $tomorrow->format('d.m.Y');
+      $dayStr = $date_utc->format('Ymd');
+      $dayOfTheMonth = $date_utc->format('d');
       $dayOfTheMonthForTomorrow = $tomorrow->format('d');
-      $resToday = getImageUrls($date_utc);
-      $linkTomorrow00 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonthForTomorrow}00_large.gif?1234";
-      $linkTomorrow12 = "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonthForTomorrow}12_large.gif?1234";
+
+      // For today: try analysis maps first (06 & 12 UTC), forecast maps as fallback
+      $knmiMaps = [
+        [
+          'primary' => "https://cdn.knmi.nl/knmi/map/page/klimatologie/daggegevens/weerkaarten/analyse_{$dayStr}06.gif",
+          'fallback' => "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonth}06_large.gif",
+          'primaryLabel' => "Etat {$todayFormatted} 06 UTC",
+          'fallbackLabel' => "Prévision {$todayFormatted} 06 UTC",
+        ],
+        [
+          'primary' => "https://cdn.knmi.nl/knmi/map/page/klimatologie/daggegevens/weerkaarten/analyse_{$dayStr}12.gif",
+          'fallback' => "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonth}12_large.gif",
+          'primaryLabel' => "Etat {$todayFormatted} 12 UTC",
+          'fallbackLabel' => "Prévision {$todayFormatted} 12 UTC",
+        ],
+        [
+          'primary' => "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonthForTomorrow}00_large.gif",
+          'fallback' => '',
+          'primaryLabel' => "Prévision {$tomorrowFormatted} 00h UTC",
+          'fallbackLabel' => '',
+        ],
+        [
+          'primary' => "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonthForTomorrow}12_large.gif",
+          'fallback' => '',
+          'primaryLabel' => "Prévision {$tomorrowFormatted} 12h UTC",
+          'fallbackLabel' => '',
+        ],
+      ];
       ?>
 
       <div id="box_154" class="box even">
         <div id="rendered-box-154" class="my-4 container">
           <div class="row">
+            <?php foreach ($knmiMaps as $map): ?>
             <div class="col-md-6 my-4">
-              <h4><?php echo $resToday[2]; ?></h4>
-              <img class="img-fluid" src="<?php echo $resToday[0]; ?>">
+              <h4 class="knmi-label"><?= htmlspecialchars($map['primaryLabel']) ?></h4>
+              <img class="img-fluid" loading="lazy"
+                src="<?= htmlspecialchars($map['primary']) ?>"
+                <?php if ($map['fallback']): ?>
+                  data-fallback="<?= htmlspecialchars($map['fallback']) ?>"
+                  data-fallback-label="<?= htmlspecialchars($map['fallbackLabel']) ?>"
+                  onerror="if(this.dataset.fallback){this.src=this.dataset.fallback;this.previousElementSibling.textContent=this.dataset.fallbackLabel;this.removeAttribute('onerror');}"
+                <?php endif; ?>>
             </div>
-            <div class="col-md-6 my-4">
-              <h4><?php echo $resToday[3]; ?></h4>
-              <img class="img-fluid" src="<?php echo $resToday[1]; ?>">
-            </div>
-            <div class="col-md-6 my-4">
-              <h4>Prévision <?php echo $tomorrowFormatted; ?> 00h UTC</h4>
-              <img class="img-fluid" src="<?php echo $linkTomorrow00; ?>">
-            </div>
-            <div class="col-md-6 my-4">
-              <h4>Prévision <?php echo $tomorrowFormatted; ?> 12h UTC</h4>
-              <img class="img-fluid" src="<?php echo $linkTomorrow12; ?>">
-            </div>
+            <?php endforeach; ?>
             <div class="col-md-6 my-4">
               <h4>Prévisions du foehn</h4>
               <img src="<?php echo "https://profiwetter.ch/wind_foehn_ch_fr.png?t=" . time() ?>" class="img-fluid">
