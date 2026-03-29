@@ -1,8 +1,9 @@
+<?php $cfg = require __DIR__ . '/config.php'; ?>
 <!DOCTYPE html>
 <html lang="fr">
 
   <head>
-    <title>BlueLift</title>
+    <title><?= htmlspecialchars($cfg['site_name']) ?></title>
 
     <meta name="title" content="BlueLift">
     <meta name="description"
@@ -48,9 +49,9 @@
       _paq.push(['trackPageView']);
       _paq.push(['enableLinkTracking']);
       (function () {
-        var u = "//matomo.steambot.ch/";
+        var u = "<?= htmlspecialchars($cfg['matomo_url']) ?>";
         _paq.push(['setTrackerUrl', u + 'matomo.php']);
-        _paq.push(['setSiteId', '7']);
+        _paq.push(['setSiteId', '<?= htmlspecialchars($cfg['matomo_site_id']) ?>']);
         var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
         g.async = true; g.src = u + 'matomo.js'; s.parentNode.insertBefore(g, s);
       })();
@@ -92,7 +93,7 @@
               <div class="col-sm-4">
                 <p>
                   <!--button class="button1">&#x2794; Carte winds.mobi</button-->
-                  <a href="https://winds.mobi/stations/map?lat=46.4075639&lon=7.3924254&zoom=9" target="_blank"
+                  <a href="https://winds.mobi/stations/map?lat=<?= $cfg['windsmobi_lat'] ?>&lon=<?= $cfg['windsmobi_lon'] ?>&zoom=<?= $cfg['windsmobi_zoom'] ?>" target="_blank"
                     class="icon-link-bl" aria-label="Open winds.<wbr>mobi map">
                     <i class="material-icons">air</i>
                     Carte winds.mobi
@@ -114,7 +115,7 @@
               <div class="iframe-wrapper">
                 <div class="iframe-overlay">
                 </div>
-                <iframe src="https://bluelift.ch/windmap/index.html?lat=46.44&lon=7.40&zoom=7.35" width="100%" height="600px"
+                <iframe src="<?= $cfg['site_url'] ?>/windmap/index.html?lat=<?= $cfg['windmap_lat'] ?>&lon=<?= $cfg['windmap_lon'] ?>&zoom=<?= $cfg['windmap_zoom'] ?>" width="100%" height="600px"
                   allow="geolocation" loading="lazy" style="border: none; display: block;" class="my-iframe">
                 </iframe>
                 <a href="https://bluelift.ch/windmap/index.html" target="_blank">bluelift.ch/windmap</a>
@@ -148,11 +149,11 @@
                 <div class="iframe-wrapper">
                   <div class="iframe-overlay">
                   </div>
-                  <iframe width="100%" height="650" src="https://paraglidable.com/?lat=46.391&lon=7.094&zoom=9"
+                  <iframe width="100%" height="650" src="https://paraglidable.com/?lat=<?= $cfg['paraglidable_lat'] ?>&lon=<?= $cfg['paraglidable_lon'] ?>&zoom=<?= $cfg['paraglidable_zoom'] ?>"
                     allowfullscreen="true" allow="geolocation" loading="lazy" name="iframe-parag" id="iframe-parag"
                     class="my-iframe"></iframe>
                   <br>
-                  <a href="https://paraglidable.com/?lat=46.391&lon=7.094&zoom=9" target="_blank">Paraglidable</a>
+                  <a href="https://paraglidable.com/?lat=<?= $cfg['paraglidable_lat'] ?>&lon=<?= $cfg['paraglidable_lon'] ?>&zoom=<?= $cfg['paraglidable_zoom'] ?>" target="_blank">Paraglidable</a>
                 </div>
               </div>
             </div>
@@ -171,8 +172,8 @@
       $windKey = 'altitude-levels';
       $wind_data_base_url = 'https://www.meteosuisse.admin.ch/product/output/altitude-levels/version__{VTAG}/heights_wind_fr.json';
       $wind_icon_base_url = 'https://www.meteosuisse.admin.ch/static/resources/wind-directions/';
-      $target_region_key = 'location_id_west';
-      $target_region_name = 'Région Ouest';
+      $target_region_key = $cfg['meteosuisse_region_key'];
+      $target_region_name = $cfg['meteosuisse_region_name'];
       $generalKey = 'generalsituation/text/fr';
       $regionalKey = 'weather-report/fr/west';
       $regionOverviewKey = 'weather-region-overview';
@@ -180,7 +181,7 @@
       // --- Data Fetching & Preparation ---
       
       // 1. Read versions.json once and decode
-      $versionsJson = cached_fetch($versionsUrl, 300, 'meteosuisse_versions');
+      $versionsJson = cached_fetch($versionsUrl, $cfg['cache_ttl_versions'], 'meteosuisse_versions');
       $versions = [];
       if ($versionsJson !== false) {
         $decoded = json_decode($versionsJson, true);
@@ -196,7 +197,7 @@
 
       if ($current_wind_tag) {
         $wind_data_url = str_replace('{VTAG}', $current_wind_tag, $wind_data_base_url);
-        $jsonData = cached_fetch($wind_data_url, 900, 'meteosuisse_wind');
+        $jsonData = cached_fetch($wind_data_url, $cfg['cache_ttl_forecast'], 'meteosuisse_wind');
         $wind_data = null;
 
         if ($jsonData !== false) {
@@ -245,14 +246,14 @@
 
       if ($generalTag) {
         $generalUrl = "https://www.meteosuisse.admin.ch/product/output/generalsituation/text/fr/version__{$generalTag}/textproduct_fr.xhtml";
-        $tmp = cached_fetch($generalUrl, 900, 'meteosuisse_general');
+        $tmp = cached_fetch($generalUrl, $cfg['cache_ttl_forecast'], 'meteosuisse_general');
         if ($tmp !== false) {
           $generalHtml = "<h4>Situation Générale</h4>" . $tmp;
         }
       }
       if ($regionalTag) {
         $regionalUrl = "https://www.meteosuisse.admin.ch/product/output/weather-report/fr/west/version__{$regionalTag}/textproduct_fr.xhtml";
-        $tmp = cached_fetch($regionalUrl, 900, 'meteosuisse_regional');
+        $tmp = cached_fetch($regionalUrl, $cfg['cache_ttl_forecast'], 'meteosuisse_regional');
         if ($tmp !== false) {
           $regionalHtml = "<hr>" . $tmp;
         }
@@ -265,7 +266,7 @@
 
       if ($overviewTag) {
         $jsonUrl = "https://www.meteosuisse.admin.ch/product/output/weather-region-overview/version__{$overviewTag}/weatherOverviewForecast_fr.json";
-        $jsonData = cached_fetch($jsonUrl, 900, 'meteosuisse_overview');
+        $jsonData = cached_fetch($jsonUrl, $cfg['cache_ttl_forecast'], 'meteosuisse_overview');
 
         if ($jsonData !== false && $jsonData !== '') {
           $decoded = json_decode($jsonData, true);
@@ -569,7 +570,7 @@
                 <div class="iframe-wrapper">
                   <div class="iframe-overlay">
                   </div>
-                  <iframe width="100%" height="650" src="https://xctherm.com/icon?lat=46.4505639&lon=6.9924254&zoom=9"
+                  <iframe width="100%" height="650" src="https://xctherm.com/icon?lat=<?= $cfg['xctherm_lat'] ?>&lon=<?= $cfg['xctherm_lon'] ?>&zoom=<?= $cfg['xctherm_zoom'] ?>"
                     allowfullscreen="true" allow="geolocation" loading="lazy" name="iframe-xcterm" id="iframe-xcterm"
                     class="my-iframe"></iframe><br>
                   <a href="https://xctherm.com/icon?lat=46.2505639&lon=7.3924254&zoom=9" target="_blank">XC Term</a>
@@ -583,18 +584,12 @@
       <div id="section-meteograms" class="box even">
         <div class="my-4 container">
           <div class="row">
+            <?php foreach ($cfg['meteograms'] as $mg): ?>
             <div class="col-md-12">
               <img class="img-fluid" loading="lazy"
-                src="https://my.meteoblue.com/visimage/meteogram_web_hd?look=KILOMETER_PER_HOUR%2CCELSIUS%2CMILLIMETER&amp;apikey=5838a18e295d&amp;winddirection=3char&amp;temperature=C&amp;windspeed=kmh&amp;precipitationamount=mm&amp;city=Charmey&amp;iso2=ch&amp;lat=46.6196&amp;lon=7.16486&amp;asl=895&amp;tz=Europe%2FZurich&amp;lang=fr&amp;sig=e477e9b21e39f451d48c7e8ca9ef69f1">
+                src="https://my.meteoblue.com/visimage/meteogram_web_hd?look=KILOMETER_PER_HOUR%2CCELSIUS%2CMILLIMETER&amp;apikey=<?= urlencode($cfg['meteoblue_apikey']) ?>&amp;winddirection=3char&amp;temperature=C&amp;windspeed=kmh&amp;precipitationamount=mm&amp;city=<?= urlencode($mg['city']) ?>&amp;iso2=<?= urlencode($mg['iso2']) ?>&amp;lat=<?= $mg['lat'] ?>&amp;lon=<?= $mg['lon'] ?>&amp;asl=<?= $mg['asl'] ?>&amp;tz=Europe%2FZurich&amp;lang=fr&amp;sig=<?= urlencode($mg['sig']) ?>">
             </div>
-            <div class="col-md-12">
-              <img class="img-fluid" loading="lazy"
-                src="https://my.meteoblue.com/visimage/meteogram_web_hd?look=KILOMETER_PER_HOUR%2CCELSIUS%2CMILLIMETER&amp;apikey=5838a18e295d&amp;winddirection=3char&amp;temperature=C&amp;windspeed=kmh&amp;precipitationamount=mm&amp;city=Bex&amp;iso2=ch&amp;lat=46.2496&amp;lon=7.0098&amp;asl=421&amp;tz=Europe%2FZurich&amp;lang=fr&amp;sig=208862b9e08efcb4d575496047005de4">
-            </div>
-            <div class="col-md-12">
-              <img class="img-fluid" loading="lazy"
-                src="https://my.meteoblue.com/visimage/meteogram_web_hd?look=KILOMETER_PER_HOUR%2CCELSIUS%2CMILLIMETER&amp;apikey=5838a18e295d&amp;temperature=C&amp;windspeed=kmh&amp;precipitationamount=mm&amp;winddirection=3char&amp;city=Vercorin&amp;iso2=ch&amp;lat=46.256500&amp;lon=7.531040&amp;asl=1340&amp;tz=Europe%2FZurich&amp;lang=fr&amp;sig=106c5f8e751346e105fb75aabe45a2eb">
-            </div>
+            <?php endforeach; ?>
           </div>
         </div>
       </div>
@@ -1014,8 +1009,8 @@
           console.error(`Error loading PDF: ${pdfUrl}`, error);
         });
       }
-      renderPdfAllPages('https://bluelift.ch/assets/pdf/dabs_today.pdf', 'dabs_today_container');
-      renderPdfAllPages('https://bluelift.ch/assets/pdf/dabs_tomorrow.pdf', 'dabs_tomorrow_container');
+      renderPdfAllPages('<?= $cfg['site_url'] . $cfg['dabs_today_pdf'] ?>', 'dabs_today_container');
+      renderPdfAllPages('<?= $cfg['site_url'] . $cfg['dabs_tomorrow_pdf'] ?>', 'dabs_tomorrow_container');
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
