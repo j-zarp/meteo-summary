@@ -127,6 +127,46 @@
         }
       }
 
+      /* Sticky section nav */
+      .section-nav {
+        position: sticky;
+        top: 0;
+        z-index: 1020;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid #dee2e6;
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      .section-nav::-webkit-scrollbar { display: none; }
+      .section-nav a {
+        display: inline-block;
+        padding: 8px 12px;
+        color: #495057;
+        text-decoration: none;
+        font-size: 0.85rem;
+        font-weight: 500;
+        border-bottom: 2px solid transparent;
+        transition: color 0.15s, border-color 0.15s;
+      }
+      .section-nav a:hover,
+      .section-nav a.active {
+        color: #3459e6;
+        border-bottom-color: #3459e6;
+      }
+      @media (max-width: 576px) {
+        .section-nav a {
+          padding: 6px 8px;
+          font-size: 0.78rem;
+        }
+      }
+      /* Offset scroll targets below the sticky nav */
+      [id^="section-"] {
+        scroll-margin-top: 50px;
+      }
+
       iframe,
       img,
       .pdf-container {
@@ -318,10 +358,23 @@
   </head>
 
   <body>
+    <nav class="section-nav" aria-label="Sections">
+      <a href="#section-wind">Vent</a>
+      <a href="#section-paraglidable">Paraglidable</a>
+      <a href="#section-meteo">MétéoSuisse</a>
+      <a href="#section-synoptic">Cartes</a>
+      <a href="#section-windch">Vents CH</a>
+      <a href="#section-xctherm">XC-Therm</a>
+      <a href="#section-meteograms">Météogrammes</a>
+      <a href="#section-dabs">DABS</a>
+      <a href="#section-gliding">Vol à voile</a>
+      <a href="#section-links">Liens</a>
+    </nav>
+
     <div id="page-content" class="striped">
-      
+
       <div class="py-3">
-        <div id="rendered-box-567" class="container">
+        <div class="container">
           <div class="row">
             <div class="col-md-12">
               <h2>Les infos essentielles pour ta journée de vol</h2>
@@ -330,9 +383,9 @@
         </div>
       </div>
 
-      <div class="box odd">
+      <div id="section-wind" class="box odd">
         <div class="py-3">
-          <div id="rendered-box-159" class="container">
+          <div class="container">
             <div class="row justify-content-around">
               <h3>Mesure du vent actuel</h3>
               <div class="col-sm-4">
@@ -370,10 +423,10 @@
         </div>
       </div>
 
-      <div id="box_155" class="box odd">
+      <div id="section-paraglidable" class="box odd">
         <div class="py-3">
-          <div id="rendered-box-155" class="container">
-            <div class="row" id="anchor">
+          <div class="container">
+            <div class="row">
               <div class="col-md-12">
                 <h3>Prédictions Paraglidable</h3>
               </div>
@@ -587,10 +640,10 @@
       }
       ?>
 
-      <div id="box_155" class="box odd">
+      <div id="section-meteo" class="box odd">
         <div class="py-3">
-          <div id="rendered-box-155" class="container">
-            <div class="row" id="anchor">
+          <div class="container">
+            <div class="row">
               <div class="col-md-12">
                 <h3>Bulletin Météo (MétéoSuisse)</h3>
               </div>
@@ -742,8 +795,8 @@
       ];
       ?>
 
-      <div id="box_154" class="box even">
-        <div id="rendered-box-154" class="my-4 container">
+      <div id="section-synoptic" class="box even">
+        <div class="my-4 container">
           <div class="row">
             <?php foreach ($knmiMaps as $map): ?>
             <div class="col-md-6 my-4">
@@ -779,9 +832,9 @@
         </div>
       </div>
 
-      <div id="box_158" class="box odd">
+      <div id="section-windch" class="box odd">
         <div class="py-3">
-          <div id="rendered-box-158" class="container">
+          <div class="container">
             <div class="row">
               <div class="col-md-12">
                 <h3>Vents en Suisse</h3>
@@ -806,10 +859,10 @@
         </div>
       </div>
 
-      <div id="box_159" class="box odd">
+      <div id="section-xctherm" class="box odd">
         <div class="py-3">
-          <div id="rendered-box-159" class="container">
-            <div class="row" id="anchor159">
+          <div class="container">
+            <div class="row">
               <div class="col-md-12">
                 <h3>XC-term ICON D2/CH1</h3>
                 <div class="iframe-wrapper">
@@ -826,8 +879,8 @@
         </div>
       </div>
 
-      <div id="box_151" class="box even">
-        <div id="rendered-box-151" class="my-4 container">
+      <div id="section-meteograms" class="box even">
+        <div class="my-4 container">
           <div class="row">
             <div class="col-md-12">
               <img class="img-fluid" loading="lazy"
@@ -845,8 +898,8 @@
         </div>
       </div>
 
-      <div id="box_152" class="box even">
-        <div id="rendered-box-152" class="my-4 container">
+      <div id="section-dabs" class="box even">
+        <div class="my-4 container">
           <div class="row">
             <div class="col-md-12 my-4">
               <h3>DABS (aujourd'hui)</h3>
@@ -856,8 +909,8 @@
           </div>
         </div>
       </div>
-      <div id="box_153" class="box even">
-        <div id="rendered-box-153" class="my-4 container">
+      <div class="box even">
+        <div class="my-4 container">
           <div class="row">
             <div class="col-md-12 my-4">
               <h3>DABS (demain)</h3>
@@ -868,8 +921,8 @@
         </div>
       </div>
 
-      <div id="box_157" class="box even">
-        <div id="rendered-box-157" class="my-4 container">
+      <div id="section-gliding" class="box even">
+        <div class="my-4 container">
           <div class="row">
             <div class="col-md-12 my-4">
               <h3>Carte de vol à voile</h3>
@@ -889,8 +942,8 @@
         </div>
       </div>
 
-      <div id="box_164" class="box odd">
-        <div id="rendered-box-165" class="container">
+      <div id="section-links" class="box odd">
+        <div class="container">
           <h2 class="">Autres liens utiles</h2>
           <div class="row row-cols-1 row-cols-md-2">
             <div class="col">
@@ -1080,7 +1133,25 @@
         }
       });
     </script>
-    
+
+    <script>
+      // Highlight active section in nav on scroll
+      (function() {
+        const nav = document.querySelector('.section-nav');
+        if (!nav) return;
+        const links = nav.querySelectorAll('a[href^="#section-"]');
+        const sections = Array.from(links).map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+        const observer = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id));
+            }
+          });
+        }, { rootMargin: '-50px 0px -70% 0px' });
+        sections.forEach(s => observer.observe(s));
+      })();
+    </script>
+
     <script>
       function fetchForecastData() {
         fetch('get_forecast.php')
