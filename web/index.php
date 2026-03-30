@@ -936,7 +936,7 @@
       renderPdfAllPages('<?= $cfg['dabs_tomorrow_pdf'] ?>', 'dabs_tomorrow_container');
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         // Find all the column elements created in the d-none d-lg-flex row
