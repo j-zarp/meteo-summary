@@ -15,6 +15,13 @@
     <meta name="theme-color" content="#d6eaf8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <!-- Preconnect to critical external origins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdn.knmi.nl">
+    <link rel="preconnect" href="https://www.meteosuisse.admin.ch">
+
     <!-- Critical CSS: minimal above-the-fold styles while full theme loads -->
     <style>
       *,::after,::before{box-sizing:border-box}
