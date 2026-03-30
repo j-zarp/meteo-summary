@@ -15,8 +15,33 @@
     <meta name="theme-color" content="#d6eaf8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" media="all" href="./assets/css/zephyr.css" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap">
+    <!-- Critical CSS: minimal above-the-fold styles while full theme loads -->
+    <style>
+      *,::after,::before{box-sizing:border-box}
+      body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:1rem;line-height:1.5;color:#212529;background:#fff}
+      h2,h3{margin-top:0;margin-bottom:.5rem;font-weight:500;line-height:1.2}
+      h2{font-size:1.75rem}h3{font-size:1.5rem}
+      a{color:#3459e6;text-decoration:underline}
+      .container{width:100%;padding-right:12px;padding-left:12px;margin:auto}
+      @media(min-width:576px){.container{max-width:540px}}
+      @media(min-width:768px){.container{max-width:720px}}
+      @media(min-width:992px){.container{max-width:960px}}
+      @media(min-width:1200px){.container{max-width:1140px}}
+      .row{display:flex;flex-wrap:wrap;margin-right:-12px;margin-left:-12px}
+      .row>*{flex-shrink:0;width:100%;max-width:100%;padding-right:12px;padding-left:12px}
+      .col-md-12{flex:0 0 auto;width:100%}
+      @media(min-width:576px){.col-sm-4{flex:0 0 auto;width:33.333%}}
+      .py-3{padding-top:1rem!important;padding-bottom:1rem!important}
+      .justify-content-around{justify-content:space-around!important}
+      .section-nav{position:sticky;top:0;z-index:1020;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);border-bottom:1px solid #dee2e6;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+      .section-nav::-webkit-scrollbar{display:none}
+      .section-nav a{display:inline-block;padding:8px 12px;color:#495057;text-decoration:none;font-size:.85rem;font-weight:500;border-bottom:2px solid transparent}
+    </style>
+    <!-- Full theme: non-render-blocking load -->
+    <link rel="preload" href="./assets/css/zephyr.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="./assets/css/zephyr.css"></noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap"></noscript>
 
     <!-- Favicons for various platforms -->
     <link rel="shortcut icon" href="/favicon_io/favicon.ico?v=2">
