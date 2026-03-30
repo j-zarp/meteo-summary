@@ -537,11 +537,12 @@
             <?php endforeach; ?>
             <div id="section-foehn-bise" class="col-md-6 my-4">
               <h4>Prévisions du foehn</h4>
-              <img src="<?php echo "https://profiwetter.ch/wind_foehn_ch_fr.png?t=" . time() ?>" class="img-fluid" loading="lazy">
+              <?php $hourKey = intdiv(time(), 3600); ?>
+              <img src="https://profiwetter.ch/wind_foehn_ch_fr.png?t=<?= $hourKey ?>" class="img-fluid" loading="lazy">
             </div>
             <div class="col-md-6 my-4">
               <h4>Prévisions de la bise</h4>
-              <img src="<?php echo "https://profiwetter.ch/wind_bise_fr.png?t=" . time() ?>" class="img-fluid" loading="lazy">
+              <img src="https://profiwetter.ch/wind_bise_fr.png?t=<?= $hourKey ?>" class="img-fluid" loading="lazy">
             </div>
             <div id="section-windy" class="col-md-12">
               <h3>Pression et vents en Europe</h3>
