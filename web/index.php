@@ -15,31 +15,47 @@
     <meta name="theme-color" content="#d6eaf8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" media="all" href="./assets/css/zephyr.css" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap">
+    <!-- Preconnect to critical external origins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdn.knmi.nl">
+    <link rel="preconnect" href="https://www.meteosuisse.admin.ch">
 
-    <!-- Favicons for various platforms -->
-    <link rel="shortcut icon" href="/favicon_io/favicon.ico?v=2">
-    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/favicon_io/apple-touch-icon-57x57.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/favicon_io/apple-touch-icon-114x114.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/favicon_io/apple-touch-icon-72x72.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/favicon_io/apple-touch-icon-144x144.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="60x60" href="/favicon_io/apple-touch-icon-60x60.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/favicon_io/apple-touch-icon-120x120.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="/favicon_io/apple-touch-icon-76x76.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/favicon_io/apple-touch-icon-152x152.png" />
-    <link rel="icon" type="image/png" href="/favicon_io/favicon-196x196.png" sizes="196x196" />
-    <link rel="icon" type="image/png" href="/favicon_io/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/png" href="/favicon_io/favicon-32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="/favicon_io/favicon-16x16.png" sizes="16x16" />
-    <link rel="icon" type="image/png" href="/favicon_io/favicon-128.png" sizes="128x128" />
-    <meta name="application-name" content="&nbsp;"/>
-    <meta name="msapplication-TileColor" content="#FFFFFF" />
-    <meta name="msapplication-TileImage" content="/favicon_io/mstile-144x144.png" />
-    <meta name="msapplication-square70x70logo" content="/favicon_io/mstile-70x70.png" />
-    <meta name="msapplication-square150x150logo" content="/favicon_io/mstile-150x150.png" />
-    <meta name="msapplication-wide310x150logo" content="/favicon_io/mstile-310x150.png" />
-    <meta name="msapplication-square310x310logo" content="/favicon_io/mstile-310x310.png" />
+    <!-- Critical CSS: minimal above-the-fold styles while full theme loads -->
+    <style>
+      *,::after,::before{box-sizing:border-box}
+      body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:1rem;line-height:1.5;color:#212529;background:#fff}
+      h2,h3{margin-top:0;margin-bottom:.5rem;font-weight:500;line-height:1.2}
+      h2{font-size:1.75rem}h3{font-size:1.5rem}
+      a{color:#3459e6;text-decoration:underline}
+      .container{width:100%;padding-right:12px;padding-left:12px;margin:auto}
+      @media(min-width:576px){.container{max-width:540px}}
+      @media(min-width:768px){.container{max-width:720px}}
+      @media(min-width:992px){.container{max-width:960px}}
+      @media(min-width:1200px){.container{max-width:1140px}}
+      .row{display:flex;flex-wrap:wrap;margin-right:-12px;margin-left:-12px}
+      .row>*{flex-shrink:0;width:100%;max-width:100%;padding-right:12px;padding-left:12px}
+      .col-md-12{flex:0 0 auto;width:100%}
+      @media(min-width:576px){.col-sm-4{flex:0 0 auto;width:33.333%}}
+      .py-3{padding-top:1rem!important;padding-bottom:1rem!important}
+      .justify-content-around{justify-content:space-around!important}
+      .section-nav{position:sticky;top:0;z-index:1020;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);border-bottom:1px solid #dee2e6;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+      .section-nav::-webkit-scrollbar{display:none}
+      .section-nav a{display:inline-block;padding:8px 12px;color:#495057;text-decoration:none;font-size:.85rem;font-weight:500;border-bottom:2px solid transparent}
+    </style>
+    <!-- Full theme: non-render-blocking load -->
+    <link rel="preload" href="./assets/css/zephyr.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="./assets/css/zephyr.css"></noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap"></noscript>
+
+    <!-- Favicons — minimal set covering all modern platforms -->
+    <link rel="icon" href="/favicon_io/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" href="/favicon_io/favicon-32x32.png" sizes="32x32">
+    <link rel="apple-touch-icon" href="/favicon_io/apple-touch-icon-152x152.png">
+    <meta name="msapplication-TileColor" content="#d6eaf8">
+    <meta name="msapplication-TileImage" content="/favicon_io/mstile-144x144.png">
     <link rel="manifest" href="/favicon_io/manifest.json">
 
     <link rel="stylesheet" href="./assets/css/bluelift.css" />
@@ -474,27 +490,29 @@
       $dayOfTheMonthForTomorrow = $tomorrow->format('d');
 
       // For today: try analysis maps first (06 & 12 UTC), forecast maps as fallback
+      // KNMI analysis maps are published at 06 and 18 UTC, forecast maps at 00 and 12 UTC.
+      // For today we try analysis first, falling back to the nearest forecast time.
       $knmiMaps = [
         [
-          'primary' => "https://cdn.knmi.nl/knmi/map/page/klimatologie/daggegevens/weerkaarten/analyse_{$dayStr}06.gif",
-          'fallback' => "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonth}06_large.gif",
+          'primary' => "https://cdn.knmi.nl/knmi/map/page/klimatologie/daggegevens/weerkaarten/analyse_{$dayStr}06.gif?1234",
+          'fallback' => "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonth}00_large.gif?1234",
           'primaryLabel' => "Etat {$todayFormatted} 06 UTC",
-          'fallbackLabel' => "Prévision {$todayFormatted} 06 UTC",
+          'fallbackLabel' => "Prévision {$todayFormatted} 00 UTC",
         ],
         [
-          'primary' => "https://cdn.knmi.nl/knmi/map/page/klimatologie/daggegevens/weerkaarten/analyse_{$dayStr}12.gif",
-          'fallback' => "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonth}12_large.gif",
+          'primary' => "https://cdn.knmi.nl/knmi/map/page/klimatologie/daggegevens/weerkaarten/analyse_{$dayStr}12.gif?1234",
+          'fallback' => "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonth}12_large.gif?1234",
           'primaryLabel' => "Etat {$todayFormatted} 12 UTC",
           'fallbackLabel' => "Prévision {$todayFormatted} 12 UTC",
         ],
         [
-          'primary' => "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonthForTomorrow}00_large.gif",
+          'primary' => "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonthForTomorrow}00_large.gif?1234",
           'fallback' => '',
           'primaryLabel' => "Prévision {$tomorrowFormatted} 00h UTC",
           'fallbackLabel' => '',
         ],
         [
-          'primary' => "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonthForTomorrow}12_large.gif",
+          'primary' => "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonthForTomorrow}12_large.gif?1234",
           'fallback' => '',
           'primaryLabel' => "Prévision {$tomorrowFormatted} 12h UTC",
           'fallbackLabel' => '',
@@ -519,11 +537,12 @@
             <?php endforeach; ?>
             <div id="section-foehn-bise" class="col-md-6 my-4">
               <h4>Prévisions du foehn</h4>
-              <img src="<?php echo "https://profiwetter.ch/wind_foehn_ch_fr.png?t=" . time() ?>" class="img-fluid" loading="lazy">
+              <?php $hourKey = intdiv(time(), 3600); ?>
+              <img src="https://profiwetter.ch/wind_foehn_ch_fr.png?t=<?= $hourKey ?>" class="img-fluid" loading="lazy">
             </div>
             <div class="col-md-6 my-4">
               <h4>Prévisions de la bise</h4>
-              <img src="<?php echo "https://profiwetter.ch/wind_bise_fr.png?t=" . time() ?>" class="img-fluid" loading="lazy">
+              <img src="https://profiwetter.ch/wind_bise_fr.png?t=<?= $hourKey ?>" class="img-fluid" loading="lazy">
             </div>
             <div id="section-windy" class="col-md-12">
               <h3>Pression et vents en Europe</h3>
@@ -934,7 +953,7 @@
       renderPdfAllPages('<?= $cfg['dabs_tomorrow_pdf'] ?>', 'dabs_tomorrow_container');
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         // Find all the column elements created in the d-none d-lg-flex row
