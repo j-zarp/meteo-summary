@@ -474,27 +474,29 @@
       $dayOfTheMonthForTomorrow = $tomorrow->format('d');
 
       // For today: try analysis maps first (06 & 12 UTC), forecast maps as fallback
+      // KNMI analysis maps are published at 06 and 18 UTC, forecast maps at 00 and 12 UTC.
+      // For today we try analysis first, falling back to the nearest forecast time.
       $knmiMaps = [
         [
-          'primary' => "https://cdn.knmi.nl/knmi/map/page/klimatologie/daggegevens/weerkaarten/analyse_{$dayStr}06.gif",
-          'fallback' => "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonth}06_large.gif",
+          'primary' => "https://cdn.knmi.nl/knmi/map/page/klimatologie/daggegevens/weerkaarten/analyse_{$dayStr}06.gif?1234",
+          'fallback' => "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonth}00_large.gif?1234",
           'primaryLabel' => "Etat {$todayFormatted} 06 UTC",
-          'fallbackLabel' => "Prévision {$todayFormatted} 06 UTC",
+          'fallbackLabel' => "Prévision {$todayFormatted} 00 UTC",
         ],
         [
-          'primary' => "https://cdn.knmi.nl/knmi/map/page/klimatologie/daggegevens/weerkaarten/analyse_{$dayStr}12.gif",
-          'fallback' => "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonth}12_large.gif",
+          'primary' => "https://cdn.knmi.nl/knmi/map/page/klimatologie/daggegevens/weerkaarten/analyse_{$dayStr}12.gif?1234",
+          'fallback' => "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonth}12_large.gif?1234",
           'primaryLabel' => "Etat {$todayFormatted} 12 UTC",
           'fallbackLabel' => "Prévision {$todayFormatted} 12 UTC",
         ],
         [
-          'primary' => "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonthForTomorrow}00_large.gif",
+          'primary' => "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonthForTomorrow}00_large.gif?1234",
           'fallback' => '',
           'primaryLabel' => "Prévision {$tomorrowFormatted} 00h UTC",
           'fallbackLabel' => '',
         ],
         [
-          'primary' => "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonthForTomorrow}12_large.gif",
+          'primary' => "https://cdn.knmi.nl/knmi/map/page/weer/waarschuwingen_verwachtingen/weerkaarten/PL{$dayOfTheMonthForTomorrow}12_large.gif?1234",
           'fallback' => '',
           'primaryLabel' => "Prévision {$tomorrowFormatted} 12h UTC",
           'fallbackLabel' => '',
