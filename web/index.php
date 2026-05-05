@@ -7,9 +7,9 @@
 
     <meta name="title" content="BlueLift">
     <meta name="description"
-      content="Les infos essentielles météo pour préparer un vol en parapente en Suisse. Probabilités, carte synoptiques, vent, différence de pression, balise, DABS, etc.">
+      content="BlueLift regroupe les informations météo essentielles pour préparer une journée de vol en parapente en Suisse romande : vent, bulletins, foehn, bise, webcams, prévisions et liens utiles.">
     <meta name="keywords"
-      content="bluelift, meteo, parapente, carte, fronts, balises, vent, dabs, suisse, weather, paragliding, switzerland, wind, windy, meteoblue, map, mountain, montagne, rain, cloud, europe, vol libre, fsvl">
+      content="bluelift, meteo, parapente, carte, fronts, balises, bulletins, vent, dabs, suisse, weather, paragliding, switzerland, wind, pressure, foehn, bise, windy, meteoblue, map, balises, mountain, montagne, rain, cloud, europe, vol libre, fsvl">
     <meta name="robots" content="index,follow">
     <meta name="msapplication-TileColor" content="#d6eaf8">
     <meta name="theme-color" content="#d6eaf8">
@@ -143,7 +143,7 @@
         </div>
       </div>
 
-      <div id="section-paraglidable" class="box odd">
+      <div id="section-paraglidable" class="box odd" data-nosnippet>
         <div class="py-3">
           <div class="container">
             <div class="row">
