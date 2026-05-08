@@ -3,11 +3,12 @@
 <html lang="fr">
 
   <head>
-    <title><?= htmlspecialchars($cfg['site_name']) ?></title>
+    <title>BlueLift - les infos utiles pour préparer un vol en parapente</title>
 
-    <meta name="title" content="BlueLift">
+    <meta name="title" content="BlueLift - les infos utiles pour préparer un vol en parapente">
+    <meta property="og:title" content="BlueLift - les infos utiles pour préparer un vol en parapente" />
     <meta name="description"
-      content="BlueLift regroupe les informations météo essentielles pour préparer une journée de vol en parapente en Suisse romande : vent, bulletins, foehn, bise, webcams, prévisions et liens utiles.">
+      content="BlueLift regroupe les informations météo et pratiques essentielles pour préparer une journée de vol en parapente en Suisse romande : vent, bulletins, foehn, bise, webcams, prévisions et liens utiles.">
     <meta name="keywords"
       content="bluelift, meteo, parapente, carte, fronts, balises, bulletins, vent, dabs, suisse, weather, paragliding, switzerland, wind, pressure, foehn, bise, windy, meteoblue, map, balises, mountain, montagne, rain, cloud, europe, vol libre, fsvl">
     <meta name="robots" content="index,follow">

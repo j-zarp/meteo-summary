@@ -30,12 +30,12 @@ function display_mauborget_image() {
 <head>
   <meta charset="utf-8" name="description" content="">
   <title>
-    Webcams sites de vol
+    Bluelift – Webcams sites de vol
   </title>
   
   <meta name="title" content="Webcams sites de vol">
-  <meta name="description" content="Les infos essentielles météo pour préparer un vol en parapente. Probabilités, carte synoptiques, vent, différence de pression, balise, DABS, etc.">
-  <meta name="keywords" content="bluelift, meteo, parapente, carte, fronts, balises, vent, dabs, suisse, weather, paragliding, switzerland, wind, windy, meteoblue">
+  <meta name="description" content="Live webcams des sites de vols et décollages de parapente en Suisse occidentale">
+  <meta name="keywords" content="bluelift, meteo, parapente, webcam, suisse, weather, paragliding, switzerland, live">
   <meta name="robots" content="index,follow">
   <meta name="msapplication-TileColor" content="#d6eaf8">
   <meta name="theme-color" content="#d6eaf8">
