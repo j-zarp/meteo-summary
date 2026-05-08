@@ -30,7 +30,7 @@ function display_mauborget_image() {
 <head>
   <meta charset="utf-8" name="description" content="">
   <title>
-    Webcams sites de vol
+    Bluelift – Webcams sites de vol
   </title>
   
   <meta name="title" content="Webcams sites de vol">
