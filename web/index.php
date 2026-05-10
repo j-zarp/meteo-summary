@@ -925,13 +925,14 @@
     <script type="module">
       const pdfjsLib = await import('https://mozilla.github.io/pdf.js/build/pdf.mjs');
       pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.mjs';
+    
       function renderPdfAllPages(pdfUrl, containerId) {
         const container = document.getElementById(containerId);
         if (!container) {
           console.error(`Container with ID "${containerId}" not found.`);
           return;
         }
-        pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
+        pdfjsLib.getDocument({url: pdfUrl}).promise.then(pdf => {
           for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
             pdf.getPage(pageNum).then(page => {
               const scale = 1.5;
@@ -950,6 +951,7 @@
           console.error(`Error loading PDF: ${pdfUrl}`, error);
         });
       }
+    
       renderPdfAllPages('<?= $cfg['dabs_today_pdf'] ?>', 'dabs_today_container');
       renderPdfAllPages('<?= $cfg['dabs_tomorrow_pdf'] ?>', 'dabs_tomorrow_container');
     </script>
