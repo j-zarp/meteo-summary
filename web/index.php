@@ -932,7 +932,7 @@
           console.error(`Container with ID "${containerId}" not found.`);
           return;
         }
-        pdfjsLib.getDocument({ url: pdfUrl }).promise.then(pdf => {
+        pdfjsLib.getDocument({url: pdfUrl}).promise.then(pdf => {
           for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
             pdf.getPage(pageNum).then(page => {
               const scale = 1.5;
@@ -952,8 +952,8 @@
         });
       }
     
-      renderPdfAllPages('/assets/pdf/dabs_today.pdf', 'dabs_today_container');
-      renderPdfAllPages('/assets/pdf/dabs_tomorrow.pdf', 'dabs_tomorrow_container');
+      renderPdfAllPages('<?= $cfg['dabs_today_pdf'] ?>', 'dabs_today_container');
+      renderPdfAllPages('<?= $cfg['dabs_tomorrow_pdf'] ?>', 'dabs_tomorrow_container');
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
