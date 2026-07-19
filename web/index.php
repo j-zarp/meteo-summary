@@ -188,14 +188,14 @@
       $versionsUrl = 'https://www.meteosuisse.admin.ch/product/output/versions.json';
 
       // --- MeteoSuisse Data URLs & Keys ---
-      $windKey = 'altitude-levels';
-      $wind_data_base_url = 'https://www.meteosuisse.admin.ch/product/output/altitude-levels/version__{VTAG}/heights_wind_fr.json';
-      $wind_icon_base_url = 'https://www.meteosuisse.admin.ch/static/resources/wind-directions/';
+      $windKey = "altitude-levels-v2";
+      $wind_data_base_url = "https://www.meteosuisse.admin.ch/product/output/{$windKey}/version__{VTAG}/heights_wind_fr.json";
+      $wind_icon_base_url = "https://www.meteosuisse.admin.ch/static/resources/wind-directions/";
       $target_region_key = $cfg['meteosuisse_region_key'];
       $target_region_name = $cfg['meteosuisse_region_name'];
       $generalKey = 'generalsituation/text/fr';
       $regionalKey = 'weather-report/fr/west';
-      $regionOverviewKey = 'weather-region-overview';
+      $regionOverviewKey = 'weather-region-overview-v2';
 
       // --- Data Fetching & Preparation ---
       
@@ -284,7 +284,7 @@
       $dayInfos = [];
 
       if ($overviewTag) {
-        $jsonUrl = "https://www.meteosuisse.admin.ch/product/output/weather-region-overview/version__{$overviewTag}/weatherOverviewForecast_fr.json";
+        $jsonUrl = "https://www.meteosuisse.admin.ch/product/output/{$regionOverviewKey}/version__{$overviewTag}/weatherOverviewForecast_fr.json";
         $jsonData = cached_fetch($jsonUrl, $cfg['cache_ttl_forecast'], 'meteosuisse_overview');
 
         if ($jsonData !== false && $jsonData !== '') {
