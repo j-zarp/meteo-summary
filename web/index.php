@@ -112,7 +112,7 @@
               <div class="col-sm-4">
                 <p>
                   <!--button class="button1">&#x2794; Carte winds.mobi</button-->
-                  <a href="https://winds.mobi/stations/map?lat=<?= $cfg['windsmobi_lat'] ?>&lon=<?= $cfg['windsmobi_lon'] ?>&zoom=<?= $cfg['windsmobi_zoom'] ?>" target="_blank"
+                  <a href="https://winds.mobi/map?latitude=<?= $cfg['windsmobi_lat'] ?>&longitude=<?= $cfg['windsmobi_lon'] ?>&zoom=<?= $cfg['windsmobi_zoom'] ?>" target="_blank"
                     class="icon-link-bl" aria-label="Open winds.<wbr>mobi map">
                     <i class="material-icons">air</i>
                     Carte winds.mobi
